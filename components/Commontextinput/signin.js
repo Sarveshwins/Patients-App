@@ -10,7 +10,7 @@ import {
 
   import { appColors } from '../../utils/Appcolors';
 import PasswordError from '../Pssworderror';
-import { useAppCommonDataProvider } from '../useAppCommonDataProvider';
+//import { useAppCommonDataProvider } from '../useAppCommonDataProvider';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
   const CommonTextInputsignin = ({

@@ -1,8 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
-  TouchableOpacity,
   ScrollView,
   Modal,
   StyleSheet,
@@ -12,80 +11,76 @@ import {
 } from 'react-native';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {BlurView} from '@react-native-community/blur';
-import {useTheme} from '../../ThemeContext';
 
-import {useNavigation} from '@react-navigation/native';
-
-const Mesection = ({
-  ismeModalVisible,
-  toggleModalme,
-  handleTabClickme,
-  meListData,
-  questionMapme,
-  handleAnswerSubmitme,
-  defaultAnswersme,
-  selectedItemme,
-  answerme,
-  setAnswerme,
-  selectedDefaultAnswerme,
-  setSelectedDefaultAnswerme,
+const HaveSection = ({
+  isHaveModalVisible,
+  toggleModalHave,
+  handleTabClickHave,
+  haveListData,
+  handleAnswerSubmitHave,
+  defaultAnswersHave,
+  selectedItemHave,
+  answerHave,
+  setAnswerHave,
+  selectedDefaultAnswerHave,
+  setSelectedDefaultAnswerHave,
 }) => {
-  const navigation = useNavigation();
   const [customAnswer, setCustomAnswer] = useState('');
+  const [pain, setPain] = useState('');
+  const [injuries, setInjuries] = useState('');
+  const [surguries, setSurguries] = useState('');
 
   const renderItemContent = item => {
-    if (['8', '9', '10'].includes(item.key)) {
+    if (['16', '19', '20'].includes(item.key)) {
       return (
         <TouchableHighlight
           underlayColor="transparent"
           key={item.key}
           style={[styles.listItem]}
-          onPress={() => handleTabClickme('Me', item)}>
+          onPress={() => handleTabClickHave('Have', item)}>
           <Text style={styles.sectiontexts}>
-            {item.text === 'Brush' ? (
-              <Text style={{color: 'black'}}>{item.text} : </Text>
-            ) : (
-              <Text>{item.text} </Text>
-            )}
-            {item.answerme ? (
+            <Text style={{color: 'black'}}>{item.text} </Text>
+            {item.answerHave ? (
               <Text style={{color: 'black', fontWeight: '400'}}>
-                {item.answerme}
+                 {item.answerHave}
               </Text>
             ) : null}
           </Text>
         </TouchableHighlight>
       );
-    } else if (item.key === '7') {
+    } else if (item.key === '15') {
       return (
         <View key={item.key} style={styles.listItem}>
           <Text style={styles.sectiontexts}>{item.text}</Text>
           <TextInput
             style={styles.textInput}
-            value={customAnswer}
-            onChangeText={text => setCustomAnswer(text)}
+            value={pain}
+            onChangeText={text => setPain(text)}
           />
         </View>
       );
-    } else if (item.key === '6') {
+    } else if (item.key === '17') {
       return (
-        <TouchableHighlight
-          underlayColor="transparent"
-          key={item.key}
-          style={[styles.listItem]}
-          // onPress={() => navigation.navigate('EmergencyContacts')}
-        >
-          <Text style={styles.sectiontexts}>{item.text}</Text>
-        </TouchableHighlight>
+        <View key={item.key} style={styles.listItem}>
+          <Text style={styles.sectiontexts}>{item.text} </Text>
+          <TextInput
+            style={styles.textInputInjuruies}
+            value={injuries}
+            onChangeText={text => setInjuries(text)}
+          />
+        </View>
       );
+      // } else if (item.key === '18') {
     } else {
       return (
-        <TouchableHighlight
-          underlayColor="transparent"
-          key={item.key}
-          style={[styles.listItem]}
-          onPress={() => navigation.navigate('MeContacts')}>
+        <View key={item.key} style={styles.listItem}>
           <Text style={styles.sectiontexts}>{item.text}</Text>
-        </TouchableHighlight>
+          <TextInput
+            style={styles.textInputSurguries}
+            value={surguries}
+            onChangeText={text => setSurguries(text)}
+          />
+        </View>
       );
     }
   };
@@ -93,71 +88,53 @@ const Mesection = ({
   return (
     <View style={styles.meContent}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        {meListData.map(item => renderItemContent(item))}
+        {haveListData.map((item, index) => (
+          <React.Fragment key={index}>{renderItemContent(item)}</React.Fragment>
+        ))}
       </ScrollView>
       <Modal
         animationType="slide"
         transparent={true}
-        visible={ismeModalVisible}
-        onRequestClose={() => toggleModalme()}
-        style={{}}>
+        visible={isHaveModalVisible}
+        onRequestClose={() => toggleModalHave()}>
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            {/* Done button */}
-            {/* <BlurView
-              style={styles.groupItem}
-              blurType="light"
-              blurAmount={22}
-              reducedTransparencyFallbackColor="white"
-            />
-            <View style={styles.groupItemPosition}>
-              <View
-                style={{
-                  ...styles.groupItem,
-                  backgroundColor: 'transparent',
-                }}
-              />
-            </View> */}
-            <View underlayColor="transparent" style={styles.GlassMorphism}>
-              <TouchableHighlight
-                underlayColor="transparent"
-                style={styles.modalButton}
-                onPress={handleAnswerSubmitme}>
-                <Text style={styles.modalButtonText}>Done</Text>
-              </TouchableHighlight>
-              <Text style={styles.Sliderfirsttext}>{selectedItemme?.text}</Text>
-            </View>
-            {/* Display default answers as selectable options */}
+            <TouchableHighlight
+              underlayColor="transparent"
+              style={styles.modalButton}
+              onPress={handleAnswerSubmitHave}>
+              <Text style={styles.modalButtonText}>Done</Text>
+            </TouchableHighlight>
+            <Text style={styles.Sliderfirsttext}>{selectedItemHave?.text}</Text>
             <ScrollView
               contentContainerStyle={styles.scrollContent}
               keyboardShouldPersistTaps="handled"
               nestedScrollEnabled={true}>
-              {defaultAnswersme[selectedItemme?.key]?.map(
+              {defaultAnswersHave[selectedItemHave?.key]?.map(
                 (defaultAnswer, index) => (
                   <TouchableHighlight
                     underlayColor="transparent"
                     key={index}
                     style={[
                       styles.listItemslider,
-                      selectedDefaultAnswerme === defaultAnswer
+                      selectedDefaultAnswerHave === defaultAnswer
                         ? styles.selectedDefaultAnswerme
                         : null,
                     ]}
                     onPress={() => {
-                      setAnswerme(defaultAnswer);
-                      setSelectedDefaultAnswerme(defaultAnswer);
+                      setAnswerHave(defaultAnswer);
+                      setSelectedDefaultAnswerHave(defaultAnswer);
                     }}>
                     <Text style={styles.sectiontextsslider}>
                       {defaultAnswer}
-                      {selectedDefaultAnswerme === defaultAnswer && (
-                        <Text style={styles.checkmark}>✓</Text>
+                      {selectedDefaultAnswerHave === defaultAnswer && (
+                        <Text style={styles.checkmark}>  ✓</Text>
                       )}
                     </Text>
                   </TouchableHighlight>
                 ),
               )}
             </ScrollView>
-            {/* Input field for custom answer */}
             <View style={styles.bottomparent}>
               <Image
                 style={styles.poweredbyicon}
@@ -183,7 +160,6 @@ const Mesection = ({
                 />
               </View>
             </View>
-            {/* ... (you can add an input field if needed) */}
           </View>
         </View>
       </Modal>
@@ -202,13 +178,6 @@ const styles = StyleSheet.create({
     height: hp('7%'),
     backgroundColor: '#FFF',
   },
-
-  modal: {
-    borderTopRightRadius: 40,
-    borderTopLeftRadius: 40,
-  },
-
-  // section2 start
 
   boldText: {
     fontWeight: '600',
@@ -239,10 +208,7 @@ const styles = StyleSheet.create({
     width: 374,
     top: 30,
   },
-  GlassMorphism: {
-    backgroundColor: 'rgba(255, 255, 255)',
-    height: hp('15%'),
-  },
+
   sectiontexts: {
     fontSize: 17,
     left: 20,
@@ -257,8 +223,8 @@ const styles = StyleSheet.create({
   modalContent: {
     height: hp('70%'),
     backgroundColor: '#FFF',
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
   },
   modalText: {
     fontSize: 18,
@@ -279,7 +245,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     alignSelf: 'flex-end',
     right: 30,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
   },
   modalButtonText: {
     color: '#2D8AE0',
@@ -292,7 +257,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     left: 30,
     top: 71,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
   },
   listItemslider: {
     left: 30,
@@ -300,7 +264,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.6,
     borderBottomColor: '#CC9B66',
     height: 30,
-    width: 345,
+    width: 340,
     fontWeight: '500',
     color: '#291E17',
     top: 100,
@@ -312,16 +276,15 @@ const styles = StyleSheet.create({
     color: '#291E17',
     bottom: 5,
     paddingRight: 100,
-    flexDirection: 'row',
   },
 
   checkmark: {
-    letterSpacing: 70,
     position: 'absolute',
+    right: 200,
     top: '50%',
     color: '#000000',
   },
-  // powered by doc
+
   bottomparent: {
     height: hp('11%'),
     width: '76.53%',
@@ -395,11 +358,30 @@ const styles = StyleSheet.create({
   textInput: {
     height: 100,
     color: '#291E17',
-    left: 80,
+    left: 64,
     bottom: 60,
     fontWeight: '500',
     color: '#291E17',
     fontSize: 17,
   },
+  textInputInjuruies: {
+    height: 100,
+    color: '#291E17',
+    left: 87,
+    bottom: 60,
+    fontWeight: '500',
+    color: '#291E17',
+    fontSize: 17,
+  },
+  textInputSurguries: {
+    height: 100,
+    color: '#291E17',
+    left: 80,
+    bottom: 60,
+    paddingLeft: 30,
+    fontWeight: '500',
+    color: '#291E17',
+    fontSize: 17,
+  },
 });
-export default Mesection;
+export default HaveSection;

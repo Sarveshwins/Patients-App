@@ -32,7 +32,7 @@ const ISection = ({
                 <Text>{item.text} </Text>
               )}
               {item.answer ? (
-                <Text style={{ color: 'black', fontWeight: '400' }}>- {item.answer}</Text>
+                <Text style={{ color: 'black', fontWeight: '400' }}>{item.answer}</Text>
               ) : null}
             </Text>
           </TouchableHighlight>
