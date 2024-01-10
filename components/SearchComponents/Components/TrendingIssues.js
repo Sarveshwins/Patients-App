@@ -32,7 +32,7 @@ const TrendingIssues = () => {
 
   const styles = StyleSheet.create({
     container: {
-      width: wp(90),
+      width: wp(100),
       flexDirection: 'column',
       alignSelf: 'center',
       paddingHorizontal: wp(1),
@@ -40,6 +40,7 @@ const TrendingIssues = () => {
     ViewWrapper: {
       flexDirection: 'row',
       marginTop: hp(1.85),
+      marginLeft: wp(5),
     },
     DoctorText: {
       color: '#000',
@@ -54,7 +55,7 @@ const TrendingIssues = () => {
     },
     ImagesContainer: {
       marginTop: hp(2.5),
-      marginLeft: -10,
+      marginLeft: 10,
     },
     ImagesRow: {
       flexDirection: 'row',

@@ -1,15 +1,27 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, Image, TouchableHighlight} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableHighlight,
+  TouchableOpacity,
+} from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {useNavigation} from '@react-navigation/native';
 import {useTheme} from '@react-navigation/native';
+import { useLocation } from '../LocationContext';
 
-import location from '../../../assets/searchSection/location.png';
+import locationPicker from '../../../assets/searchSection/location.png';
 
 const Header = () => {
+  const navigation = useNavigation();
+  const { location, locality } = useLocation();
+
   const [profile, setProfile] = useState(null);
 
   const {isDarkMode} = useTheme();
@@ -65,10 +77,14 @@ const Header = () => {
       letterSpacing: 0.4,
       textAlignVertical: 'center',
     },
+    ViewArea: {
+      flexDirection: 'row',
+    },
     LocationNameStyle: {
       flexDirection: 'row',
-      paddingLeft: wp(41.4),
-      paddingRight: wp(3),
+      width: wp(22),
+      marginLeft: wp(35),
+      //paddingRight: wp(3),
       verticalAlign: 'middle',
     },
     TextLocation: {
@@ -79,6 +95,16 @@ const Header = () => {
       fontWeight: '500',
       lineHeight: undefined,
       textAlignVertical: 'center',
+    },
+    TextLocation2: {
+      color: '#000',
+      fontFamily: 'SF Pro Display',
+      fontSize: 16,
+      fontStyle: 'normal',
+      fontWeight: '500',
+      lineHeight: undefined,
+      textAlignVertical: 'center',
+      marginLeft: 15
     },
     locationIcon: {
       width: wp(7),
@@ -103,10 +129,22 @@ const Header = () => {
       <View style={styles.TextStyle}>
         <Text style={styles.Text}>Myself</Text>
       </View>
-      <View style={styles.LocationNameStyle}>
-        <Text style={styles.TextLocation}>Nashik</Text>
-      </View>
-      <Image resizeMode="cover" style={styles.locationIcon} source={location} />
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Location')}
+        style={styles.ViewArea}>
+        <View style={styles.LocationNameStyle}>
+          {location === null ? (
+            <Text style={styles.TextLocation}>No Location</Text>
+          ) : (
+            <Text style={styles.TextLocation2}>{location}</Text>
+          )}
+        </View>
+        <Image
+          resizeMode="cover"
+          style={styles.locationIcon}
+          source={locationPicker}
+        />
+      </TouchableOpacity>
     </View>
   );
 };

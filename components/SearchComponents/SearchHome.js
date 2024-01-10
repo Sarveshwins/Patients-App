@@ -11,7 +11,7 @@ import MyDoctors from './Components/MyDoctors';
 import TrendingIssues from './Components/TrendingIssues';
 import TrendingSpecialist from './Components/TrendingSpecialist';
 
-const SearchHome = ({navigation}) => {
+const SearchHome = () => {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -19,8 +19,8 @@ const SearchHome = ({navigation}) => {
       backgroundColor: '#fff',
     },
     Header: {
-      position: "absolute",
-      backgroundColor: "#fff",
+      position: 'absolute',
+      backgroundColor: '#fff',
     },
     ScrollArea: {
       height: hp(70),
@@ -38,6 +38,7 @@ const SearchHome = ({navigation}) => {
         <MyDoctors />
         <TrendingIssues />
         <TrendingSpecialist />
+        <View style={{margin: 25}} />
       </ScrollView>
     </View>
   );
