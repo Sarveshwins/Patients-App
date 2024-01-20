@@ -13,13 +13,15 @@ import {
 } from 'react-native-responsive-screen';
 import {useLocation} from '../LocationContext';
 import {useNavigation} from '@react-navigation/native';
+import {useTheme} from '../../ThemeContext';
 
 import searchIcon from '../../../assets/searchSection/searchIcon.png';
-import { openPicker } from 'react-native-image-crop-picker';
+import darkSearchIcon from '../../../assets/searchSection/searchIconDark.png';
 
 const CustomSearchBar = () => {
   const navigation = useNavigation();
   const {locality} = useLocation();
+  const {isDarkMode} = useTheme();
   // const [isTyping, setIsTyping] = useState(false);
 
   // function handleClick() {
@@ -36,20 +38,21 @@ const CustomSearchBar = () => {
       flexDirection: 'row',
       alignSelf: 'center',
       borderRadius: 22,
-      backgroundColor: 'rgba(249, 249, 249, 0.9)',
+      backgroundColor: isDarkMode ? 'rgba(158, 158, 158, 0.60)' : '#F2F2F2',
       paddingHorizontal: wp(4),
       marginTop: hp(3),
     },
     searchIcon: {
       width: wp(5),
       height: hp(2.46),
-      marginRight: wp(0.6),
-      marginTop: hp(1.6),
+      marginLeft: wp(1),
+      marginRight: wp(0.81),
+      marginTop: hp(1.65),
     },
     input: {
-      flex: 1,
       fontSize: 15,
-      color: '#000',
+      //color: isDarkMode ? 'rgba(255, 255, 255, 1)' : '#6A6464',
+      fontWeight: '400',
     },
     cityView: {
       marginLeft: wp(9),
@@ -69,11 +72,17 @@ const CustomSearchBar = () => {
     <>
       <TouchableOpacity onPress={() => navigation.navigate('Search')}>
         <View style={styles.searchBarContainer}>
-          <Image source={searchIcon} style={styles.searchIcon} />
+          {isDarkMode ? (
+            <Image source={darkSearchIcon} style={styles.searchIcon} />
+          ) : (
+            <Image source={searchIcon} style={styles.searchIcon} />
+          )}
           <TextInput
             style={styles.input}
             placeholder="Search for Doctor’s, Clinic’s, Services & more.."
-            placeholderTextColor="#A5A5A5"
+            placeholderTextColor={
+              isDarkMode ? 'rgba(255, 255, 255, 1)' : '#6A6464'
+            }
             onPress={() => navigation.navigate('Search')}
             onPressIn={() => navigation.navigate('Search')}
           />

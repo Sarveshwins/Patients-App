@@ -8,6 +8,9 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import { LoginAction } from "../../../redux/action/Login";
+import { useDispatch, useSelector } from "react-redux";
+import { SignUpAction } from "../../../redux/action/Signup";
 
 const SignIn = ({navigation}) => {
   const [signUpValues, setSignUpValues] = useState({
@@ -49,6 +52,67 @@ const SignIn = ({navigation}) => {
   } else {
     console.log('Validation failed. Please check the input values.');
   }
+
+  const signInProcess = async () => {
+    if (
+      signUpValues?.firstName?.length >= 2 &&
+      signUpValues?.lastName?.length >= 2 &&
+      signUpValues?.Password?.length >= 8 &&
+      signUpValues?.confirmPassword?.length >= 8
+    ) {
+      console.log(signUpValues, "<--signUpValuessignUpValues");
+      dispatch({
+        type: SignUpAction?.types?.start,
+        payload: {
+          contact: signUpValues?.Phone,
+          firstName: signUpValues?.firstName,
+          lastName: signUpValues?.lastName,
+          password: signUpValues?.Password,
+          confirmPassword: signUpValues?.confirmPassword,
+          role: "doctor",
+          regBy: "manual",
+          extraData: (signupResponse) => {
+            console.log("signupResponse", signupResponse);
+            if (signupResponse?.status === 201) {
+              if (signupResponse?.data?.status == "success") {
+                navigation?.navigate("Verification", {
+                  contact: signUpValues?.Phone,
+                });
+              }
+            } else {
+              CustomMessage(err?.response?.data?.message?.message, "danger");
+            }
+          },
+          onError: (err) => {
+            //console.log("err", err);
+            CustomMessage(err?.response?.data?.message?.message, "danger");
+          },
+        },
+      });
+      // try {
+      //   const res = await apiPostModule('v11/user/signup', {
+      //     contact: signUpValues?.Phone,
+      //     firstName: signUpValues?.firstName,
+      //     lastName: signUpValues?.lastName,
+      //     password: signUpValues?.Password,
+      //     confirmPassword: signUpValues?.confirmPassword,
+      //     role: 'doctor',
+      //     regBy: 'manual',
+      //   });
+      //   console.log(res, '<--asdadasda');
+      //   if (res?.status === 'success') {
+      //     navigation?.navigate('Verification', {
+      //       contact: signUpValues?.Phone,
+      //     });
+      //   } else {
+      //     Alert.alert('error', res?.message?.message);
+      //   }
+      // } catch (er) {
+      //   console.log(er, '<--sadas');
+      // }
+      // console.log(signUpValues, '<---signUpValuessignUpValues');
+    }
+  };
 
   return (
     <SafeAreaProvider>

@@ -7,6 +7,8 @@ import {
   Image,
   TextInput,
   Text,
+  SafeAreaView,
+  TouchableHighlight,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -14,20 +16,21 @@ import {
 } from 'react-native-responsive-screen';
 import {useNavigation} from '@react-navigation/native';
 import {useRecentSearch} from '../RecentSearchContext';
+import {useTheme} from '../../ThemeContext';
 
 import LeftArrow from '../../../assets/searchSection/LeftArrowIcon.png';
+import LeftArrowDark from '../../../assets/searchSection/LeftArrowIconDark.png';
 import searchIcon from '../../../assets/searchSection/searchIcon.png';
-import PolyGon from '../../../assets/searchSection/Polygon.png';
-import PolyGonC from '../../../assets/searchSection/PolygonC.png';
-import clinicBanner from '../../../assets/searchSection/clinicBanner.png';
-import doctorBanner from '../../../assets/searchSection/doctorBanner.png';
+import darkSearchIcon from '../../../assets/searchSection/searchIconDark.png';
 import TrendingIssues from '../Components/TrendingIssues';
 import TrendingSpecialist from '../Components/TrendingSpecialist';
+import Cross from '../../../assets/searchSection/cross.png';
+import CrossDark from '../../../assets/searchSection/crossDark.png';
 
 const RecentSearch = () => {
   const navigation = useNavigation();
   const {allSelectedItems} = useRecentSearch();
-  const [searchText, setSearchText] = useState('');
+  const {isDarkMode} = useTheme();
 
   function handleArrowClick() {
     navigation.navigate('SearchHome');
@@ -35,37 +38,33 @@ const RecentSearch = () => {
 
   const truncateName = name => {
     const maxLength = 11;
-
-    // Check if the name length exceeds the maximum length
     if (name.length > maxLength) {
-      // Truncate the name to the first 10 letters and add a dot at the end
       return `${name.substring(0, 8)}..`;
     } else {
-      // If the name is within the limit, return the original name
       return name;
     }
   };
 
   const styles = StyleSheet.create({
     container: {
-      flex: 1,
       flexDirection: 'column',
-      backgroundColor: '#fff',
+      backgroundColor: isDarkMode ? '#000' : '#fff',
     },
     Header: {
-      backgroundColor: '#fff',
+      backgroundColor: isDarkMode ? '#000' : '#fff',
       flexDirection: 'column',
     },
     headerWrapper: {
       flexDirection: 'row',
     },
     searchBarContainer: {
-      width: wp(86),
+      width: wp(77),
       flexDirection: 'row',
+      alignSelf: 'center',
       borderRadius: 22,
-      backgroundColor: 'rgba(242, 242, 242, 0.9)',
-      paddingHorizontal: wp(4),
+      backgroundColor: isDarkMode ? 'rgba(158, 158, 158, 0.60)' : '#F2F2F2',
       marginTop: hp(3),
+      paddingLeft: 10,
     },
     ArrowImage: {
       marginLeft: wp(1),
@@ -79,10 +78,18 @@ const RecentSearch = () => {
       marginTop: hp(1.6),
     },
     input: {
-      flex: 1,
-      fontSize: 15,
-      color: '#000',
-      paddingHorizontal: 20,
+      fontSize: 13,
+      color: isDarkMode ? '#fff' : '#000',
+    },
+    CrossWrapper: {
+      position: 'absolute',
+    },
+    CrossImage: {
+      position: 'absolute',
+      marginLeft: wp(90),
+      marginTop: hp(4.8),
+      height: 22,
+      width: 22
     },
     RecentSearchView: {
       flexDirection: 'column',
@@ -91,7 +98,7 @@ const RecentSearch = () => {
     },
     RecentSearchTextView: {},
     RecentSearchText: {
-      color: '#000',
+      color: isDarkMode ? '#fff' : '#000',
       fontFamily: 'SFProDisplay-Medium',
       fontSize: 17,
       fontStyle: 'normal',
@@ -105,9 +112,10 @@ const RecentSearch = () => {
       flexDirection: 'column',
       alignContent: 'center',
       textAlign: 'center',
+      marginBottom: 15
     },
     RecentName: {
-      color: '#000',
+      color: isDarkMode ? '#fff' : '#000',
       fontFamily: 'SFProDisplay-Medium',
       fontSize: 15,
       fontStyle: 'normal',
@@ -117,7 +125,7 @@ const RecentSearch = () => {
       textAlign: 'center',
     },
     hexagonContainer: {
-      alignSelf: "center",
+      alignSelf: 'center',
       width: wp(15),
       height: hp(6.9),
       aspectRatio: 1,
@@ -134,67 +142,82 @@ const RecentSearch = () => {
       alignSelf: 'center',
     },
     ScrollArea: {
-      //position: 'absolute',
       height: hp(90),
-      //marginTop: wp(26),
     },
   });
 
   return (
-    <View style={styles.container}>
-      <View style={styles.Header}>
-        <View style={styles.headerWrapper}>
-          <TouchableOpacity onPress={handleArrowClick}>
-            <Image style={styles.ArrowImage} source={LeftArrow} />
-          </TouchableOpacity>
-          <View style={styles.searchBarContainer}>
-            <Image source={searchIcon} style={styles.searchIcon} />
-            <TextInput
-              style={styles.input}
-              placeholder="Search for Doctor’s, Clinic’s, Services & more.."
-              placeholderTextColor="#A5A5A5"
-              onPress={() => navigation.navigate('Search')}
-              onPressIn={() => navigation.navigate('Search')}
-            />
+    <SafeAreaView style={{height: hp(100)}}>
+      <View style={styles.container}>
+        <View style={styles.Header}>
+          <View style={styles.headerWrapper}>
+            <TouchableOpacity onPress={handleArrowClick}>
+              {isDarkMode ? (
+                <Image style={styles.ArrowImage} source={LeftArrowDark} />
+              ) : (
+                <Image style={styles.ArrowImage} source={LeftArrow} />
+              )}
+            </TouchableOpacity>
+            <View style={styles.searchBarContainer}>
+              {isDarkMode ? (
+                <Image source={darkSearchIcon} style={styles.searchIcon} />
+              ) : (
+                <Image source={searchIcon} style={styles.searchIcon} />
+              )}
+              <TextInput
+                style={styles.input}
+                placeholder="Search for Doctor’s, Clinic’s, Services & more.."
+                placeholderTextColor={isDarkMode ? '#fff' : '#A5A5A5'}
+                onPress={() => navigation.navigate('Search')}
+                onPressIn={() => navigation.navigate('Search')}
+              />
+            </View>
+            <TouchableHighlight style={styles.CrossWrapper}>
+              {isDarkMode ? (
+                <Image style={styles.CrossImage} source={CrossDark} />
+              ) : (
+                <Image style={styles.CrossImage} source={Cross} />
+              )}
+            </TouchableHighlight>
           </View>
         </View>
-      </View>
-      <View style={styles.RecentSearchView}>
-        <View style={styles.RecentSearchTextView}>
-          <Text style={styles.RecentSearchText}>Recent Search</Text>
+        <View style={styles.RecentSearchView}>
+          <View style={styles.RecentSearchTextView}>
+            <Text style={styles.RecentSearchText}>Recent Search</Text>
+          </View>
         </View>
-      </View>
-      <ScrollView style={styles.ScrollArea}>
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          {allSelectedItems.map(data => (
-            <View style={styles.RecentScrollView} key={data.id}>
-              {data.name ? (
-                <View style={styles.DataCard}>
-                  <View style={styles.hexagonContainer}>
-                    <Image style={styles.RecentImage} source={data.image} />
+        <ScrollView style={styles.ScrollArea}>
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+            {allSelectedItems.map(data => (
+              <View style={styles.RecentScrollView} key={data.id}>
+                {data.name ? (
+                  <View style={styles.DataCard}>
+                    <View style={styles.hexagonContainer}>
+                      <Image style={styles.RecentImage} source={data.image} />
+                    </View>
+                    <Text style={styles.RecentName}>
+                      {truncateName(data.name)}
+                    </Text>
                   </View>
-                  <Text style={styles.RecentName}>
-                    {truncateName(data.name)}
-                  </Text>
-                </View>
-              ) : (
-                <View style={styles.DataCard}>
-                  <View style={styles.hexagonContainer}>
-                    <Image style={styles.RecentImage} source={data.image} />
+                ) : (
+                  <View style={styles.DataCard}>
+                    <View style={styles.hexagonContainer}>
+                      <Image style={styles.RecentImage} source={data.image} />
+                    </View>
+                    <Text style={styles.RecentName}>
+                      {truncateName(data.firstName)}
+                    </Text>
                   </View>
-                  <Text style={styles.RecentName}>
-                    {truncateName(data.firstName)}
-                  </Text>
-                </View>
-              )}
-            </View>
-          ))}
+                )}
+              </View>
+            ))}
+          </ScrollView>
+          <TrendingIssues />
+          <TrendingSpecialist />
+          <View style={{margin: 25}} />
         </ScrollView>
-        <TrendingIssues />
-        <TrendingSpecialist />
-        <View style={{margin: 25}} />
-      </ScrollView>
-    </View>
+      </View>
+    </SafeAreaView>
   );
 };
 

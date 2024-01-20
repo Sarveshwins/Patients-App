@@ -18,10 +18,14 @@ import {
 } from 'react-native-responsive-screen';
 import {appColors} from '../../../utils/Appcolors';
 import {useAppCommonDataProvider} from '../../UseAppCommonDataProvider';
+import {useDispatch, useSelector} from 'react-redux';
+import {SignUpAction} from '../../redux/action/Signup';
 
 // import { useAppCommonDataProvider } from '../../../useAppCommonDataProvider'
 
 const Signup = ({navigation}) => {
+  const dispatch = useDispatch();
+
   const [signUpValues, setSignUpValues] = useState({
     firstName: '',
     lastName: '',
@@ -35,24 +39,63 @@ const Signup = ({navigation}) => {
   });
   const {colorScheme} = useAppCommonDataProvider();
 
-  const handleSignup = () => {
+  // const handleSignup = () => {
+  //   if (
+  //     signUpValues?.firstName?.length >= 3 &&
+  //     signUpValues?.lastName?.length >= 3 &&
+  //     signUpValues?.Password?.length >= 8 &&
+  //     signUpValues?.confirmPassword?.length >= 8
+  //   ) {
+  //     if (/^\d{10}$/.test(signUpValues?.Phone)) {
+  //       // Navigate to verifyphoneno page if signing up with mobile number
+  //       navigation.navigate('Verifyphone');
+  //     } else {
+  //       // Navigate to verifyemail page if signing up with email
+  //       navigation.navigate('VerifyEmail');
+  //     }
+  //   } else {
+  //     console.log('Validation failed. Please check the input values.');
+  //   }
+  // };
+
+  const signUpProcess = async () => {
     if (
-      signUpValues?.firstName?.length >= 3 &&
-      signUpValues?.lastName?.length >= 3 &&
+      signUpValues?.firstName?.length >= 2 &&
+      signUpValues?.lastName?.length >= 2 &&
       signUpValues?.Password?.length >= 8 &&
       signUpValues?.confirmPassword?.length >= 8
     ) {
-      if (/^\d{10}$/.test(signUpValues?.Phone)) {
-        // Navigate to verifyphoneno page if signing up with mobile number
-        navigation.navigate('Verifyphone');
-      } else {
-        // Navigate to verifyemail page if signing up with email
-        navigation.navigate('VerifyEmail');
-      }
-    } else {
-      console.log('Validation failed. Please check the input values.');
+      console.log(signUpValues, '<--signUpValuessignUpValues');
+      dispatch({
+        type: SignUpAction?.types?.start,
+        payload: {
+          contact: signUpValues?.Phone,
+          firstName: signUpValues?.firstName,
+          lastName: signUpValues?.lastName,
+          password: signUpValues?.Password,
+          confirmPassword: signUpValues?.confirmPassword,
+          role: 'doctor',
+          regBy: 'manual',
+          extraData: signupResponse => {
+            console.log('signupResponse', signupResponse);
+            if (signupResponse?.status === 201) {
+              if (signupResponse?.data?.status == 'success') {
+                navigation?.navigate('Verification', {
+                  contact: signUpValues?.Phone,
+                });
+              }
+            } else {
+              CustomMessage(err?.response?.data?.message?.message, 'danger');
+            }
+          },
+          onError: err => {
+            CustomMessage(err?.response?.data?.message?.message, 'danger');
+          },
+        },
+      });
     }
   };
+
   return (
     <SafeAreaProvider>
       <ScreenWrapper
@@ -168,7 +211,7 @@ const Signup = ({navigation}) => {
         <View style={styles.group3}>
           <TouchableOpacity
             style={[styles.signinbutton1]}
-            onPress={handleSignup}>
+            onPress={signUpProcess}>
             <Text style={styles.signintext1}>Sign up</Text>
             <Image
               style={styles.signinicon}

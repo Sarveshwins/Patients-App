@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   View,
   Text,
@@ -5,19 +6,23 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  SafeAreaView,
 } from 'react-native';
-import React, {useState} from 'react';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {useNavigation} from '@react-navigation/native';
+import {useTheme} from '../../ThemeContext';
 
 import LeftArrow from '../../../assets/searchSection/LeftArrowIcon.png';
+import LeftArrowDark from '../../../assets/searchSection/LeftArrowIconDark.png';
+import Border from '../../../assets/searchSection/borderImage.png';
 
 const Doctors = ({route}) => {
   const {doctorList, filteredDoctors} = route.params;
   const navigation = useNavigation();
+  const {isDarkMode} = useTheme();
 
   function handleArrowClick() {
     navigation.navigate('SearchHome');
@@ -25,18 +30,19 @@ const Doctors = ({route}) => {
 
   const styles = StyleSheet.create({
     container: {
-      width: wp(90),
+      width: wp(100),
       flexDirection: 'column',
       alignSelf: 'center',
       paddingHorizontal: wp(1),
+      backgroundColor: isDarkMode ? '#000' : '#fff',
     },
     ViewWrapper: {
       flexDirection: 'row',
       marginTop: hp(1.85),
-      marginLeft: wp(-5),
+      marginLeft: wp(0),
     },
     DoctorText: {
-      color: '#000',
+      color: isDarkMode ? '#fff' : '#000',
       fontFamily: 'SFProDisplay-Semibold',
       fontSize: 28,
       fontStyle: 'normal',
@@ -51,31 +57,41 @@ const Doctors = ({route}) => {
       flexDirection: 'column',
       marginTop: hp(2.2),
       width: wp(95),
+      marginLeft: wp(5),
     },
     DoctorCard: {
       flexDirection: 'row',
       marginBottom: hp(1.35),
+      height: hp(7.5),
+      width: wp(88),
+      borderBottomColor: '#fff',
+      borderBottomWidth: 0.5,
     },
     DoctorImage: {
-      width: wp(13),
-      height: wp(13),
+      width: wp(12.2),
+      height: hp(5.7),
       borderRadius: 23,
       overflow: 'hidden',
       borderWidth: 1.7,
-      borderColor: '#FFF',
-      borderColor: '#E923BD',
+      //borderColor: isDarkMode ? '#000' : '#E923BD',
       shadowColor: '#000',
       shadowOffset: {width: 0, height: 2},
       shadowOpacity: 0.35,
       shadowRadius: 3,
+      marginLeft: 3,
+      marginTop: 4,
+    },
+    DoctorBorderImage: {
+      position: 'absolute',
     },
     DoctorTextView: {
       marginLeft: wp(3.2),
-      width: wp(40),
+      width: wp(35),
       flexDirection: 'column',
+      marginTop: 6,
     },
     TextName: {
-      color: '#212121',
+      color: isDarkMode ? '#fff' : '#212121',
       fontFamily: 'SFProDisplay-Bold',
       fontSize: 16,
       fontStyle: 'normal',
@@ -83,7 +99,7 @@ const Doctors = ({route}) => {
       lineHeight: 22,
     },
     TextSpecialist: {
-      color: '#777',
+      color: isDarkMode ? '#fff' : '#777',
       fontFamily: 'SFProDisplay-Medium',
       fontSize: 15,
       fontStyle: 'normal',
@@ -91,99 +107,104 @@ const Doctors = ({route}) => {
       lineHeight: 21,
     },
     ButtonView: {
-      marginLeft: wp(2.25),
+      marginLeft: wp(1),
       flexDirection: 'row',
+      marginTop: hp(2),
     },
     DoctorButton: {
-      width: wp(12.26),
-      height: hp(4),
+      width: wp(15.46),
+      height: hp(2.95),
       borderRadius: 10,
-      backgroundColor: '#1A936F',
-      margin: 7,
-      marginTop: 15,
+      backgroundColor: isDarkMode ? '#000' : '#1A936F',
+      borderColor: isDarkMode ? '#1A936F' : undefined,
+      borderWidth: 1,
+      marginTop: 13,
+      marginLeft: 7
     },
     DoctorButtonHovered: {
-      backgroundColor: '#147e5a',
+      backgroundColor: isDarkMode ? '#1A936F' : '#147e5a',
     },
     buttonText: {
-      color: '#FFF',
+      color: isDarkMode ? '#1A936F' : '#FFF',
       fontFamily: 'SFProDisplay-Bold',
       fontSize: 15,
       fontStyle: 'normal',
-      fontWeight: '700',
+      fontWeight: isDarkMode ? '500' : '700',
       lineHeight: 22,
       textAlign: 'center',
-      marginTop: 4,
     },
-    ScrollArea: {},
+    ScrollArea: {
+      height: hp(100),
+      marginBottom: 85,
+    },
   });
 
   return (
-    <View style={styles.container}>
-      <View style={styles.ViewWrapper}>
-        <TouchableOpacity onPress={handleArrowClick}>
-          <Image style={styles.ArrowImage} source={LeftArrow} />
-        </TouchableOpacity>
-        <Text style={styles.DoctorText}>Doctors</Text>
+    <SafeAreaView style={{height: hp(100)}}>
+      <View style={styles.container}>
+        <View style={styles.ViewWrapper}>
+          <TouchableOpacity onPress={handleArrowClick}>
+            {isDarkMode ? (
+              <Image style={styles.ArrowImage} source={LeftArrowDark} />
+            ) : (
+              <Image style={styles.ArrowImage} source={LeftArrow} />
+            )}
+          </TouchableOpacity>
+          <Text style={styles.DoctorText}>Doctors</Text>
+        </View>
+        <ScrollView
+          style={styles.ScrollArea}
+          showsVerticalScrollIndicator={false}>
+          {doctorList ? (
+            <View style={styles.DoctorsCard}>
+              {doctorList.map(doctor => (
+                <View style={styles.DoctorCard} key={doctor.id}>
+                  <Image style={styles.DoctorImage} source={doctor.image} />
+                  <Image style={styles.DoctorBorderImage} source={Border} />
+                  <View style={styles.DoctorTextView}>
+                    <Text style={styles.TextName}>{doctor.firstName}</Text>
+                    <Text style={styles.TextSpecialist}>{doctor.lastName}</Text>
+                  </View>
+                  <View style={styles.ButtonView}>
+                    <TouchableOpacity
+                      style={[styles.DoctorButton]}>
+                      <Text style={styles.buttonText}>Book</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={[styles.DoctorButton]}>
+                      <Text style={styles.buttonText}>Call</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              ))}
+            </View>
+          ) : (
+            <View style={styles.DoctorsCard}>
+              {filteredDoctors.map(doctor => (
+                <View style={styles.DoctorCard} key={doctor.id}>
+                  <Image style={styles.DoctorImage} source={doctor.image} />
+                  <Image style={styles.DoctorBorderImage} source={Border} />
+                  <View style={styles.DoctorTextView}>
+                    <Text style={styles.TextName}>{doctor.firstName}</Text>
+                    <Text style={styles.TextSpecialist}>{doctor.lastName}</Text>
+                  </View>
+                  <View style={styles.ButtonView}>
+                    <TouchableOpacity
+                      style={[styles.DoctorButton]}>
+                      <Text style={styles.buttonText}>Book</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={[styles.DoctorButton]}>
+                      <Text style={styles.buttonText}>Call</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              ))}
+            </View>
+          )}
+        </ScrollView>
       </View>
-      <ScrollView
-        style={styles.ScrollArea}
-        showsVerticalScrollIndicator={false}>
-        {doctorList ? (
-          <View style={styles.DoctorsCard}>
-            {doctorData.map(doctor => (
-              <View style={styles.DoctorCard} key={doctor.id}>
-                <Image style={styles.DoctorImage} source={doctor.image} />
-                <View style={styles.DoctorTextView}>
-                  <Text style={styles.TextName}>{doctor.firstName}</Text>
-                  <Text style={styles.TextSpecialist}>{doctor.lastName}</Text>
-                </View>
-                <View style={styles.ButtonView}>
-                  <TouchableOpacity
-                    style={[styles.DoctorButton]}
-                    onPress={() => console.log('Button Book Pressed')}
-                    activeOpacity={1}>
-                    <Text style={styles.buttonText}>Book</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={[styles.DoctorButton]}
-                    onPress={() => console.log('Button Call Pressed')}
-                    activeOpacity={1}>
-                    <Text style={styles.buttonText}>Call</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            ))}
-          </View>
-        ) : (
-          <View style={styles.DoctorsCard}>
-            {filteredDoctors.map(doctor => (
-              <View style={styles.DoctorCard} key={doctor.id}>
-                <Image style={styles.DoctorImage} source={doctor.image} />
-                <View style={styles.DoctorTextView}>
-                  <Text style={styles.TextName}>{doctor.firstName}</Text>
-                  <Text style={styles.TextSpecialist}>{doctor.lastName}</Text>
-                </View>
-                <View style={styles.ButtonView}>
-                  <TouchableOpacity
-                    style={[styles.DoctorButton]}
-                    onPress={() => console.log('Button Book Pressed')}
-                    activeOpacity={1}>
-                    <Text style={styles.buttonText}>Book</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={[styles.DoctorButton]}
-                    onPress={() => console.log('Button Call Pressed')}
-                    activeOpacity={1}>
-                    <Text style={styles.buttonText}>Call</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            ))}
-          </View>
-        )}
-      </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 

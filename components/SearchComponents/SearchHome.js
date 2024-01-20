@@ -1,10 +1,10 @@
 import React from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native';
+import {View, StyleSheet, ScrollView, SafeAreaView} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-
+import {useTheme} from '../ThemeContext';
 import Header from './Components/Header';
 import CustomSearchBar from './Components/CustomSearchBar';
 import MyDoctors from './Components/MyDoctors';
@@ -12,15 +12,17 @@ import TrendingIssues from './Components/TrendingIssues';
 import TrendingSpecialist from './Components/TrendingSpecialist';
 
 const SearchHome = () => {
+  const {isDarkMode} = useTheme();
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
       flexDirection: 'column',
-      backgroundColor: '#fff',
+      backgroundColor: isDarkMode ? '#000' : '#fff',
     },
     Header: {
       position: 'absolute',
-      backgroundColor: '#fff',
+      backgroundColor: isDarkMode ? '#000' : '#fff',
     },
     ScrollArea: {
       height: hp(70),
@@ -29,18 +31,20 @@ const SearchHome = () => {
   });
 
   return (
-    <View style={styles.container}>
-      <View style={styles.Header}>
-        <Header />
-        <CustomSearchBar />
+    <SafeAreaView style={{height: hp(100)}}>
+      <View style={styles.container}>
+        <View style={styles.Header}>
+          <Header />
+          <CustomSearchBar />
+        </View>
+        <ScrollView style={styles.ScrollArea}>
+          <MyDoctors />
+          <TrendingIssues />
+          <TrendingSpecialist />
+          <View style={{margin: 5}} />
+        </ScrollView>
       </View>
-      <ScrollView style={styles.ScrollArea}>
-        <MyDoctors />
-        <TrendingIssues />
-        <TrendingSpecialist />
-        <View style={{margin: 25}} />
-      </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 

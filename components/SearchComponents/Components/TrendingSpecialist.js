@@ -1,18 +1,31 @@
-import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+} from 'react-native';
 import React from 'react';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {useNavigation} from '@react-navigation/native';
+import {useRecentSearch} from '../RecentSearchContext';
+import {useTheme} from '../../ThemeContext';
 
 import RightArrow from '../../../assets/searchSection/RightArrowIcon.png';
-import Dietian from '../../../assets/searchSection/Dietian.png';
-import Ophtalmologist from '../../../assets/searchSection/Ophtalmologist.png';
-import Ayurveda from '../../../assets/searchSection/Ayurveda.png';
+import RightArrowDark from '../../../assets/searchSection/RightArrowIconDark.png';
+// import Dietian from '../../../assets/searchSection/Dietian.png';
+// import Ophtalmologist from '../../../assets/searchSection/Ophtalmologist.png';
+// import Ayurveda from '../../../assets/searchSection/Ayurveda.png';
+import Medicines from '../../../assets/issues/Medicines.png';
 
 const TrendingSpecialist = () => {
   const navigation = useNavigation();
+  const {leftSideSpecialityData, rightSideSpecialityData} = useRecentSearch();
+  const {isDarkMode} = useTheme();
 
   function handleArrowClick() {
     navigation.navigate('Specailist');
@@ -20,18 +33,17 @@ const TrendingSpecialist = () => {
 
   const styles = StyleSheet.create({
     container: {
-      width: wp(90),
+      width: wp(100),
       flexDirection: 'column',
-      alignSelf: 'center',
       paddingHorizontal: wp(1),
-      marginTop: hp(3),
     },
     ViewWrapper: {
       flexDirection: 'row',
-      marginTop: hp(1.85),
+      marginTop: hp(3.73),
     },
     DoctorText: {
-      color: '#000',
+      marginLeft: wp(5),
+      color: isDarkMode ? '#fff' : '#000',
       fontFamily: 'SF Pro Display',
       fontSize: 22,
       fontStyle: 'normal',
@@ -39,11 +51,12 @@ const TrendingSpecialist = () => {
       lineHeight: undefined,
     },
     RighArrowImage: {
-      marginLeft: wp(31.5),
+      marginLeft: wp(32),
+      marginTop: 6,
     },
     ImagesContainer: {
       marginTop: hp(2.5),
-      marginLeft: -16,
+      //marginLeft: -16,
     },
     ImagesRow: {
       flexDirection: 'row',
@@ -63,14 +76,14 @@ const TrendingSpecialist = () => {
     TrendingImage: {
       resizeMode: 'cover',
       justifyContent: 'center',
-      overlayColor: 'lightgray',
+      overlayColor: isDarkMode ? 'white' : 'lightgray',
     },
     ImageTextView: {
       justifyContent: 'center',
       marginTop: 5,
     },
     TextName: {
-      color: '#000',
+      color: isDarkMode ? '#fff' : '#000',
       fontFamily: 'SFProDisplay-Regular',
       fontSize: 13,
       fontStyle: 'normal',
@@ -83,53 +96,43 @@ const TrendingSpecialist = () => {
       <View style={styles.ViewWrapper}>
         <Text style={styles.DoctorText}>Trending Specialities</Text>
         <TouchableOpacity onPress={handleArrowClick}>
-          <Image style={styles.RighArrowImage} source={RightArrow} />
+          {isDarkMode ? (
+            <Image style={styles.RighArrowImage} source={RightArrowDark} />
+          ) : (
+            <Image style={styles.RighArrowImage} source={RightArrow} />
+          )}
         </TouchableOpacity>
       </View>
-      <View style={styles.ImagesContainer}>
-        <View style={styles.ImagesRow}>
-          <View style={styles.ImageView}>
-            <Image style={styles.TrendingImage} source={Dietian} />
-            <View style={styles.ImageTextView}>
-              <Text style={styles.TextName}>Dietian /</Text>
-              <Text style={styles.TextName}>Nutrition</Text>
-            </View>
+      <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+        <View style={styles.ImagesContainer}>
+          <View style={styles.ImagesRow}>
+            {leftSideSpecialityData.map((speciality, index) => (
+              <View key={index} style={styles.ImageView}>
+                <Image style={styles.TrendingImage} source={Medicines} />
+                <View style={styles.ImageTextView}>
+                  <Text style={styles.TextName}>{speciality.FirstName}</Text>
+                  {speciality.LastName && (
+                    <Text style={styles.TextName}>{speciality.LastName}</Text>
+                  )}
+                </View>
+              </View>
+            ))}
           </View>
-          <View style={styles.ImageView}>
-            <Image style={styles.TrendingImage} source={Ophtalmologist} />
-            <View style={styles.ImageTextView}>
-              <Text style={styles.TextName}>Ophtalmologist </Text>
-            </View>
-          </View>
-          <View style={styles.ImageView}>
-            <Image style={styles.TrendingImage} source={Ayurveda} />
-            <View style={styles.ImageTextView}>
-              <Text style={styles.TextName}>Ayurveda</Text>
-            </View>
-          </View>
-        </View>
-        <View style={styles.ImagesRow2}>
-          <View style={styles.ImageView}>
-            <Image style={styles.TrendingImage} source={Dietian} />
-            <View style={styles.ImageTextView}>
-              <Text style={styles.TextName}>Dietian /</Text>
-              <Text style={styles.TextName}>Nutrition</Text>
-            </View>
-          </View>
-          <View style={styles.ImageView}>
-            <Image style={styles.TrendingImage} source={Ophtalmologist} />
-            <View style={styles.ImageTextView}>
-              <Text style={styles.TextName}>Ophtalmologist </Text>
-            </View>
-          </View>
-          <View style={styles.ImageView}>
-            <Image style={styles.TrendingImage} source={Ayurveda} />
-            <View style={styles.ImageTextView}>
-              <Text style={styles.TextName}>Ayurveda</Text>
-            </View>
+          <View style={styles.ImagesRow2}>
+            {rightSideSpecialityData.map((speciality, index) => (
+              <View key={index} style={styles.ImageView}>
+                <Image style={styles.TrendingImage} source={Medicines} />
+                <View style={styles.ImageTextView}>
+                  <Text style={styles.TextName}>{speciality.FirstName}</Text>
+                  {speciality.LastName && (
+                    <Text style={styles.TextName}>{speciality.LastName}</Text>
+                  )}
+                </View>
+              </View>
+            ))}
           </View>
         </View>
-      </View>
+      </ScrollView>
     </View>
   );
 };

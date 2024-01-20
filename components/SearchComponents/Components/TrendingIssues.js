@@ -12,19 +12,16 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {useNavigation} from '@react-navigation/native';
+import { useRecentSearch } from '../RecentSearchContext';
+import { useTheme } from '../../ThemeContext';
 
 import RightArrow from '../../../assets/searchSection/RightArrowIcon.png';
-import Covid from '../../../assets/searchSection/Covid.png';
-import Diarrhea from '../../../assets/searchSection/Diarrhea.png';
-import Dengue from '../../../assets/searchSection/Dengue.png';
-import Diabetes from '../../../assets/searchSection/Diabetes.png';
-import LowBP from '../../../assets/searchSection/LowBP.png';
-import Constipation from '../../../assets/searchSection/Constipation.png';
-import Malaria from '../../../assets/searchSection/Malaria.png';
-import Headache from '../../../assets/searchSection/Headache.png';
+import RightArrowDark from '../../../assets/searchSection/RightArrowIconDark.png';
 
 const TrendingIssues = () => {
   const navigation = useNavigation();
+  const {isDarkMode} = useTheme();
+  const {leftSideIssueData, rightSideIssueData} = useRecentSearch();
 
   function handleArrowClick() {
     navigation.navigate('Issues');
@@ -34,16 +31,18 @@ const TrendingIssues = () => {
     container: {
       width: wp(100),
       flexDirection: 'column',
-      alignSelf: 'center',
+      //alignSelf: 'center',
       paddingHorizontal: wp(1),
     },
     ViewWrapper: {
       flexDirection: 'row',
-      marginTop: hp(1.85),
-      marginLeft: wp(5),
+      //alignSelf: "center",
+      //verticalAlign: "middle",
+      marginTop: hp(1),
     },
     DoctorText: {
-      color: '#000',
+      marginLeft: wp(5),
+      color: isDarkMode ? '#fff' : '#000',
       fontFamily: 'SF Pro Display',
       fontSize: 22,
       fontStyle: 'normal',
@@ -51,7 +50,8 @@ const TrendingIssues = () => {
       lineHeight: undefined,
     },
     RighArrowImage: {
-      marginLeft: wp(43.5),
+      marginLeft: wp(43),
+      marginTop: 6
     },
     ImagesContainer: {
       marginTop: hp(2.5),
@@ -82,7 +82,7 @@ const TrendingIssues = () => {
       marginTop: 5,
     },
     TextName: {
-      color: '#000',
+      color: isDarkMode ? '#fff' : '#000',
       fontFamily: 'SFProDisplay-Regular',
       fontSize: 13,
       fontStyle: 'normal',
@@ -90,92 +90,47 @@ const TrendingIssues = () => {
       lineHeight: 18,
     },
   });
+
+
   return (
     <View style={styles.container}>
       <View style={styles.ViewWrapper}>
         <Text style={styles.DoctorText}>Trending Issues</Text>
         <TouchableOpacity onPress={handleArrowClick}>
-          <Image style={styles.RighArrowImage} source={RightArrow} />
+          {isDarkMode ? (
+            <Image style={styles.RighArrowImage} source={RightArrowDark} />
+          ) : (
+            <Image style={styles.RighArrowImage} source={RightArrow} />
+          )}
         </TouchableOpacity>
       </View>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
         <View style={styles.ImagesContainer}>
           <View style={styles.ImagesRow}>
-            <View style={styles.ImageView}>
-              <Image style={styles.TrendingImage} source={Covid} />
-              <View style={styles.ImageTextView}>
-                <Text style={styles.TextName}>Covid</Text>
+            {leftSideIssueData.map(issue => (
+              <View key={issue.id} style={styles.ImageView}>
+                <Image style={styles.TrendingImage} source={issue.image} />
+                <View style={styles.ImageTextView}>
+                  <Text style={styles.TextName}>{issue.FirstName}</Text>
+                  {issue.LastName && (
+                    <Text style={styles.TextName}>{issue.LastName}</Text>
+                  )}
+                </View>
               </View>
-            </View>
-            <View style={styles.ImageView}>
-              <Image style={styles.TrendingImage} source={Diarrhea} />
-              <View style={styles.ImageTextView}>
-                <Text style={styles.TextName}>Diarrhea </Text>
-                <Text style={styles.TextName}>Diarrhea </Text>
-              </View>
-            </View>
-            <View style={styles.ImageView}>
-              <Image style={styles.TrendingImage} source={Dengue} />
-              <View style={styles.ImageTextView}>
-                <Text style={styles.TextName}>Dengue</Text>
-              </View>
-            </View>
-            <View style={styles.ImageView}>
-              <Image style={styles.TrendingImage} source={Diabetes} />
-              <View style={styles.ImageTextView}>
-                <Text style={styles.TextName}>Diabetes</Text>
-              </View>
-            </View>
-            <View style={styles.ImageView}>
-              <Image style={styles.TrendingImage} source={Malaria} />
-              <View style={styles.ImageTextView}>
-                <Text style={styles.TextName}>Malaria</Text>
-              </View>
-            </View>
-            <View style={styles.ImageView}>
-              <Image style={styles.TrendingImage} source={Headache} />
-              <View style={styles.ImageTextView}>
-                <Text style={styles.TextName}>Headache</Text>
-              </View>
-            </View>
+            ))}
           </View>
           <View style={styles.ImagesRow2}>
-            <View style={styles.ImageView}>
-              <Image style={styles.TrendingImage} source={LowBP} />
-              <View style={styles.ImageTextView}>
-                <Text style={styles.TextName}>Low BP</Text>
+            {rightSideIssueData.map(issue => (
+              <View key={issue.id} style={styles.ImageView}>
+                <Image style={styles.TrendingImage} source={issue.image} />
+                <View style={styles.ImageTextView}>
+                  <Text style={styles.TextName}>{issue.FirstName}</Text>
+                  {issue.LastName && (
+                    <Text style={styles.TextName}>{issue.LastName}</Text>
+                  )}
+                </View>
               </View>
-            </View>
-            <View style={styles.ImageView}>
-              <Image style={styles.TrendingImage} source={Constipation} />
-              <View style={styles.ImageTextView}>
-                <Text style={styles.TextName}>Constipation </Text>
-              </View>
-            </View>
-            <View style={styles.ImageView}>
-              <Image style={styles.TrendingImage} source={Malaria} />
-              <View style={styles.ImageTextView}>
-                <Text style={styles.TextName}>Malaria</Text>
-              </View>
-            </View>
-            <View style={styles.ImageView}>
-              <Image style={styles.TrendingImage} source={Headache} />
-              <View style={styles.ImageTextView}>
-                <Text style={styles.TextName}>Headache</Text>
-              </View>
-            </View>
-            <View style={styles.ImageView}>
-              <Image style={styles.TrendingImage} source={Malaria} />
-              <View style={styles.ImageTextView}>
-                <Text style={styles.TextName}>Malaria</Text>
-              </View>
-            </View>
-            <View style={styles.ImageView}>
-              <Image style={styles.TrendingImage} source={Headache} />
-              <View style={styles.ImageTextView}>
-                <Text style={styles.TextName}>Headache</Text>
-              </View>
-            </View>
+            ))}
           </View>
         </View>
       </ScrollView>

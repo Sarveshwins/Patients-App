@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   View,
   Text,
@@ -5,19 +6,22 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  SafeAreaView,
 } from 'react-native';
-import React, {useState} from 'react';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {useNavigation} from '@react-navigation/native';
+import {useTheme} from '../../ThemeContext';
 
 import LeftArrow from '../../../assets/searchSection/LeftArrowIcon.png';
+import LeftArrowDark from '../../../assets/searchSection/LeftArrowIconDark.png';
 
 const Clinics = ({route}) => {
   const {clinicsNameList, filteredClinics} = route.params;
   const navigation = useNavigation();
+  const {isDarkMode} = useTheme();
 
   function handleArrowClick() {
     navigation.navigate('SearchHome');
@@ -25,18 +29,19 @@ const Clinics = ({route}) => {
 
   const styles = StyleSheet.create({
     container: {
-      width: wp(90),
+      width: wp(100),
       flexDirection: 'column',
       alignSelf: 'center',
       paddingHorizontal: wp(1),
+      backgroundColor: isDarkMode ? '#000' : '#fff',
     },
     ViewWrapper: {
       flexDirection: 'row',
       marginTop: hp(1.85),
-      marginLeft: wp(-5),
+      marginLeft: wp(0),
     },
     DoctorText: {
-      color: '#000',
+      color: isDarkMode ? '#fff' : '#000',
       fontFamily: 'SFProDisplay-Semibold',
       fontSize: 28,
       fontStyle: 'normal',
@@ -51,32 +56,31 @@ const Clinics = ({route}) => {
       flexDirection: 'column',
       marginTop: hp(2.2),
       width: wp(95),
+      marginLeft: wp(5),
     },
     DoctorCard: {
       flexDirection: 'row',
-      marginBottom: hp(1.35),
+      height: hp(7),
+      width: wp(88),
+      marginBottom: hp(1.25),
+      borderBottomColor: '#fff',
+      borderBottomWidth: 0.5,
     },
     DoctorImage: {
-      width: wp(13),
-      height: wp(13),
-      // borderRadius: 23,
-      // overflow: 'hidden',
-      // borderWidth: 1.7,
-      // borderColor: '#FFF',
-      // borderColor: '#E923BD',
-      // shadowColor: '#000',
-      // shadowOffset: {width: 0, height: 2},
-      // shadowOpacity: 0.35,
-      // shadowRadius: 3,
+      width: wp(12.2),
+      height: hp(5.7),
+    },
+    DoctorBorderImage: {
+      position: 'absolute',
     },
     DoctorTextView: {
       marginLeft: wp(3.2),
-      width: wp(80),
+      width: wp(70),
       flexDirection: 'column',
-      alignSelf: "center"
+      marginTop: 4.5,
     },
     TextName: {
-      color: '#212121',
+      color: isDarkMode ? '#fff' : '#212121',
       fontFamily: 'SFProDisplay-Bold',
       fontSize: 16,
       fontStyle: 'normal',
@@ -84,7 +88,7 @@ const Clinics = ({route}) => {
       lineHeight: 22,
     },
     TextSpecialist: {
-      color: '#777',
+      color: isDarkMode ? '#fff' : '#777',
       fontFamily: 'SFProDisplay-Medium',
       fontSize: 15,
       fontStyle: 'normal',
@@ -92,75 +96,85 @@ const Clinics = ({route}) => {
       lineHeight: 21,
     },
     ButtonView: {
-      marginLeft: wp(2.25),
+      marginLeft: wp(1),
       flexDirection: 'row',
+      marginTop: hp(2),
     },
     DoctorButton: {
-      width: wp(12.26),
-      height: hp(4),
+      width: wp(15.46),
+      height: hp(2.95),
       borderRadius: 10,
-      backgroundColor: '#1A936F',
+      backgroundColor: isDarkMode ? '#000' : '#1A936F',
+      borderColor: isDarkMode ? '#1A936F' : undefined,
+      borderWidth: 1,
       margin: 7,
-      marginTop: 15,
     },
     DoctorButtonHovered: {
-      backgroundColor: '#147e5a',
+      backgroundColor: isDarkMode ? '#1A936F' : '#147e5a',
     },
     buttonText: {
-      color: '#FFF',
+      color: isDarkMode ? '#1A936F' : '#FFF',
       fontFamily: 'SFProDisplay-Bold',
       fontSize: 15,
       fontStyle: 'normal',
-      fontWeight: '700',
+      fontWeight: isDarkMode ? '500' : '700',
       lineHeight: 22,
       textAlign: 'center',
-      marginTop: 4,
     },
-    ScrollArea: {},
+    ScrollArea: {
+      marginBottom: 85,
+      height: hp(100),
+    }
   });
 
   return (
-    <View style={styles.container}>
-      <View style={styles.ViewWrapper}>
-        <TouchableOpacity onPress={handleArrowClick}>
-          <Image style={styles.ArrowImage} source={LeftArrow} />
-        </TouchableOpacity>
-        <Text style={styles.DoctorText}>Clinics</Text>
+    <SafeAreaView style={{height: hp(100)}}>
+      <View style={styles.container}>
+        <View style={styles.ViewWrapper}>
+          <TouchableOpacity onPress={handleArrowClick}>
+            {isDarkMode ? (
+              <Image style={styles.ArrowImage} source={LeftArrowDark} />
+            ) : (
+              <Image style={styles.ArrowImage} source={LeftArrow} />
+            )}
+          </TouchableOpacity>
+          <Text style={styles.DoctorText}>Clinics</Text>
+        </View>
+        <ScrollView
+          style={styles.ScrollArea}
+          showsVerticalScrollIndicator={false}>
+          {clinicsNameList ? (
+            <View style={styles.DoctorsCard}>
+              {clinicsNameList.map(clinic => (
+                <View style={styles.DoctorCard} key={clinic.id}>
+                  <Image style={styles.DoctorImage} source={clinic.image} />
+                  <View style={styles.DoctorTextView}>
+                    <Text style={styles.TextName}>{clinic.name}</Text>
+                    <Text style={styles.TextSpecialist}>
+                      {clinic.field} | {clinic.location}
+                    </Text>
+                  </View>
+                </View>
+              ))}
+            </View>
+          ) : (
+            <View style={styles.DoctorsCard}>
+              {filteredClinics.map(clinic => (
+                <View style={styles.DoctorCard} key={clinic.id}>
+                  <Image style={styles.DoctorImage} source={clinic.image} />
+                  <View style={styles.DoctorTextView}>
+                    <Text style={styles.TextName}>{clinic.name}</Text>
+                    <Text style={styles.TextSpecialist}>
+                      {clinic.field} | {clinic.location}
+                    </Text>
+                  </View>
+                </View>
+              ))}
+            </View>
+          )}
+        </ScrollView>
       </View>
-      <ScrollView
-        style={styles.ScrollArea}
-        showsVerticalScrollIndicator={false}>
-        {clinicsNameList ? (
-          <View style={styles.DoctorsCard}>
-            {clinicsNameList.map(clinic => (
-              <View style={styles.DoctorCard} key={clinic.id}>
-                <Image style={styles.DoctorImage} source={clinic.image} />
-                <View style={styles.DoctorTextView}>
-                  <Text style={styles.TextName}>{clinic.name}</Text>
-                  <Text style={styles.TextSpecialist}>
-                    {clinic.field} | {clinic.location}
-                  </Text>
-                </View>
-              </View>
-            ))}
-          </View>
-        ) : (
-          <View style={styles.DoctorsCard}>
-            {filteredClinics.map(clinic => (
-              <View style={styles.DoctorCard} key={clinic.id}>
-                <Image style={styles.DoctorImage} source={clinic.image} />
-                <View style={styles.DoctorTextView}>
-                  <Text style={styles.TextName}>{clinic.name}</Text>
-                  <Text style={styles.TextSpecialist}>
-                    {clinic.field} | {clinic.location}
-                  </Text>
-                </View>
-              </View>
-            ))}
-          </View>
-        )}
-      </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -13,18 +13,19 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {useNavigation} from '@react-navigation/native';
-import {useTheme} from '@react-navigation/native';
-import { useLocation } from '../LocationContext';
+import { useTheme } from '../../ThemeContext';
+import {useLocation} from '../LocationContext';
 
 import locationPicker from '../../../assets/searchSection/location.png';
+import locationSpotDark from '../../../assets/searchSection/locationSpotDark.png';
 
 const Header = () => {
+  const {isDarkMode} = useTheme();
   const navigation = useNavigation();
-  const { location, locality } = useLocation();
+  const {location, locality} = useLocation();
 
   const [profile, setProfile] = useState(null);
 
-  const {isDarkMode} = useTheme();
 
   const imagepick = () => {
     ImagePicker.openPicker({
@@ -54,8 +55,7 @@ const Header = () => {
       overflow: 'hidden',
       borderRadius: 43,
       borderWidth: 2,
-      borderColor: '#FFF',
-      backgroundColor: 'rgba(242, 242, 242, 0.9)',
+      backgroundColor: isDarkMode ? 'lightgray' : 'rgba(242, 242, 242, 0.9)',
       shadowColor: '#000',
       shadowOffset: {width: 0, height: 2},
       shadowOpacity: 0.35,
@@ -67,7 +67,7 @@ const Header = () => {
       verticalAlign: 'middle',
     },
     Text: {
-      color: '#000',
+      color: isDarkMode ? 'white' : '#000',
       textAlign: 'center',
       fontFamily: 'SF Pro Display',
       fontSize: 17,
@@ -79,32 +79,34 @@ const Header = () => {
     },
     ViewArea: {
       flexDirection: 'row',
+      width: wp(47),
+      marginLeft: 'auto',
+      textAlign: "right",
     },
     LocationNameStyle: {
       flexDirection: 'row',
-      width: wp(22),
-      marginLeft: wp(35),
-      //paddingRight: wp(3),
-      verticalAlign: 'middle',
     },
     TextLocation: {
-      color: '#000',
+      color: isDarkMode ? 'white' : '#000',
       fontFamily: 'SF Pro Display',
       fontSize: 16,
       fontStyle: 'normal',
       fontWeight: '500',
       lineHeight: undefined,
       textAlignVertical: 'center',
+      textAlign: "right",
+      width: wp(40),
     },
     TextLocation2: {
-      color: '#000',
+      color: isDarkMode ? 'white' : '#000',
       fontFamily: 'SF Pro Display',
       fontSize: 16,
       fontStyle: 'normal',
       fontWeight: '500',
       lineHeight: undefined,
       textAlignVertical: 'center',
-      marginLeft: 15
+      textAlign: "right",
+      width: wp(40),
     },
     locationIcon: {
       width: wp(7),
@@ -139,11 +141,19 @@ const Header = () => {
             <Text style={styles.TextLocation2}>{location}</Text>
           )}
         </View>
-        <Image
-          resizeMode="cover"
-          style={styles.locationIcon}
-          source={locationPicker}
-        />
+        {isDarkMode ? (
+          <Image
+            resizeMode="cover"
+            style={styles.locationIcon}
+            source={locationSpotDark}
+          />
+        ) : (
+          <Image
+            resizeMode="cover"
+            style={styles.locationIcon}
+            source={locationPicker}
+          />
+        )}
       </TouchableOpacity>
     </View>
   );

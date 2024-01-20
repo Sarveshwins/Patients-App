@@ -1,13 +1,26 @@
 import React, {createContext, useContext, useState} from 'react';
 import clinicBanner from '../../assets/searchSection/clinicBanner.png';
 import doctorBanner from '../../assets/searchSection/doctorBanner.png';
+import DoctorImage1 from '../../assets/searchSection/DoctorImage.png';
+import DoctorImage2 from '../../assets/searchSection/DoctorImage2.png';
+import DoctorImage3 from '../../assets/searchSection/DoctorImage3.png';
+import Acne from '../../assets/issues/Acne.png';
+import BackPain from '../../assets/issues/BackPain.png';
+import Depression from '../../assets/issues/Depression.png';
+import Diabetes from '../../assets/issues/Diabetes.png';
+import Diarrhoea from '../../assets/issues/Diarrhoea.png';
+import Dietation from '../../assets/issues/Dietation.png';
+import Headache from '../../assets/issues/Headache.png';
+import Infertitily from '../../assets/issues/Infertitily.png';
+import KneePain from '../../assets/issues/KneePain.png';
+import LowBP from '../../assets/issues/LowBP.png';
+import Piles from '../../assets/issues/Piles.png';
+import WeightLoss from '../../assets/issues/WeightLoss.png';
+import Ophtalmologist from '../../assets/searchSection/Ophtalmologist.png';
 
 const RecentSearchContext = createContext();
 
 export const RecentSearchProvider = ({children}) => {
-  //const [selectedIssues, setSelectedIssues] = useState([]);
-  const [selectedClinics, setSelectedClinics] = useState([]);
-  const [selectedDoctors, setSelectedDoctors] = useState([]);
   const [allSelectedItems, setAllSelectedItems] = useState([]);
 
   const issueDataList = [
@@ -409,13 +422,308 @@ export const RecentSearchProvider = ({children}) => {
     },
   ];
 
+  const myDoctorsData = [
+    {
+      key: '1',
+      name: 'Dr. Pramod Hari Mahajan',
+      specialist: 'Neurosurgeon',
+      area: 'Bandra (W)',
+      image: DoctorImage1,
+    },
+    {
+      key: '2',
+      name: 'Dr. Hariprakash Chauhan',
+      specialist: 'Neurosurgeon',
+      area: 'Bandra (W)',
+      image: DoctorImage2,
+    },
+    {
+      key: '3',
+      name: 'Dr. Garge Hari R',
+      specialist: 'Neurosurgeon',
+      area: 'Bandra (W)',
+      image: DoctorImage3,
+    },
+    {
+      key: '4',
+      name: 'Dr. Pramod Hari Mahajan',
+      specialist: 'Neurosurgeon',
+      area: 'Bandra (W)',
+      image: DoctorImage1,
+    },
+    {
+      key: '5',
+      name: 'Dr. Hariprakash Chauhan',
+      specialist: 'Neurosurgeon',
+      area: 'Bandra (W)',
+      image: DoctorImage2,
+    },
+    {
+      key: '6',
+      name: 'Dr. Garge Hari R',
+      specialist: 'Neurosurgeon',
+      area: 'Bandra (W)',
+      image: DoctorImage3,
+    },
+    {
+      key: '7',
+      name: 'Dr. Pramod Hari Mahajan',
+      specialist: 'Neurosurgeon',
+      area: 'Bandra (W)',
+      image: DoctorImage1,
+    },
+    {
+      key: '8',
+      name: 'Dr. Hariprakash Chauhan',
+      specialist: 'Neurosurgeon',
+      area: 'Bandra (W)',
+      image: DoctorImage2,
+    },
+    {
+      key: '9',
+      name: 'Dr. Garge Hari R',
+      specialist: 'Neurosurgeon',
+      area: 'Bandra (W)',
+      image: DoctorImage3,
+    },
+    {
+      key: '10',
+      name: 'Dr. Pramod Hari Mahajan',
+      specialist: 'Neurosurgeon',
+      area: 'Bandra (W)',
+      image: DoctorImage1,
+    },
+    {
+      key: '11',
+      name: 'Dr. Hariprakash Chauhan',
+      specialist: 'Neurosurgeon',
+      area: 'Bandra (W)',
+      image: DoctorImage2,
+    },
+    {
+      key: '12',
+      name: 'Dr. Garge Hari R',
+      specialist: 'Neurosurgeon',
+      area: 'Bandra (W)',
+      image: DoctorImage3,
+    },
+    {
+      key: '13',
+      name: 'Dr. Garge Hari R',
+      specialist: 'Neurosurgeon',
+      area: 'Bandra (W)',
+      image: DoctorImage1,
+    },
+    {
+      key: '14',
+      name: 'Dr. Garge Hari R',
+      specialist: 'Neurosurgeon',
+      area: 'Bandra (W)',
+      image: DoctorImage2,
+    },
+    {
+      key: '15',
+      name: 'Dr. Garge Hari R',
+      specialist: 'Neurosurgeon',
+      area: 'Bandra (W)',
+      image: DoctorImage3,
+    },
+  ];
+
+  const leftSideIssueData = [
+    {
+      id: 1,
+      FirstName: 'Diabetes',
+      image: Diabetes,
+    },
+    {
+      id: 2,
+      FirstName: 'Dietation /',
+      LastName: 'Nutritionist',
+      image: Dietation,
+    },
+    {
+      id: 3,
+      FirstName: 'Low BP',
+      image: LowBP,
+    },
+    {
+      id: 4,
+      FirstName: 'Acne /',
+      LastName: 'Pimples',
+      image: Acne,
+    },
+    {
+      id: 5,
+      FirstName: 'Depression',
+      image: Depression,
+    },
+    {
+      id: 6,
+      FirstName: 'Weight Loss',
+      image: WeightLoss,
+    },
+    {
+      id: 7,
+      FirstName: 'Pregnancy',
+      image: Ophtalmologist,
+    },
+    {
+      id: 8,
+      FirstName: 'Acne /',
+      LastName: 'Pimples',
+      image: Acne,
+    },
+    {
+      id: 9,
+      FirstName: 'Depression',
+      image: Depression,
+    },
+    {
+      id: 10,
+      FirstName: 'Weight Loss',
+      image: WeightLoss,
+    },
+  ];
+
+  const rightSideIssueData = [
+    {
+      id: 1,
+      FirstName: 'Knee Pain',
+      image: KneePain,
+    },
+    {
+      id: 2,
+      FirstName: 'Infertitily',
+      image: Infertitily,
+    },
+    {
+      id: 3,
+      FirstName: 'Headache',
+      image: Headache,
+    },
+    {
+      id: 4,
+      FirstName: 'Piles',
+      image: Piles,
+    },
+    {
+      id: 5,
+      FirstName: 'Diarrhoea',
+      image: Diarrhoea,
+    },
+    {
+      id: 6,
+      FirstName: 'Back Pain',
+      image: BackPain,
+    },
+    {
+      id: 7,
+      FirstName: 'Piles',
+      image: Piles,
+    },
+    {
+      id: 8,
+      FirstName: 'Diarrhoea',
+      image: Diarrhoea,
+    },
+    {
+      id: 9,
+      FirstName: 'Back Pain',
+      image: BackPain,
+    },
+  ];
+
+  const leftSideSpecialityData = [
+    {
+      id: 1,
+      FirstName: 'Diabetes',
+    },
+    {
+      id: 2,
+      FirstName: 'Dietation /',
+      LastName: 'Nutritionist',
+    },
+    {
+      id: 3,
+      FirstName: 'Low BP',
+    },
+    {
+      id: 4,
+      FirstName: 'Acne /',
+      LastName: 'Pimples',
+    },
+    {
+      id: 5,
+      FirstName: 'Depression',
+    },
+    {
+      id: 6,
+      FirstName: 'Weight Loss',
+    },
+    {
+      id: 7,
+      FirstName: 'Pregnancy',
+    },
+    {
+      id: 8,
+      FirstName: 'Acne /',
+      LastName: 'Pimples',
+    },
+    {
+      id: 9,
+      FirstName: 'Depression',
+    },
+    {
+      id: 10,
+      FirstName: 'Weight Loss',
+    },
+  ];
+  
+  const rightSideSpecialityData = [
+    {
+      id: 11,
+      FirstName: 'Knee Pain',
+    },
+    {
+      id: 12,
+      FirstName: 'Infertility',
+    },
+    {
+      id: 13,
+      FirstName: 'Headache',
+    },
+    {
+      id: 14,
+      FirstName: 'Piles',
+    },
+    {
+      id: 15,
+      FirstName: 'Diarrhoea',
+    },
+    {
+      id: 16,
+      FirstName: 'Back Pain',
+    },
+    {
+      id: 17,
+      FirstName: 'Piles',
+    },
+    {
+      id: 18,
+      FirstName: 'Diarrhoea',
+    },
+    {
+      id: 19,
+      FirstName: 'Back Pain',
+    },
+  ];
+
   function handleItemClicked(item) {
-    // Find the index of the existing item in the allSelectedItems array based on id
     const itemIndex = allSelectedItems.findIndex(
       existingItem => existingItem.id === item.id,
     );
-  
-    // If the item exists in allSelectedItems, update it, else add it to the end
+
     if (itemIndex !== -1) {
       const updatedItems = [...allSelectedItems];
       updatedItems[itemIndex] = item;
@@ -423,11 +731,8 @@ export const RecentSearchProvider = ({children}) => {
     } else {
       setAllSelectedItems([item, ...allSelectedItems]);
     }
-  
-    console.log(allSelectedItems);
   }
   
-
   return (
     <RecentSearchContext.Provider
       value={{
@@ -436,6 +741,11 @@ export const RecentSearchProvider = ({children}) => {
         issueDataList,
         clinicsNameList,
         doctorList,
+        myDoctorsData,
+        leftSideIssueData,
+        rightSideIssueData,
+        leftSideSpecialityData,
+        rightSideSpecialityData,
       }}>
       {children}
     </RecentSearchContext.Provider>

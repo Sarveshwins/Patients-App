@@ -1,35 +1,21 @@
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
+import {useRecentSearch} from '../RecentSearchContext';
 import RightArrow from '../../../assets/searchSection/RightArrowIcon.png';
-import DoctorImage from '../../../assets/searchSection/DoctorImage.png';
+import RightArrowDark from '../../../assets/searchSection/RightArrowIconDark.png';
+import Border from '../../../assets/searchSection/borderImage.png';
 import {useNavigation} from '@react-navigation/native';
-import MyDoctorScreen from '../Screens/MyDoctorScreen';
+import {useTheme} from '../../ThemeContext';
 
 const MyDoctors = () => {
-  const [isCallPressed, setCallPressed] = useState(false);
-  const [isBookPressed, setBookPressed] = useState(false);
+  const {myDoctorsData} = useRecentSearch();
+  const {isDarkMode} = useTheme();
   const navigation = useNavigation();
-
-  const handleCallPressIn = () => {
-    setCallPressed(true);
-  };
-
-  const handleCallPressOut = () => {
-    setCallPressed(false);
-  };
-
-  const handleBookPressIn = () => {
-    setBookPressed(true);
-  };
-
-  const handleBookPressOut = () => {
-    setBookPressed(false);
-  };
 
   function handleImageClick() {
     navigation.navigate('MyDoctorScreen');
@@ -44,10 +30,12 @@ const MyDoctors = () => {
     },
     ViewWrapper: {
       flexDirection: 'row',
+      alignSelf: 'center',
+      verticalAlign: 'middle',
       //marginTop: hp(1.85),
     },
     DoctorText: {
-      color: '#000',
+      color: isDarkMode ? '#fff' : '#000',
       fontFamily: 'SF Pro Display',
       fontSize: 22,
       fontStyle: 'normal',
@@ -56,6 +44,7 @@ const MyDoctors = () => {
     },
     RighArrowImage: {
       marginLeft: wp(54.5),
+      marginTop: 5,
     },
     DoctorsCard: {
       flexDirection: 'column',
@@ -66,19 +55,25 @@ const MyDoctors = () => {
     DoctorCard: {
       flexDirection: 'row',
       marginBottom: hp(1.35),
+      // borderBottomColor: 'white',
+      // borderBottomWidth: 0.5,
     },
     DoctorImage: {
-      width: wp(13),
-      height: wp(13),
+      width: wp(12.2),
+      height: hp(5.7),
       borderRadius: 23,
       overflow: 'hidden',
       borderWidth: 1.7,
-      borderColor: '#FFF',
-      borderColor: '#E923BD',
+      //borderColor: isDarkMode ? '#000' : '#E923BD',
       shadowColor: '#000',
       shadowOffset: {width: 0, height: 2},
       shadowOpacity: 0.35,
       shadowRadius: 3,
+      marginLeft: 3,
+      marginTop: 4,
+    },
+    DoctorBorderImage: {
+      position: 'absolute',
     },
     DoctorTextView: {
       marginLeft: wp(3.2),
@@ -86,165 +81,108 @@ const MyDoctors = () => {
       flexDirection: 'column',
     },
     TextName: {
-      color: '#000',
+      color: isDarkMode ? '#fff' : '#000',
+      position: 'absolute',
+      width: wp(80),
       fontFamily: 'SFProDisplay-Bold',
-      fontSize: 13,
+      fontSize: 15,
       fontStyle: 'normal',
       fontWeight: '700',
       lineHeight: 20,
     },
     TextSpecialist: {
-      color: '#000',
+      color: isDarkMode ? '#fff' : '#000',
       fontFamily: 'SFProDisplay-Regular',
+      marginTop: hp(2.5),
       fontSize: 11,
       fontStyle: 'normal',
       fontWeight: '400',
       lineHeight: 16,
     },
     TextArea: {
-      color: '#000',
+      color: isDarkMode ? '#fff' : '#000',
       fontFamily: 'SFProDisplay-Regular',
+      marginTop: hp(0.5),
       fontSize: 11,
       fontStyle: 'normal',
       fontWeight: '400',
       lineHeight: 16,
     },
     ButtonView: {
-      marginLeft: wp(2.25),
+      marginLeft: wp(-4.6),
       flexDirection: 'row',
+      marginTop: hp(3),
     },
     DoctorButton: {
-      width: wp(12.26),
-      height: hp(4),
+      width: wp(15.46),
+      height: hp(2.95),
       borderRadius: 10,
-      backgroundColor: '#1A936F',
+      backgroundColor: isDarkMode ? '#000' : '#1A936F',
+      borderColor: isDarkMode ? '#1A936F' : undefined,
+      borderWidth: 1,
       margin: 7,
-      marginTop: 15,
     },
     DoctorButtonHovered: {
-      backgroundColor: '#147e5a',
+      backgroundColor: isDarkMode ? '#1A936F' : '#147e5a',
     },
     buttonText: {
-      color: '#FFF',
+      color: isDarkMode ? '#1A936F' : '#FFF',
       fontFamily: 'SFProDisplay-Bold',
       fontSize: 15,
       fontStyle: 'normal',
-      fontWeight: '700',
+      fontWeight: isDarkMode ? '500' : '700',
       lineHeight: 22,
       textAlign: 'center',
-      marginTop: 4,
     },
   });
+
   return (
     <View style={styles.container}>
       <View style={styles.ViewWrapper}>
         <Text style={styles.DoctorText}>My Doctors</Text>
         <TouchableOpacity onPress={handleImageClick}>
-          <Image style={styles.RighArrowImage} source={RightArrow} />
+          {isDarkMode ? (
+            <Image style={styles.RighArrowImage} source={RightArrowDark} />
+          ) : (
+            <Image style={styles.RighArrowImage} source={RightArrow} />
+          )}
         </TouchableOpacity>
       </View>
       <View style={styles.DoctorsCard}>
-        <View style={styles.DoctorCard}>
-          <Image style={styles.DoctorImage} source={DoctorImage} />
-          <View style={styles.DoctorTextView}>
-            <Text style={styles.TextName}>Dr Swapnil Katare</Text>
-            <Text style={styles.TextSpecialist}>Neurosurgeon</Text>
-            <Text style={styles.TextArea}>Bandra (W)</Text>
-          </View>
-          <View style={styles.ButtonView}>
-            <TouchableOpacity
-              style={[
-                styles.DoctorButton,
-                isCallPressed && styles.DoctorButtonHovered,
-              ]}
-              onPress={() => console.log('Button Call Pressed')}
-              onPressIn={handleCallPressIn}
-              onPressOut={handleCallPressOut}
-              activeOpacity={1}>
-              <Text style={styles.buttonText}>Call</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[
-                styles.DoctorButton,
-                isBookPressed && styles.DoctorButtonHovered,
-              ]}
-              onPress={() => console.log('Button Book Pressed')}
-              onPressIn={handleBookPressIn}
-              onPressOut={handleBookPressOut}
-              activeOpacity={1}>
-              <Text style={styles.buttonText}>Book</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <View style={styles.DoctorCard}>
-          <Image style={styles.DoctorImage} source={DoctorImage} />
-          <View style={styles.DoctorTextView}>
-            <Text style={styles.TextName}>Dr Swapnil Katare</Text>
-            <Text style={styles.TextSpecialist}>Neurosurgeon</Text>
-            <Text style={styles.TextArea}>Bandra (W)</Text>
-          </View>
-          <View style={styles.ButtonView}>
-            <TouchableOpacity
-              style={[
-                styles.DoctorButton,
-                isCallPressed && styles.DoctorButtonHovered,
-              ]}
-              onPress={() => console.log('Button Call Pressed')}
-              onPressIn={handleCallPressIn}
-              onPressOut={handleCallPressOut}
-              activeOpacity={1}>
-              <Text style={styles.buttonText}>Call</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[
-                styles.DoctorButton,
-                isBookPressed && styles.DoctorButtonHovered,
-              ]}
-              onPress={() => console.log('Button Book Pressed')}
-              onPressIn={handleBookPressIn}
-              onPressOut={handleBookPressOut}
-              activeOpacity={1}>
-              <Text style={styles.buttonText}>Book</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <View style={styles.DoctorCard}>
-          <Image style={styles.DoctorImage} source={DoctorImage} />
-          <View style={styles.DoctorTextView}>
-            <Text style={styles.TextName}>Dr Swapnil Katare</Text>
-            <Text style={styles.TextSpecialist}>Neurosurgeon</Text>
-            <Text style={styles.TextArea}>Bandra (W)</Text>
-          </View>
-          <View style={styles.ButtonView}>
-            <TouchableOpacity
-              style={[
-                styles.DoctorButton,
-                isCallPressed && styles.DoctorButtonHovered,
-              ]}
-              onPress={() => console.log('Button Call Pressed')}
-              onPressIn={handleCallPressIn}
-              onPressOut={handleCallPressOut}
-              activeOpacity={1}>
-              <Text style={styles.buttonText}>Call</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[
-                styles.DoctorButton,
-                isBookPressed && styles.DoctorButtonHovered,
-              ]}
-              onPress={() => console.log('Button Book Pressed')}
-              onPressIn={handleBookPressIn}
-              onPressOut={handleBookPressOut}
-              activeOpacity={1}>
-              <Text style={styles.buttonText}>Book</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+        {myDoctorsData.map(
+          (doctor, index) =>
+            doctor.key < 4 && (
+              <View
+                key={doctor.key}
+                style={[
+                  styles.DoctorCard,
+                  {
+                    borderBottomColor:
+                      index > 1
+                        ? 'transparent'
+                        : 'white',
+                    borderBottomWidth:
+                      index > 1 ? 0 : 0.5,
+                  },
+                ]}>
+                <Image style={styles.DoctorImage} source={doctor.image} />
+                <Image style={styles.DoctorBorderImage} source={Border} />
+                <View style={styles.DoctorTextView}>
+                  <Text style={styles.TextName}>{doctor.name}</Text>
+                  <Text style={styles.TextSpecialist}>{doctor.specialist}</Text>
+                  <Text style={styles.TextArea}>{doctor.area}</Text>
+                </View>
+                <View style={styles.ButtonView}>
+                  <TouchableOpacity style={[styles.DoctorButton]}>
+                    <Text style={styles.buttonText}>Call</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={[styles.DoctorButton]}>
+                    <Text style={styles.buttonText}>Book</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            ),
+        )}
       </View>
     </View>
   );

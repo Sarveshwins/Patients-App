@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   View,
   Text,
@@ -5,85 +6,24 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  SafeAreaView,
 } from 'react-native';
-import React from 'react';
-import {useNavigation} from '@react-navigation/native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {useNavigation} from '@react-navigation/native';
+import {useRecentSearch} from '../RecentSearchContext';
+import {useTheme} from '../../ThemeContext';
 
 import LeftArrow from '../../../assets/searchSection/LeftArrowIcon.png';
+import LeftArrowDark from '../../../assets/searchSection/LeftArrowIconDark.png';
 import Medicines from '../../../assets/issues/Medicines.png';
 
 const Specailist = () => {
   const navigation = useNavigation();
-
-  const leftSideData = [
-    {
-      FirstName: 'Diabetes',
-    },
-    {
-      FirstName: 'Dietation /',
-      LastName: 'Nutritionist',
-    },
-    {
-      FirstName: 'Low BP',
-    },
-    {
-      FirstName: 'Acne /',
-      LastName: 'Pimples',
-    },
-    {
-      FirstName: 'Depression',
-    },
-    {
-      FirstName: 'Weight Loss',
-    },
-    {
-      FirstName: 'Pregnancy',
-    },
-    {
-      FirstName: 'Acne /',
-      LastName: 'Pimples',
-    },
-    {
-      FirstName: 'Depression',
-    },
-    {
-      FirstName: 'Weight Loss',
-    },
-  ];
-
-  const rightSideData = [
-    {
-      FirstName: 'Knee Pain',
-    },
-    {
-      FirstName: 'Infertitily',
-    },
-    {
-      FirstName: 'Headache',
-    },
-    {
-      FirstName: 'Piles',
-    },
-    {
-      FirstName: 'Diarrhoea',
-    },
-    {
-      FirstName: 'Back Pain',
-    },
-    {
-      FirstName: 'Piles',
-    },
-    {
-      FirstName: 'Diarrhoea',
-    },
-    {
-      FirstName: 'Back Pain',
-    },
-  ];
+  const {leftSideSpecialityData, rightSideSpecialityData} = useRecentSearch();
+  const {isDarkMode} = useTheme();
 
   function handleArrowClick() {
     navigation.navigate('SearchHome');
@@ -91,18 +31,19 @@ const Specailist = () => {
 
   const styles = StyleSheet.create({
     container: {
-      width: wp(90),
+      width: wp(100),
       flexDirection: 'column',
       alignSelf: 'center',
       paddingHorizontal: wp(1),
+      backgroundColor: isDarkMode ? '#000' : '#fff',
     },
     ViewWrapper: {
       flexDirection: 'row',
       marginTop: hp(1.85),
-      marginLeft: wp(-5),
+      marginLeft: 8,
     },
     DoctorText: {
-      color: '#000',
+      color: isDarkMode ? '#fff' : '#000',
       fontFamily: 'SFProDisplay-Semibold',
       fontSize: 28,
       fontStyle: 'normal',
@@ -120,7 +61,7 @@ const Specailist = () => {
       flexDirection: 'column',
       marginTop: hp(2.2),
       width: wp(45),
-      marginLeft: wp(0),
+      marginLeft: wp(5.86),
     },
     DoctorsCard2: {
       flexDirection: 'column',
@@ -135,12 +76,9 @@ const Specailist = () => {
     DoctorImage: {
       width: wp(13),
       height: wp(13),
+      borderRadius: 57,
+      backgroundColor: '#C4C4C4',
       overflow: 'hidden',
-      //backgroundColor: '#C4C4C4',
-      //flex: 1,
-      resizeMode: 'cover',
-      //justifyContent: 'center',
-      //alignItems: 'center',
     },
     DoctorTextView: {
       marginLeft: wp(3.2),
@@ -150,7 +88,7 @@ const Specailist = () => {
       height: wp(13),
     },
     TextName: {
-      color: '#000',
+      color: isDarkMode ? '#fff' : '#000',
       fontFamily: 'SFProDisplay-Bold',
       fontSize: 13,
       fontStyle: 'normal',
@@ -159,7 +97,7 @@ const Specailist = () => {
       marginTop: 20,
     },
     TextName2: {
-      color: '#000',
+      color: isDarkMode ? '#fff' : '#000',
       fontFamily: 'SFProDisplay-Bold',
       fontSize: 13,
       fontStyle: 'normal',
@@ -168,7 +106,7 @@ const Specailist = () => {
       marginTop: 16,
     },
     TextName3: {
-      color: '#000',
+      color: isDarkMode ? '#fff' : '#000',
       fontFamily: 'SFProDisplay-Bold',
       fontSize: 13,
       fontStyle: 'normal',
@@ -179,53 +117,60 @@ const Specailist = () => {
   });
 
   return (
-    <View style={styles.container}>
-      <View style={styles.ViewWrapper}>
-        <TouchableOpacity onPress={handleArrowClick}>
-          <Image style={styles.ArrowImage} source={LeftArrow} />
-        </TouchableOpacity>
-        <Text style={styles.DoctorText}>Speciality</Text>
-      </View>
-      <ScrollView style={styles.ScrollArea} showsVerticalScrollIndicator={false}>
-        <View style={styles.IssuesWrapper}>
-          <View style={styles.DoctorsCard}>
-            {leftSideData.map(issuse => (
-              <View style={styles.DoctorCard} key={issuse.key}>
-                <Image style={styles.DoctorImage} source={Medicines} />
-                <View style={styles.DoctorTextView}>
-                  {issuse.FirstName && issuse.LastName ? (
-                    <>
-                      <Text style={styles.TextName2}>{issuse.FirstName}</Text>
-                      <Text style={styles.TextName3}>{issuse.LastName}</Text>
-                    </>
-                  ) : (
-                    <Text style={styles.TextName}>{issuse.FirstName}</Text>
-                  )}
-                </View>
-              </View>
-            ))}
-          </View>
-
-          <View style={styles.DoctorsCard2}>
-            {rightSideData.map(issuse => (
-              <View style={styles.DoctorCard} key={issuse.key}>
-                <Image style={styles.DoctorImage} source={Medicines} />
-                <View style={styles.DoctorTextView}>
-                  {issuse.FirstName && issuse.LastName ? (
-                    <>
-                      <Text style={styles.TextName2}>{issuse.FirstName}</Text>
-                      <Text style={styles.TextName3}>{issuse.LastName}</Text>
-                    </>
-                  ) : (
-                    <Text style={styles.TextName}>{issuse.FirstName}</Text>
-                  )}
-                </View>
-              </View>
-            ))}
-          </View>
+    <SafeAreaView style={{height: hp(100)}}>
+      <View style={styles.container}>
+        <View style={styles.ViewWrapper}>
+          <TouchableOpacity onPress={handleArrowClick}>
+            {isDarkMode ? (
+              <Image style={styles.ArrowImage} source={LeftArrowDark} />
+            ) : (
+              <Image style={styles.ArrowImage} source={LeftArrow} />
+            )}
+          </TouchableOpacity>
+          <Text style={styles.DoctorText}>Speciality</Text>
         </View>
-      </ScrollView>
-    </View>
+        <ScrollView
+          style={styles.ScrollArea}
+          showsVerticalScrollIndicator={false}>
+          <View style={styles.IssuesWrapper}>
+            <View style={styles.DoctorsCard}>
+              {leftSideSpecialityData.map(issuse => (
+                <View style={styles.DoctorCard} key={issuse.id}>
+                  <Image style={styles.DoctorImage} source={Medicines} />
+                  <View style={styles.DoctorTextView}>
+                    {issuse.FirstName && issuse.LastName ? (
+                      <>
+                        <Text style={styles.TextName2}>{issuse.FirstName}</Text>
+                        <Text style={styles.TextName3}>{issuse.LastName}</Text>
+                      </>
+                    ) : (
+                      <Text style={styles.TextName}>{issuse.FirstName}</Text>
+                    )}
+                  </View>
+                </View>
+              ))}
+            </View>
+            <View style={styles.DoctorsCard2}>
+              {rightSideSpecialityData.map(issuse => (
+                <View style={styles.DoctorCard} key={issuse.id}>
+                  <Image style={styles.DoctorImage} source={Medicines} />
+                  <View style={styles.DoctorTextView}>
+                    {issuse.FirstName && issuse.LastName ? (
+                      <>
+                        <Text style={styles.TextName2}>{issuse.FirstName}</Text>
+                        <Text style={styles.TextName3}>{issuse.LastName}</Text>
+                      </>
+                    ) : (
+                      <Text style={styles.TextName}>{issuse.FirstName}</Text>
+                    )}
+                  </View>
+                </View>
+              ))}
+            </View>
+          </View>
+        </ScrollView>
+      </View>
+    </SafeAreaView>
   );
 };
 

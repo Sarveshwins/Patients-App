@@ -8,6 +8,7 @@ import {
   ScrollView,
   TouchableOpacity,
   TouchableHighlight,
+  SafeAreaView,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -15,15 +16,21 @@ import {
 } from 'react-native-responsive-screen';
 import {useNavigation} from '@react-navigation/native';
 import {useRecentSearch} from '../RecentSearchContext';
+import {useTheme} from '../../ThemeContext';
 
 import RightArrow from '../../../assets/searchSection/RightArrowIcon.png';
+import RightArrowDark from '../../../assets/searchSection/RightArrowIconDark.png';
 import LeftArrow from '../../../assets/searchSection/LeftArrowIcon.png';
+import LeftArrowDark from '../../../assets/searchSection/LeftArrowIconDark.png';
 import searchIcon from '../../../assets/searchSection/searchIcon.png';
+import searchIconDark from '../../../assets/searchSection/searchIconDark.png';
 import Line from '../../../assets/searchSection/TextLine.png';
 import Cross from '../../../assets/searchSection/cross.png';
+import CrossDark from '../../../assets/searchSection/crossDark.png';
 
 const Search = () => {
   const navigation = useNavigation();
+  const {isDarkMode} = useTheme();
   const {handleItemClicked, issueDataList, clinicsNameList, doctorList} =
     useRecentSearch();
   const [isTyping, setIsTyping] = useState(false);
@@ -74,8 +81,6 @@ const Search = () => {
 
   function handleDoctorArrowClick() {
     setDoctorIndex(prevIndex => prevIndex + itemsPerPage);
-    //
-
     if (isTyping) {
       navigation.navigate('Doctors', {filteredDoctors});
     } else {
@@ -92,9 +97,26 @@ const Search = () => {
     setIsTyping(false);
   };
 
+  function boldMatchedText(text, searchText) {
+    const index = text.toLowerCase().indexOf(searchText.toLowerCase());
+    if (index !== -1) {
+      const preMatched = text.substring(0, index);
+      const matched = text.substring(index, index + searchText.length);
+      const postMatched = text.substring(index + searchText.length);
+      return (
+        <>
+          {preMatched}
+          <Text style={{fontWeight: '900'}}>{matched}</Text>
+          {postMatched}
+        </>
+      );
+    }
+    return <>{text}</>;
+  }
+
   const styles = StyleSheet.create({
     Container: {
-      backgroundColor: '#FFF',
+      backgroundColor: isDarkMode ? '#000' : '#FFF',
       flexDirection: 'column',
     },
     headerWrapper: {},
@@ -102,10 +124,12 @@ const Search = () => {
       flexDirection: 'row',
     },
     searchBarContainer: {
-      width: wp(77.3),
+      width: wp(86),
       flexDirection: 'row',
       borderRadius: 22,
-      backgroundColor: 'rgba(242, 242, 242, 0.9)',
+      backgroundColor: isDarkMode
+        ? 'rgba(183, 183, 183, 0.26)'
+        : 'rgba(242, 242, 242, 0.9)',
       paddingHorizontal: wp(4),
       marginTop: hp(3),
     },
@@ -114,7 +138,7 @@ const Search = () => {
     },
     CrossImage: {
       position: 'absolute',
-      marginLeft: wp(92),
+      marginLeft: wp(86),
       marginTop: hp(4.8),
     },
     ArrowImage: {
@@ -131,29 +155,10 @@ const Search = () => {
     input: {
       flex: 1,
       fontSize: 15,
-      color: '#000',
-      paddingHorizontal: 20,
+      color: isDarkMode ? '#fff' : '#000',
     },
-    LocationViewWrapper: {
-      marginLeft: wp(13.3),
-      marginTop: hp(1.35),
-      flexDirection: 'row',
-      marginTop: 15,
-    },
-    locationSpot: {
-      width: wp(4.26),
-      height: hp(2),
-    },
-    TextLocation: {
-      color: '#0B547C',
-      fontFamily: 'SFProDisplay-Medium',
-      fontSize: 14,
-      fontStyle: 'normal',
-      fontWeight: '500',
-      lineHeight: 20,
-      marginLeft: 6,
-      marginTop: -2.5,
-      marginBottom: 15,
+    ScrollAreaStyle: {
+      height: hp(100),
     },
     ScrollAreaContainer: {
       width: wp(100),
@@ -161,15 +166,17 @@ const Search = () => {
     },
     TopCities: {
       height: hp(5),
-      backgroundColor: 'rgba(242, 242, 242, 0.9)',
-      marginTop: wp(2),
+      backgroundColor: isDarkMode
+        ? 'rgba(183, 183, 183, 0.30)'
+        : 'rgba(242, 242, 242, 0.9)',
+      marginTop: 26,
       flexDirection: 'row',
     },
     TopCitiesText: {
       width: wp(30),
       marginLeft: wp(5.6),
       marginTop: hp(1),
-      color: '#222',
+      color: isDarkMode ? '#fff' : '#222',
       fontFamily: 'SFProDisplay-Semibold',
       fontSize: 18,
       fontStyle: 'normal',
@@ -185,12 +192,11 @@ const Search = () => {
       marginLeft: wp(55),
       marginTop: wp(2),
     },
-
     TopCityCard: {
       marginLeft: wp(5.6),
     },
     TopCityText: {
-      color: '#222',
+      color: isDarkMode ? '#fff' : '#222',
       fontFamily: 'SFProDisplay-Regular',
       fontSize: 15,
       fontStyle: 'normal',
@@ -213,6 +219,7 @@ const Search = () => {
     ClinicImage: {
       marginTop: hp(2.4),
       marginRight: 6,
+      borderRadius: 10,
     },
     DoctorTextView: {
       flexDirection: 'column',
@@ -220,13 +227,14 @@ const Search = () => {
       width: wp(80),
       marginLeft: wp(15),
       marginTop: 25,
+      textAlignVertical: 'center',
     },
     ClinicTextView: {
       flexDirection: 'column',
-      marginTop: 25,
+      marginTop: 22,
     },
     ClinicName: {
-      color: '#000',
+      color: isDarkMode ? '#fff' : '#000',
       fontFamily: 'SFProDisplay-Semibold',
       fontSize: 16,
       fontStyle: 'normal',
@@ -234,16 +242,17 @@ const Search = () => {
       lineHeight: 22,
     },
     ClinicSpecialist: {
-      color: '#000',
+      color: isDarkMode ? '#fff' : '#000',
       fontFamily: 'SFProDisplay-Regular',
       fontSize: 14,
       fontStyle: 'normal',
       fontWeight: '400',
       lineHeight: 20,
+      marginTop: 4,
     },
     ButtonView: {
       marginLeft: wp(70),
-      marginTop: wp(11),
+      marginTop: wp(12),
       flexDirection: 'row',
       position: 'absolute',
     },
@@ -270,65 +279,207 @@ const Search = () => {
   });
 
   return (
-    <View style={styles.Container}>
-      <View style={styles.headerWrapper}>
-        <View style={styles.header}>
-          <TouchableOpacity onPress={handleArrowClick}>
-            <Image style={styles.ArrowImage} source={LeftArrow} />
-          </TouchableOpacity>
-          <View style={styles.searchBarContainer}>
-            <Image source={searchIcon} style={styles.searchIcon} />
-            <TextInput
-              placeholder="Search my city, locality"
-              placeholderTextColor="#A5A5A5"
-              clearButtonMode="always"
-              style={styles.input}
-              value={searchText}
-              onChangeText={text => {
-                setSearchText(text);
-                if (!isTyping) setIsTyping(true);
-              }}
-            />
-          </View>
-          {isTyping && (
-            <TouchableHighlight
-              style={styles.CrossWrapper}
-              onPress={handleCrossPress}>
-              <Image style={styles.CrossImage} source={Cross} />
-            </TouchableHighlight>
-          )}
-        </View>
-      </View>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        {isTyping && searchText.length > 0 ? (
-          <>
-            {filteredIssues.map(issue => (
-              <View style={styles.TopCityCard} key={issue.id}>
-                {issue.id ? (
-                  <>
-                    <TouchableOpacity>
-                      <Text style={styles.TopCityText}>{issue.issue}</Text>
-                    </TouchableOpacity>
-                    <Image source={Line} style={styles.TopCityLine} />
-                  </>
-                ) : undefined}
-              </View>
-            ))}
-            <View style={styles.ScrollAreaContainer}>
-              <View style={styles.TopCities}>
-                <Text style={styles.TopCitiesText}>Cilincs</Text>
-                {filteredClinics.length > itemsPerPage && (
-                  <TouchableOpacity onPress={handleClinicArrowClick}>
-                    <Image style={styles.RightArrowImage} source={RightArrow} />
-                  </TouchableOpacity>
-                )}
-              </View>
+    <SafeAreaView style={{height: hp(100)}}>
+      <View style={styles.Container}>
+        <View style={styles.headerWrapper}>
+          <View style={styles.header}>
+            <TouchableOpacity onPress={handleArrowClick}>
+              {isDarkMode ? (
+                <Image style={styles.ArrowImage} source={LeftArrowDark} />
+              ) : (
+                <Image style={styles.ArrowImage} source={LeftArrow} />
+              )}
+            </TouchableOpacity>
+            <View style={styles.searchBarContainer}>
+              {isDarkMode ? (
+                <Image source={searchIconDark} style={styles.searchIcon} />
+              ) : (
+                <Image source={searchIcon} style={styles.searchIcon} />
+              )}
+              <TextInput
+                placeholder="Search my city, locality"
+                placeholderTextColor={isDarkMode ? '#fff' : '#4A4A4A'}
+                clearButtonMode="always"
+                style={styles.input}
+                value={searchText}
+                onChangeText={text => {
+                  setSearchText(text);
+                  if (!isTyping) setIsTyping(true);
+                }}
+              />
             </View>
-            {filteredClinics
-              .slice(clinicIndex, clinicIndex + itemsPerPage)
-              .map(clinic => (
+            {isTyping && (
+              <TouchableHighlight
+                style={styles.CrossWrapper}
+                onPress={handleCrossPress}>
+                {isDarkMode ? (
+                  <Image style={styles.CrossImage} source={CrossDark} />
+                ) : (
+                  <Image style={styles.CrossImage} source={Cross} />
+                )}
+              </TouchableHighlight>
+            )}
+          </View>
+        </View>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={styles.ScrollAreaStyle}>
+          {isTyping && searchText.length > 0 ? (
+            <>
+              {filteredIssues.map(issue => (
+                <View style={styles.TopCityCard} key={issue.id}>
+                  {issue.id ? (
+                    <>
+                      <TouchableOpacity>
+                        <Text style={styles.TopCityText}>
+                          {boldMatchedText(issue.issue, searchText)}
+                        </Text>
+                      </TouchableOpacity>
+                      <Image source={Line} style={styles.TopCityLine} />
+                    </>
+                  ) : undefined}
+                </View>
+              ))}
+              <View style={styles.ScrollAreaContainer}>
+                <View style={styles.TopCities}>
+                  <Text style={styles.TopCitiesText}>Cilincs</Text>
+                  {filteredClinics.length > itemsPerPage && (
+                    <TouchableOpacity onPress={handleClinicArrowClick}>
+                      {isDarkMode ? (
+                        <Image
+                          style={styles.RightArrowImage}
+                          source={RightArrowDark}
+                        />
+                      ) : (
+                        <Image
+                          style={styles.RightArrowImage}
+                          source={RightArrow}
+                        />
+                      )}
+                    </TouchableOpacity>
+                  )}
+                </View>
+              </View>
+              {filteredClinics
+                .slice(clinicIndex, clinicIndex + itemsPerPage)
+                .map(clinic => (
+                  <View style={styles.DoctorCard} key={clinic.id}>
+                    {clinic.id && (
+                      <>
+                        <TouchableOpacity
+                          onPress={() => handleClickedItem(clinic)}>
+                          <Image
+                            style={styles.ClinicImage}
+                            source={clinic.image}
+                          />
+                          <View style={styles.DoctorTextView}>
+                            <Text style={styles.ClinicName}>
+                              {boldMatchedText(clinic.name, searchText)}
+                            </Text>
+                            <Text style={styles.ClinicSpecialist}>
+                              {clinic.field} | {clinic.location}
+                            </Text>
+                          </View>
+                        </TouchableOpacity>
+                      </>
+                    )}
+                  </View>
+                ))}
+              <View style={styles.ScrollAreaContainer}>
+                <View style={styles.TopCities}>
+                  <Text style={styles.TopCitiesText}>Doctors</Text>
+                  {filteredDoctors.length > itemsPerPage && (
+                    <TouchableOpacity onPress={handleDoctorArrowClick}>
+                      {isDarkMode ? (
+                        <Image
+                          style={styles.RightArrowImage}
+                          source={RightArrowDark}
+                        />
+                      ) : (
+                        <Image
+                          style={styles.RightArrowImage}
+                          source={RightArrow}
+                        />
+                      )}
+                    </TouchableOpacity>
+                  )}
+                </View>
+              </View>
+              {filteredDoctors
+                .slice(doctorIndex, doctorIndex + itemsPerPage)
+                .map(doctor => (
+                  <View style={styles.DoctorCard} key={doctor.id}>
+                    {doctor.id && (
+                      <>
+                        <TouchableOpacity
+                          onPress={() => handleClickedItem(doctor)}>
+                          <Image
+                            style={styles.ClinicImage}
+                            source={doctor.image}
+                          />
+                          <View style={styles.DoctorTextView}>
+                            <Text style={styles.ClinicName}>
+                              {boldMatchedText(doctor.firstName, searchText)}
+                              {' '}
+                              {boldMatchedText(doctor.lastName, searchText)}
+                            </Text>
+                            <Text style={styles.ClinicSpecialist}>
+                              {doctor.field}
+                            </Text>
+                          </View>
+                        </TouchableOpacity>
+                        <View style={styles.ButtonView}>
+                          <TouchableOpacity
+                            onPress={() => setBookPressed(true)}
+                            style={[
+                              styles.DoctorButton,
+                              isBookPressed && styles.DoctorButtonHovered,
+                            ]}>
+                            <Text style={styles.buttonText}>Book a call</Text>
+                          </TouchableOpacity>
+                        </View>
+                      </>
+                    )}
+                  </View>
+                ))}
+            </>
+          ) : (
+            <>
+              {issueDataList.map(issue => (
+                <View style={styles.TopCityCard} key={issue.id}>
+                  {issue.id < 10 ? (
+                    <>
+                      <TouchableOpacity>
+                        <Text style={styles.TopCityText}>{issue.issue}</Text>
+                      </TouchableOpacity>
+                      <Image source={Line} style={styles.TopCityLine} />
+                    </>
+                  ) : undefined}
+                </View>
+              ))}
+              <View style={styles.ScrollAreaContainer}>
+                <View style={styles.TopCities}>
+                  <Text style={styles.TopCitiesText}>Cilincs</Text>
+                  {clinicsNameList.length > itemsPerPage && (
+                    <TouchableOpacity onPress={handleClinicArrowClick}>
+                      {isDarkMode ? (
+                        <Image
+                          style={styles.RightArrowImage}
+                          source={RightArrowDark}
+                        />
+                      ) : (
+                        <Image
+                          style={styles.RightArrowImage}
+                          source={RightArrow}
+                        />
+                      )}
+                    </TouchableOpacity>
+                  )}
+                </View>
+              </View>
+              {clinicsNameList.map(clinic => (
                 <View style={styles.DoctorCard} key={clinic.id}>
-                  {clinic.id && (
+                  {clinic.id < 31 && (
                     <>
                       <TouchableOpacity
                         onPress={() => handleClickedItem(clinic)}>
@@ -347,21 +498,29 @@ const Search = () => {
                   )}
                 </View>
               ))}
-            <View style={styles.ScrollAreaContainer}>
-              <View style={styles.TopCities}>
-                <Text style={styles.TopCitiesText}>Doctors</Text>
-                {filteredDoctors.length > itemsPerPage && (
-                  <TouchableOpacity onPress={handleDoctorArrowClick}>
-                    <Image style={styles.RightArrowImage} source={RightArrow} />
-                  </TouchableOpacity>
-                )}
+              <View style={styles.ScrollAreaContainer}>
+                <View style={styles.TopCities}>
+                  <Text style={styles.TopCitiesText}>Doctors</Text>
+                  {doctorList.length > itemsPerPage && (
+                    <TouchableOpacity onPress={handleDoctorArrowClick}>
+                      {isDarkMode ? (
+                        <Image
+                          style={styles.RightArrowImage}
+                          source={RightArrowDark}
+                        />
+                      ) : (
+                        <Image
+                          style={styles.RightArrowImage}
+                          source={RightArrow}
+                        />
+                      )}
+                    </TouchableOpacity>
+                  )}
+                </View>
               </View>
-            </View>
-            {filteredDoctors
-              .slice(doctorIndex, doctorIndex + itemsPerPage)
-              .map(doctor => (
+              {doctorList.map(doctor => (
                 <View style={styles.DoctorCard} key={doctor.id}>
-                  {doctor.id && (
+                  {doctor.id < 57 && (
                     <>
                       <TouchableOpacity
                         onPress={() => handleClickedItem(doctor)}>
@@ -380,7 +539,6 @@ const Search = () => {
                       </TouchableOpacity>
                       <View style={styles.ButtonView}>
                         <TouchableOpacity
-                          onPress={() => setBookPressed(true)}
                           style={[
                             styles.DoctorButton,
                             isBookPressed && styles.DoctorButtonHovered,
@@ -392,91 +550,12 @@ const Search = () => {
                   )}
                 </View>
               ))}
-          </>
-        ) : (
-          <>
-            {issueDataList.map(issue => (
-              <View style={styles.TopCityCard} key={issue.id}>
-                {issue.id < 10 ? (
-                  <>
-                    <TouchableOpacity>
-                      <Text style={styles.TopCityText}>{issue.issue}</Text>
-                    </TouchableOpacity>
-                    <Image source={Line} style={styles.TopCityLine} />
-                  </>
-                ) : undefined}
-              </View>
-            ))}
-            <View style={styles.ScrollAreaContainer}>
-              <View style={styles.TopCities}>
-                <Text style={styles.TopCitiesText}>Cilincs</Text>
-                {clinicsNameList.length > itemsPerPage && (
-                  <TouchableOpacity onPress={handleClinicArrowClick}>
-                    <Image style={styles.RightArrowImage} source={RightArrow} />
-                  </TouchableOpacity>
-                )}
-              </View>
-            </View>
-            {clinicsNameList.map(clinic => (
-              <View style={styles.DoctorCard} key={clinic.id}>
-                {clinic.id < 31 && (
-                  <>
-                    <TouchableOpacity onPress={() => handleClickedItem(clinic)}>
-                      <Image style={styles.ClinicImage} source={clinic.image} />
-                      <View style={styles.DoctorTextView}>
-                        <Text style={styles.ClinicName}>{clinic.name}</Text>
-                        <Text style={styles.ClinicSpecialist}>
-                          {clinic.field} | {clinic.location}
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                  </>
-                )}
-              </View>
-            ))}
-            <View style={styles.ScrollAreaContainer}>
-              <View style={styles.TopCities}>
-                <Text style={styles.TopCitiesText}>Doctors</Text>
-                {doctorList.length > itemsPerPage && (
-                  <TouchableOpacity onPress={handleDoctorArrowClick}>
-                    <Image style={styles.RightArrowImage} source={RightArrow} />
-                  </TouchableOpacity>
-                )}
-              </View>
-            </View>
-            {doctorList.map(doctor => (
-              <View style={styles.DoctorCard} key={doctor.id}>
-                {doctor.id < 57 && (
-                  <>
-                    <TouchableOpacity onPress={() => handleClickedItem(doctor)}>
-                      <Image style={styles.ClinicImage} source={doctor.image} />
-                      <View style={styles.DoctorTextView}>
-                        <Text style={styles.ClinicName}>
-                          {doctor.firstName} {doctor.lastName}
-                        </Text>
-                        <Text style={styles.ClinicSpecialist}>
-                          {doctor.field}
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                    <View style={styles.ButtonView}>
-                      <TouchableOpacity
-                        style={[
-                          styles.DoctorButton,
-                          isBookPressed && styles.DoctorButtonHovered,
-                        ]}>
-                        <Text style={styles.buttonText}>Book a call</Text>
-                      </TouchableOpacity>
-                    </View>
-                  </>
-                )}
-              </View>
-            ))}
-          </>
-        )}
-        <View style={{padding: 60}} />
-      </ScrollView>
-    </View>
+            </>
+          )}
+          <View style={{padding: 60}} />
+        </ScrollView>
+      </View>
+    </SafeAreaView>
   );
 };
 
