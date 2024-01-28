@@ -74,7 +74,7 @@ const Signup = ({navigation}) => {
           lastName: signUpValues?.lastName,
           password: signUpValues?.Password,
           confirmPassword: signUpValues?.confirmPassword,
-          role: 'doctor',
+          role: 'patient',
           regBy: 'manual',
           extraData: signupResponse => {
             console.log('signupResponse', signupResponse);

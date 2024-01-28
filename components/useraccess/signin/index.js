@@ -2,15 +2,25 @@ import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import ScreenWrapper from '../../ScreenWrapper';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {appColors} from '../../../utils/Appcolors';
-import CommonTextInputsignin from '../../Commontextinput/signin';
+// import {appColors} from '../../../utils/Appcolors';
+// import CommonTextInputsignin from '../../Commontextinput/signin';
+import CommonTextInput from '../../Commontextinput';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import { LoginAction } from "../../../redux/action/Login";
-import { useDispatch, useSelector } from "react-redux";
-import { SignUpAction } from "../../../redux/action/Signup";
+import appleAuth from '@invertase/react-native-apple-authentication';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import { LoginAction } from '../../redux/action/Login';
+import {useDispatch, useSelector} from 'react-redux';
+import {SignUpAction} from '../../../redux/action/Signup';
+// import {
+//   AccessToken,
+//   GraphRequest,
+//   GraphRequestManager,
+//   LoginManager,
+// } from 'react-native-fbsdk-next';
 
 const SignIn = ({navigation}) => {
   const [signUpValues, setSignUpValues] = useState({
@@ -24,24 +34,48 @@ const SignIn = ({navigation}) => {
     passwordFocus: false,
     confirmPasswordFocus: false,
   });
-  // useEffect(() => {
-  //   GoogleSignin.configure({
-  //     webClientId: '112069212219-tk7odcavp85d9gpiv9kpll6ot055r027.apps.googleusercontent.com',
-  //   });
-  // },[])
 
-  // async function onGoogleButtonPress() {
-  //   // Check if your device supports Google Play
-  //   await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-  //   // Get the users ID token
-  //   const { idToken } = await GoogleSignin.signIn();
+  const loginMethod = async () => {
+    // navigation?.navigate("TabNavigator");
+    // return;
+    dispatch({
+      type: LoginAction?.types?.start,
+      payload: {
+        contact: loginValue?.email,
+        password: loginValue?.password,
+        extraData: loginResponse => {
+          console.log('loginResponse', loginResponse);
+          if (loginResponse?.status === 200) {
+            if (loginResponse?.data?.status == 'success') {
+              navigation?.navigate('TabNavigator');
+            }
+          } else {
+            CustomMessage(err?.response?.data?.message?.message, 'danger');
+          }
+        },
+        onError: err => {
+          CustomMessage(err?.response?.data?.message?.message, 'danger');
+        },
+      },
+    });
+  };
 
-  //   // Create a Google credential with the token
-  //   const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId:
+        '112069212219-vs4uvnguffdtg3mj43opvidg9d1r13dn.apps.googleusercontent.com',
+      offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
+    });
+  }, []);
+  useEffect(() => {
+    // onCredentialRevoked returns a function that will remove the event listener. useEffect will call this function when the component unmounts
+    return appleAuth.onCredentialRevoked(async () => {
+      console.warn(
+        'If this function executes, User Credentials have been Revoked',
+      );
+    });
+  }, []);
 
-  //   // Sign-in the user with the credential
-  //   return auth().signInWithCredential(googleCredential);
-  // }
   if (
     signUpValues?.firstName?.length >= 3 &&
     signUpValues?.lastName?.length >= 3 &&
@@ -53,66 +87,54 @@ const SignIn = ({navigation}) => {
     console.log('Validation failed. Please check the input values.');
   }
 
-  const signInProcess = async () => {
-    if (
-      signUpValues?.firstName?.length >= 2 &&
-      signUpValues?.lastName?.length >= 2 &&
-      signUpValues?.Password?.length >= 8 &&
-      signUpValues?.confirmPassword?.length >= 8
-    ) {
-      console.log(signUpValues, "<--signUpValuessignUpValues");
-      dispatch({
-        type: SignUpAction?.types?.start,
-        payload: {
-          contact: signUpValues?.Phone,
-          firstName: signUpValues?.firstName,
-          lastName: signUpValues?.lastName,
-          password: signUpValues?.Password,
-          confirmPassword: signUpValues?.confirmPassword,
-          role: "doctor",
-          regBy: "manual",
-          extraData: (signupResponse) => {
-            console.log("signupResponse", signupResponse);
-            if (signupResponse?.status === 201) {
-              if (signupResponse?.data?.status == "success") {
-                navigation?.navigate("Verification", {
-                  contact: signUpValues?.Phone,
-                });
-              }
-            } else {
-              CustomMessage(err?.response?.data?.message?.message, "danger");
-            }
-          },
-          onError: (err) => {
-            //console.log("err", err);
-            CustomMessage(err?.response?.data?.message?.message, "danger");
-          },
-        },
-      });
-      // try {
-      //   const res = await apiPostModule('v11/user/signup', {
-      //     contact: signUpValues?.Phone,
-      //     firstName: signUpValues?.firstName,
-      //     lastName: signUpValues?.lastName,
-      //     password: signUpValues?.Password,
-      //     confirmPassword: signUpValues?.confirmPassword,
-      //     role: 'doctor',
-      //     regBy: 'manual',
-      //   });
-      //   console.log(res, '<--asdadasda');
-      //   if (res?.status === 'success') {
-      //     navigation?.navigate('Verification', {
-      //       contact: signUpValues?.Phone,
-      //     });
-      //   } else {
-      //     Alert.alert('error', res?.message?.message);
-      //   }
-      // } catch (er) {
-      //   console.log(er, '<--sadas');
-      // }
-      // console.log(signUpValues, '<---signUpValuessignUpValues');
-    }
+  const googleSign = async () => {
+    await GoogleSignin.hasPlayServices();
+    const userInfo = await GoogleSignin.signIn();
+    console.log(userInfo, '<----userInfo');
   };
+  // const logInWIthFb = useCallback(() => {
+  //   //login with facebook
+  //   LoginManager.logInWithPermissions(['public_profile', 'email']).then(
+  //     function (result) {
+  //       if (result.isCancelled) {
+  //       } else {
+  //         AccessToken.getCurrentAccessToken().then(data => {
+  //           const accessToken = data.accessToken.toString();
+  //           getInfoFromToken(accessToken);
+  //         });
+  //       }
+  //     },
+  //     function (error) {
+  //       console.log('==> Login fail with error: ' + error);
+  //     },
+  //   );
+  // }, []);
+
+  // const getInfoFromToken = useCallback(
+  //   //login with facebook
+
+  //   async token => {
+  //     const role = await AsyncStorage.getItem('roleType');
+  //     const PROFILE_REQUEST_PARAMS = {
+  //       fields: {
+  //         string: 'id,name,first_name,last_name,email',
+  //       },
+  //     };
+  //     const profileRequest = new GraphRequest(
+  //       '/me',
+  //       {token, parameters: PROFILE_REQUEST_PARAMS},
+  //       async (error, user) => {
+  //         if (error) {
+  //           console.log('login info has error: ' + error);
+  //         } else {
+  //           console.log('login info has user: ' + user);
+  //         }
+  //       },
+  //     );
+  //     new GraphRequestManager().addRequest(profileRequest).start();
+  //   },
+  //   [],
+  // );
 
   return (
     <SafeAreaProvider>
@@ -121,7 +143,7 @@ const SignIn = ({navigation}) => {
           <View style={styles.group1}>
             <Text style={styles.Welcometext}>Welcome{'\n'}Back !!</Text>
           </View>
-          <CommonTextInputsignin
+          {/* <CommonTextInputsignin
             style={[styles.Emailph]}
             label="Email/Phone number"
             value={signUpValues?.Phone}
@@ -129,8 +151,42 @@ const SignIn = ({navigation}) => {
             onChangeText={e => {
               setSignUpValues({...signUpValues, Phone: e});
             }}
+          /> */}
+          <CommonTextInput
+            sucess={/^(?:\d{10}|\w+@\w+\.\w{2,3})$/.test(loginValue?.email)}
+            value={loginValue?.email}
+            style={[styles.Emailph]}
+            label={'Email Address / Phone Number'}
+            onChangeText={e => {
+              setLoginValue({...loginValue, email: e});
+            }}
           />
-          <CommonTextInputsignin
+          <CommonTextInput
+            label={'Password'}
+            style={[styles.password, {top: 98}]}
+            sucess={/^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(
+              loginValue?.password,
+            )}
+            value={loginValue?.password}
+            eyeValue={loginValue?.passwordeye}
+            onFocus={() => {
+              setLoginValue({...loginValue, passwordFocus: true});
+            }}
+            onBlur={() => {
+              setLoginValue({...loginValue, passwordFocus: false});
+            }}
+            passwordFocus={loginValue?.passwordFocus}
+            onChangeText={e => {
+              setLoginValue({...loginValue, password: e});
+            }}
+            onChangeEye={() => {
+              setLoginValue({
+                ...loginValue,
+                passwordeye: !loginValue?.passwordeye,
+              });
+            }}
+          />
+          {/* <CommonTextInputsignin
             style={[styles.password, {top: 98}]}
             label="Password"
             value={signUpValues?.Password}
@@ -151,26 +207,30 @@ const SignIn = ({navigation}) => {
             onChangeText={e => {
               setSignUpValues({...signUpValues, Password: e});
             }}
-          />
+          /> */}
         </View>
         <TouchableOpacity onPress={() => navigation.navigate('Forgetpassword')}>
           <Text style={styles.forgetPassword}>Forget Password</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.signinbutton1}>
+        <TouchableOpacity
+          onPress={() => {
+            loginMethod();
+          }}
+          style={styles.signinbutton1}>
           <Text style={styles.signintext1}>Sign In</Text>
-          <Image
-            style={styles.signinicon}
-            source={require('../../../assets/logos/rightarrowblack.png')}
-          />
-          <Image
-            style={{left: 160, bottom: 22}}
-            source={require('../../../assets/logos/googlelogo.png')}
-          />
-          <Image
-            style={{left: 230, bottom: 59}}
-            source={require('../../../assets/logos/facebooklogo.png')}
-          />
         </TouchableOpacity>
+        <Image
+          style={styles.signinicon}
+          source={require('../../../assets/logos/rightarrowblack.png')}
+        />
+        <Image
+          style={{left: 160, bottom: 22}}
+          source={require('../../../assets/logos/googlelogo.png')}
+        />
+        <Image
+          style={{left: 230, bottom: 59}}
+          source={require('../../../assets/logos/facebooklogo.png')}
+        />
         <TouchableOpacity style={styles.applebutton}>
           <Text style={styles.appletext}>Continue with Apple</Text>
           <Image
