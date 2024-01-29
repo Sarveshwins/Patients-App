@@ -15,12 +15,12 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import { LoginAction } from '../../redux/action/Login';
 import {useDispatch, useSelector} from 'react-redux';
 import {SignUpAction} from '../../../redux/action/Signup';
-// import {
-//   AccessToken,
-//   GraphRequest,
-//   GraphRequestManager,
-//   LoginManager,
-// } from 'react-native-fbsdk-next';
+import {
+  AccessToken,
+  GraphRequest,
+  GraphRequestManager,
+  LoginManager,
+} from 'react-native-fbsdk-next';
 
 const SignIn = ({navigation}) => {
   const [signUpValues, setSignUpValues] = useState({
