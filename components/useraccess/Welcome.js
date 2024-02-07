@@ -1,19 +1,71 @@
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import ScreenWrapper from '../ScreenWrapper';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {appColors} from '../../utils/Appcolors';
 import {Dimensions} from 'react-native';
 import {useWindowDimensions} from 'react-native';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+// import {
+//   AccessToken,
+//   GraphRequest,
+//   GraphRequestManager,
+//   LoginManager,
+// } from "react-native-fbsdk-next";
+
 function useStyles() {
   const {width, height} = useWindowDimensions();
 }
 const Welcome = ({navigation}) => {
   // const styles = useStyles();
+
+  // const logInWIthFb = useCallback(() => {
+  //   //login with facebook
+  //   LoginManager.logInWithPermissions(["public_profile", "email"]).then(
+  //     function (result) {
+  //       if (result.isCancelled) {
+  //       } else {
+  //         AccessToken.getCurrentAccessToken().then((data) => {
+  //           const accessToken = data.accessToken.toString();
+  //           getInfoFromToken(accessToken);
+  //         });
+  //       }
+  //     },
+  //     function (error) {
+  //       console.log("==> Login fail with error: " + error);
+  //     }
+  //   );
+  // }, []);
+
+  // const getInfoFromToken = useCallback(
+  //   //login with facebook
+
+  //   async (token) => {
+  //     const role = await AsyncStorage.getItem("roleType");
+  //     const PROFILE_REQUEST_PARAMS = {
+  //       fields: {
+  //         string: "id,name,first_name,last_name,email",
+  //       },
+  //     };
+  //     const profileRequest = new GraphRequest(
+  //       "/me",
+  //       { token, parameters: PROFILE_REQUEST_PARAMS },
+  //       async (error, user) => {
+  //         if (error) {
+  //           console.log("login info has error: " + error);
+  //         } else {
+  //           console.log("login info has user: " + user);
+  //         }
+  //       }
+  //     );
+  //     new GraphRequestManager().addRequest(profileRequest).start();
+  //   },
+  //   []
+  // );
 
   return (
     <SafeAreaProvider>
@@ -26,7 +78,7 @@ const Welcome = ({navigation}) => {
             </Text>
           </View>
 
-          <TouchableOpacity style={[styles.facebookButton, styles.button]}>
+          <TouchableOpacity  style={[styles.facebookButton, styles.button]}>
             <Text style={[styles.group2text, styles.facebookText]}>
               {' '}
               Continue with facebook
@@ -68,7 +120,7 @@ const Welcome = ({navigation}) => {
             <Text style={styles.group4text}>If already have an account ?</Text>
             <TouchableOpacity
               style={styles.signinbutton}
-              onPress={() => navigation.navigate('SearchHome')}>
+              onPress={() => navigation.navigate('Signup')}>
               <Text style={styles.signintext}>Sign in</Text>
               <Image
                 style={styles.signinicon}

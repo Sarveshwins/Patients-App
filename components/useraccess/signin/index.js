@@ -15,12 +15,7 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import { LoginAction } from '../../redux/action/Login';
 import {useDispatch, useSelector} from 'react-redux';
 import {SignUpAction} from '../../../redux/action/Signup';
-import {
-  AccessToken,
-  GraphRequest,
-  GraphRequestManager,
-  LoginManager,
-} from 'react-native-fbsdk-next';
+
 
 const SignIn = ({navigation}) => {
   const [signUpValues, setSignUpValues] = useState({
@@ -153,8 +148,8 @@ const SignIn = ({navigation}) => {
             }}
           /> */}
           <CommonTextInput
-            sucess={/^(?:\d{10}|\w+@\w+\.\w{2,3})$/.test(loginValue?.email)}
-            value={loginValue?.email}
+            // sucess={/^(?:\d{10}|\w+@\w+\.\w{2,3})$/.test(loginValue?.email)}
+            // value={loginValue?.email}
             style={[styles.Emailph]}
             label={'Email Address / Phone Number'}
             onChangeText={e => {
@@ -164,10 +159,10 @@ const SignIn = ({navigation}) => {
           <CommonTextInput
             label={'Password'}
             style={[styles.password, {top: 98}]}
-            sucess={/^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(
-              loginValue?.password,
-            )}
-            value={loginValue?.password}
+            // sucess={/^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(
+            //   loginValue?.password,
+            // )}
+            // value={loginValue?.password}
             eyeValue={loginValue?.passwordeye}
             onFocus={() => {
               setLoginValue({...loginValue, passwordFocus: true});

@@ -738,12 +738,12 @@ const Meprofile = ({navigation}) => {
                   <Text style={styles.f}>f</Text>
                 </Text>
                 <View style={styles.namesection}>
-                  <Text style={styles.fullname}>Gouri Kannurkar</Text>
-                  <Text style={styles.gender}>F/</Text>
+                  <Text style={styles.fullname}>Bipin Gupta</Text>
+                  <Text style={styles.gender}>{}</Text>
                 </View>
-                <Text style={styles.age}>23</Text>
-                <Text style={styles.status}>Single</Text>
-                <Text style={styles.city}>Pune</Text>
+                <Text style={styles.age}>{}</Text>
+                <Text style={styles.status}>{}</Text>
+                <Text style={styles.city}>{}</Text>
               </View>
             </View>
             <ScrollView>

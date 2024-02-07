@@ -65,7 +65,7 @@ const Signup = ({navigation}) => {
       signUpValues?.Password?.length >= 8 &&
       signUpValues?.confirmPassword?.length >= 8
     ) {
-      console.log(signUpValues, '<--signUpValuessignUpValues');
+      //console.log(signUpValues, '<--signUpValuessignUpValues');
       dispatch({
         type: SignUpAction?.types?.start,
         payload: {
@@ -80,9 +80,10 @@ const Signup = ({navigation}) => {
             console.log('signupResponse', signupResponse);
             if (signupResponse?.status === 201) {
               if (signupResponse?.data?.status == 'success') {
-                navigation?.navigate('Verification', {
-                  contact: signUpValues?.Phone,
-                });
+                navigation.navigate('Successful')
+                // , {
+                //   contact: signUpValues?.Phone,
+                // });
               }
             } else {
               CustomMessage(err?.response?.data?.message?.message, 'danger');

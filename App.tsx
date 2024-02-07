@@ -25,7 +25,7 @@ import Welcome from './components/useraccess/Welcome';
 import Signup from './components/useraccess/signup';
 import EditSection from './components/internal/meprofile/EditSection';
 import Verifyemail from './components/verification/verifyemail/verifyemail';
-//import MainContainer from './components/navigation/mainController';
+// import MainContainer from './components/navigation/mainController';
 import {ThemeProvider} from './components/ThemeContext';
 import {LocationProvider} from './components/SearchComponents/LocationContext';
 import {RecentSearchProvider} from './components/SearchComponents/RecentSearchContext';
@@ -40,9 +40,9 @@ import Search from './components/SearchComponents/Screens/Search';
 import RecentSearch from './components/SearchComponents/Screens/RecentSearch';
 import Doctors from './components/SearchComponents/Screens/Doctors';
 import Clinics from './components/SearchComponents/Screens/Clinics';
-// import Crosssignnumber from './components/verification/crosssignnumber';
-// import Successful from './components/verification/sucessfull';
-// import Changepwsuccess from './components/verification/changepwsuccess';
+import Crosssignnumber from './components/verification/crosssignnumber';
+import Successful from './components/verification/sucessfull';
+import Changepwsuccess from './components/verification/changepwsuccess';
 import SignIn from './components/useraccess/signin';
 import Forgetpassword from './components/useraccess/signin/forgetpassword';
 
@@ -173,9 +173,20 @@ function App(): JSX.Element {
                     component={Verifyemail}
                   />
 
-                  {/* <Stack.Screen  options={{ headerShown: false }}  name="Crosssignnumber" component={Crosssignnumber} />
-              <Stack.Screen  options={{ headerShown: false }} name="Successful" component={Successful} />
-              <Stack.Screen name="Changepwsuccess" component={Changepwsuccess} /> */}
+                  <Stack.Screen
+                    options={{headerShown: false}}
+                    name="Crosssignnumber"
+                    component={Crosssignnumber}
+                  />
+                  <Stack.Screen
+                    options={{headerShown: false}}
+                    name="Successful"
+                    component={Successful}
+                  />
+                  <Stack.Screen
+                    name="Changepwsuccess"
+                    component={Changepwsuccess}
+                  />
 
                   {/* </SafeAreaView> */}
                 </Stack.Navigator>
