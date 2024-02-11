@@ -548,7 +548,7 @@ const Search = () => {
                       </View>
                     </>
                   )}
-                </View>
+                </View> 
               ))}
             </>
           )}

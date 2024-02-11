@@ -45,6 +45,7 @@ import Successful from './components/verification/sucessfull';
 import Changepwsuccess from './components/verification/changepwsuccess';
 import SignIn from './components/useraccess/signin';
 import Forgetpassword from './components/useraccess/signin/forgetpassword';
+import PreviewScreen from './components/previewScreen/PreviewScreen';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -59,7 +60,7 @@ function App(): JSX.Element {
           <RecentSearchProvider>
             <LocationProvider>
               <NavigationContainer>
-                <Stack.Navigator initialRouteName="Welcome">
+                <Stack.Navigator initialRouteName="PreviewScreen">
                   {/* <Stack.Navigator initialRouteName="EditSection"> */}
                   {/* <SafeAreaView style={backgroundStyle}> */}
                   {/* <StatusBar
@@ -186,6 +187,10 @@ function App(): JSX.Element {
                   <Stack.Screen
                     name="Changepwsuccess"
                     component={Changepwsuccess}
+                  />
+                  <Stack.Screen
+                    name="PreviewScreen"
+                    component={PreviewScreen}
                   />
 
                   {/* </SafeAreaView> */}
