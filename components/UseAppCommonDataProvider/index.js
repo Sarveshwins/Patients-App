@@ -1,6 +1,5 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import React, {createContext, useContext, useState} from 'react';
-import {useColorScheme} from 'react-native';
 import {Appearance} from 'react-native';
 export const AppContext = createContext({
   colorScheme: null,
@@ -35,4 +34,3 @@ export const AppCommonDataProvider = ({children}) => {
   );
 };
 export const useAppCommonDataProvider = () => useContext(AppContext);
-const styles = StyleSheet.create({});

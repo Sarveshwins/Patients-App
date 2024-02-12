@@ -120,7 +120,7 @@ const Welcome = ({navigation}) => {
             <Text style={styles.group4text}>If already have an account ?</Text>
             <TouchableOpacity
               style={styles.signinbutton}
-              onPress={() => navigation.navigate('Signup')}>
+              onPress={() => navigation.navigate('Signin')}>
               <Text style={styles.signintext}>Sign in</Text>
               <Image
                 style={styles.signinicon}

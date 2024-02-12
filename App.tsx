@@ -7,13 +7,11 @@
 
 import React from 'react';
 import {PropsWithChildren} from 'react';
-import {StyleSheet, Text, useColorScheme, View} from 'react-native';
-// import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {StyleSheet} from 'react-native';
 import store from './components/redux/store';
 import {Provider} from 'react-redux';
 
 import Meprofile from './components/internal/meprofile/meprofile';
-//import ContactList from './components/demo';
 import {AppCommonDataProvider} from './components/UseAppCommonDataProvider';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
@@ -25,7 +23,7 @@ import Welcome from './components/useraccess/Welcome';
 import Signup from './components/useraccess/signup';
 import EditSection from './components/internal/meprofile/EditSection';
 import Verifyemail from './components/verification/verifyemail/verifyemail';
-// import MainContainer from './components/navigation/mainController';
+import MainContainer from './components/navigation/mainController';
 import {ThemeProvider} from './components/ThemeContext';
 import {LocationProvider} from './components/SearchComponents/LocationContext';
 import {RecentSearchProvider} from './components/SearchComponents/RecentSearchContext';
@@ -60,8 +58,9 @@ function App(): JSX.Element {
           <RecentSearchProvider>
             <LocationProvider>
               <NavigationContainer>
-                <Stack.Navigator initialRouteName="PreviewScreen">
-                  {/* <Stack.Navigator initialRouteName="EditSection"> */}
+              <MainContainer />
+                {/* <Stack.Navigator initialRouteName="PreviewScreen"> */}
+                  {/* <Stack.Navigator> */}
                   {/* <SafeAreaView style={backgroundStyle}> */}
                   {/* <StatusBar
                         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
@@ -194,7 +193,7 @@ function App(): JSX.Element {
                   />
 
                   {/* </SafeAreaView> */}
-                </Stack.Navigator>
+                {/* </Stack.Navigator> */}
               </NavigationContainer>
             </LocationProvider>
           </RecentSearchProvider>
