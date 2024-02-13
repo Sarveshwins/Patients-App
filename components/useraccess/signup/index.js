@@ -6,9 +6,8 @@ import {
   Image,
   TouchableOpacity,
   Appearance,
-  useColorScheme,
+  SafeAreaView,
 } from 'react-native';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
 import React, {useState, useEffect} from 'react';
 import ScreenWrapper from '../../ScreenWrapper';
 import CommonTextInput from '../../Commontextinput';
@@ -98,11 +97,9 @@ const Signup = ({navigation}) => {
   };
 
   return (
-    <SafeAreaProvider>
-      <ScreenWrapper
-        statusBarColor={colorScheme === 'light' ? appColors?.white : 'black'}>
-        {/* <KeyboardAwareScrollView
-       > */}
+    <SafeAreaView style={{flex:1}}>
+    
+       
         <View style={styles.container}>
           <View style={styles.group1}>
             <Text
@@ -256,8 +253,8 @@ const Signup = ({navigation}) => {
           </View>
         </View>
         {/* </KeyboardAwareScrollView> */}
-      </ScreenWrapper>
-    </SafeAreaProvider>
+    
+    </SafeAreaView>
   );
 };
 

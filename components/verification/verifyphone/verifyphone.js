@@ -1,5 +1,10 @@
-import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  SafeAreaView,
+} from 'react-native';
 import React, {useState} from 'react';
 import OtpInputs from 'react-native-otp-inputs';
 import ScreenWrapper from '../../ScreenWrapper';
@@ -13,7 +18,7 @@ const Verifyphone = ({navigation}) => {
 
   const isOtpComplete = otp.length === 6;
   return (
-    <SafeAreaProvider>
+    <SafeAreaView>
       <ScreenWrapper>
         <View style={styles.container}>
           <View style={styles.group1}>
@@ -60,8 +65,7 @@ const Verifyphone = ({navigation}) => {
             shadowColor: isOtpComplete ? '#FF9393' : '#FFF',
           }}
           onPress={() => navigation.navigate('Signup')}
-          disabled={!isOtpComplete}
-          >
+          disabled={!isOtpComplete}>
           <Text
             style={{
               ...styles.verifytext,
@@ -71,7 +75,7 @@ const Verifyphone = ({navigation}) => {
           </Text>
         </TouchableOpacity>
       </ScreenWrapper>
-    </SafeAreaProvider>
+    </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({

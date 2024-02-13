@@ -1,11 +1,10 @@
-import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Image,SafeAreaView} from 'react-native';
 import React, {useEffect, useState, useCallback} from 'react';
 import ScreenWrapper from '../ScreenWrapper';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {appColors} from '../../utils/Appcolors';
 import {Dimensions} from 'react-native';
 import {useWindowDimensions} from 'react-native';
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -69,8 +68,7 @@ const Welcome = ({navigation}) => {
   // );
 
   return (
-    <SafeAreaProvider>
-      <ScreenWrapper>
+    <SafeAreaView style={{flex:1}}>
         <View style={styles.container}>
           <View style={styles.group1}>
             <Text style={styles.Welcometext}>Welcome to {'\n'}With ME !!</Text>
@@ -78,41 +76,34 @@ const Welcome = ({navigation}) => {
               Signup first to experience the app{' '}
             </Text>
           </View>
-
-          <TouchableOpacity  style={[styles.facebookButton, styles.button]}>
-            <Text style={[styles.group2text, styles.facebookText]}>
-              {' '}
-              Continue with facebook
-            </Text>
-            <Image
-              resizeMode="cover"
-              style={[styles.facebookicon, styles.icon]}
-              source={require('../../assets/logos/facebook.png')}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.googleButton, styles.button]}>
-            <Text style={[styles.group2text, styles.googleText]}>
-              Continue with google
-            </Text>
-            <Image
-              resizeMode="cover"
-              style={styles.icon}
-              source={require('../../assets/logos/google.png')}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.emailButton, styles.button]}
-            onPress={() => navigation.navigate('Signup')}>
-            <Text style={[styles.group2text, styles.emailText]}>
-              {' '}
-              Continue with Email/Ph
-            </Text>
-            <Image
-              resizeMode="cover"
-              style={styles.icon}
-              source={require('../../assets/logos/gmaill.png')}
-            />
-          </TouchableOpacity>
+          <View
+            style={{
+              justifyContent: 'center',
+              alignSelf: 'center',
+              alignItems: 'center',
+              marginTop: 170,
+            }}>
+            <TouchableOpacity style={styles.button}>
+              <Image
+                resizeMode="cover"
+                source={require('../../assets/logos/facebookButton.png')}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button}>
+              <Image
+                resizeMode="cover"
+                source={require('../../assets/logos/googleButton.png')}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => navigation.navigate('Signup')}>
+              <Image
+                resizeMode="cover"
+                source={require('../../assets/logos/emailButton.png')}
+              />
+            </TouchableOpacity>
+          </View>
           <Text style={[styles.group3text]}>
             If you are a new user create an account to enter and experience the
             app
@@ -130,8 +121,7 @@ const Welcome = ({navigation}) => {
             </TouchableOpacity>
           </View>
         </View>
-      </ScreenWrapper>
-    </SafeAreaProvider>
+    </SafeAreaView>
   );
 };
 
@@ -165,19 +155,9 @@ const styles = StyleSheet.create({
     top: 65,
   },
 
-  // group 1 end
-
-  // group 2 start
   button: {
-    height: hp('3.8%'),
-    borderRadius: 15, // Adjust the border radius as needed
-    paddingVertical: 0,
-    elevation: 5, // For Android box shadow
-    shadowColor: '#000000', // For iOS box shadow
-    shadowOffset: {width: 0, height: 4},
-    shadowOpacity: 0.11,
-    shadowRadius: 1,
-    width: 271,
+    height: 55,
+    marginBottom: 10,
   },
   button2: {
     height: hp('1.8%'),
@@ -216,9 +196,6 @@ const styles = StyleSheet.create({
   },
 
   googleButton: {
-    backgroundColor: '#FCFCFE',
-    // Google Blue Color
-
     top: 216,
   },
   googleText: {
@@ -235,9 +212,7 @@ const styles = StyleSheet.create({
   emailText: {
     color: '#FFF',
   },
-  //   group 2 end
 
-  //   group 3 start
   group3text: {
     height: hp('5%'),
     width: 264,
@@ -245,12 +220,11 @@ const styles = StyleSheet.create({
     color: '#454545',
     fontSize: 14,
     fontWeight: '500',
-    top: hp('50%'),
+    marginTop: 70,
   },
-  //   group 3 end
-  //   group 4 start
+
   group4text: {
-    top: hp('60%'),
+    top: 70,
     fontSize: 14,
     fontWeight: '500',
     color: '#454545',
@@ -267,15 +241,15 @@ const styles = StyleSheet.create({
     shadowRadius: 12,
     width: 140,
     backgroundColor: '#FF9393',
-    top: hp('61%'),
-    left: 80,
+    top: 80,
+    left: 100,
   },
   signintext: {
     color: '#FFF',
     fontSize: 18,
     textAlign: 'left',
     fontWeight: '600',
-    top: 4,
+    top: 6,
     left: 26,
     position: 'absolute',
     alignContent: 'center',

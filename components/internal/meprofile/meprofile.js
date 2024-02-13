@@ -295,14 +295,16 @@ const Meprofile = ({navigation}) => {
     },
     container: {
       backgroundColor: isDarkMode ? 'black' : '#FFF',
+      flex:1
     },
     header: {
-      height: hp('25%'),
+      height: hp('26%'),
       backgroundColor: isDarkMode ? 'black' : '#FFF',
     },
     Addsection: {
       height: hp('15%'),
       backgroundColor: isDarkMode ? 'black' : '#FFF',
+      flex:1
     },
     section2: {
       flexDirection: 'row',
@@ -745,8 +747,8 @@ const Meprofile = ({navigation}) => {
                 <Text style={styles.status}>{}</Text>
                 <Text style={styles.city}>{}</Text>
               </View>
-            </View>
-            <ScrollView>
+             </View>
+             <ScrollView>
               <View style={styles.Addsection}>
                 {participants.length < 5 && (
                   <TouchableHighlight
@@ -797,9 +799,9 @@ const Meprofile = ({navigation}) => {
                   ))}
                 </View>
               </View>
-            </ScrollView>
+             </ScrollView>
 
-            <View style={styles.Mehavei}>
+             <View style={styles.Mehavei}>
               <View style={styles.section2}>
                 <TouchableHighlight
                   underlayColor="transparent"

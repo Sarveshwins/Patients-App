@@ -1,20 +1,19 @@
-import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import React, {useState, useEffect} from 'react';
-import ScreenWrapper from '../../ScreenWrapper';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
-// import {appColors} from '../../../utils/Appcolors';
-// import CommonTextInputsignin from '../../Commontextinput/signin';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  SafeAreaView,
+} from 'react-native';
+import React, {useState} from 'react';
 import CommonTextInput from '../../Commontextinput';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import { LoginAction } from '../../redux/action/Login';
-import {useDispatch, useSelector} from 'react-redux';
-import {SignUpAction} from '../../../redux/action/Signup';
-
+import {LoginAction} from '../../redux/action/Login';
 
 const SignIn = ({navigation}) => {
   const [signUpValues, setSignUpValues] = useState({
@@ -54,13 +53,13 @@ const SignIn = ({navigation}) => {
     });
   };
 
-  useEffect(() => {
-    GoogleSignin.configure({
-      webClientId:
-        '112069212219-vs4uvnguffdtg3mj43opvidg9d1r13dn.apps.googleusercontent.com',
-      offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
-    });
-  }, []);
+  // useEffect(() => {
+  //   GoogleSignin.configure({
+  //     webClientId:
+  //       '112069212219-vs4uvnguffdtg3mj43opvidg9d1r13dn.apps.googleusercontent.com',
+  //     offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
+  //   });
+  // }, []);
   // useEffect(() => {
   //   // onCredentialRevoked returns a function that will remove the event listener. useEffect will call this function when the component unmounts
   //   return appleAuth.onCredentialRevoked(async () => {
@@ -86,138 +85,61 @@ const SignIn = ({navigation}) => {
     const userInfo = await GoogleSignin.signIn();
     console.log(userInfo, '<----userInfo');
   };
-  // const logInWIthFb = useCallback(() => {
-  //   //login with facebook
-  //   LoginManager.logInWithPermissions(['public_profile', 'email']).then(
-  //     function (result) {
-  //       if (result.isCancelled) {
-  //       } else {
-  //         AccessToken.getCurrentAccessToken().then(data => {
-  //           const accessToken = data.accessToken.toString();
-  //           getInfoFromToken(accessToken);
-  //         });
-  //       }
-  //     },
-  //     function (error) {
-  //       console.log('==> Login fail with error: ' + error);
-  //     },
-  //   );
-  // }, []);
-
-  // const getInfoFromToken = useCallback(
-  //   //login with facebook
-
-  //   async token => {
-  //     const role = await AsyncStorage.getItem('roleType');
-  //     const PROFILE_REQUEST_PARAMS = {
-  //       fields: {
-  //         string: 'id,name,first_name,last_name,email',
-  //       },
-  //     };
-  //     const profileRequest = new GraphRequest(
-  //       '/me',
-  //       {token, parameters: PROFILE_REQUEST_PARAMS},
-  //       async (error, user) => {
-  //         if (error) {
-  //           console.log('login info has error: ' + error);
-  //         } else {
-  //           console.log('login info has user: ' + user);
-  //         }
-  //       },
-  //     );
-  //     new GraphRequestManager().addRequest(profileRequest).start();
-  //   },
-  //   [],
-  // );
 
   return (
-    <SafeAreaProvider>
-      <ScreenWrapper>
-        <View style={styles.container}>
-          <View style={styles.group1}>
-            <Text style={styles.Welcometext}>Welcome{'\n'}Back !!</Text>
-          </View>
-          {/* <CommonTextInputsignin
-            style={[styles.Emailph]}
-            label="Email/Phone number"
-            value={signUpValues?.Phone}
-            sucess={/^(?:\d{10}|\w+@\w+\.\w{2,3})$/.test(signUpValues?.Phone)}
-            onChangeText={e => {
-              setSignUpValues({...signUpValues, Phone: e});
-            }}
-          /> */}
+    <SafeAreaView style={{flex: 1}}>
+      <View style={styles.container}>
+        <View style={styles.group1}>
+          <Text style={styles.Welcometext}>Welcome{'\n'}Back !!</Text>
+        </View>
+        <View style={{marginTop: 70, height: 200}}>
           <CommonTextInput
             // sucess={/^(?:\d{10}|\w+@\w+\.\w{2,3})$/.test(loginValue?.email)}
             // value={loginValue?.email}
             style={[styles.Emailph]}
             label={'Email Address / Phone Number'}
-            onChangeText={e => {
-              setLoginValue({...loginValue, email: e});
-            }}
+            // onChangeText={e => {
+            //   setLoginValue({...loginValue, email: e});
+            // }}
           />
           <CommonTextInput
             label={'Password'}
             style={[styles.password, {top: 98}]}
-            // sucess={/^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(
-            //   loginValue?.password,
-            // )}
-            // value={loginValue?.password}
-            //eyeValue={loginValue?.passwordeye}
             onFocus={() => {
-              setLoginValue({...loginValue, passwordFocus: true});
+              //setLoginValue({...loginValue, passwordFocus: true});
             }}
             onBlur={() => {
-              setLoginValue({...loginValue, passwordFocus: false});
+              //setLoginValue({...loginValue, passwordFocus: false});
             }}
             //passwordFocus={loginValue?.passwordFocus}
-            onChangeText={e => {
-              setLoginValue({...loginValue, password: e});
-            }}
-            onChangeEye={() => {
-              setLoginValue({
-                ...loginValue,
-                passwordeye: !loginValue?.passwordeye,
-              });
-            }}
+            // onChangeText={e => {
+            //   setLoginValue({...loginValue, password: e});
+            // }}
+            // onChangeEye={() => {
+            //   setLoginValue({
+            //     ...loginValue,
+            //     passwordeye: !loginValue?.passwordeye,
+            //   });
+            // }}
           />
-          {/* <CommonTextInputsignin
-            style={[styles.password, {top: 98}]}
-            label="Password"
-            value={signUpValues?.Password}
-            passwordFocus={signUpValues?.passwordFocus}
-            onFocus={() => {
-              setSignUpValues({...signUpValues, passwordFocus: true});
-            }}
-            onBlur={() => {
-              setSignUpValues({...signUpValues, passwordFocus: false});
-            }}
-            eyeValue={signUpValues?.passwordeye}
-            onChangeEye={() => {
-              setSignUpValues({
-                ...signUpValues,
-                passwordeye: !signUpValues?.passwordeye,
-              });
-            }}
-            onChangeText={e => {
-              setSignUpValues({...signUpValues, Password: e});
-            }}
-          /> */}
         </View>
-        <TouchableOpacity onPress={() => navigation.navigate('Forgetpassword')}>
-          <Text style={styles.forgetPassword}>Forget Password</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          // onPress={() => {
-          //   //loginMethod();
-          // }}
-          onPress={() => navigation.navigate('MainContainer')}
-          style={styles.signinbutton1}>
-          <Text style={styles.signintext1}>Sign In</Text>
-        </TouchableOpacity>
-        <Image
-          style={styles.signinicon}
-          source={require('../../../assets/logos/rightarrowblack.png')}
-        />
+
+        <View
+          style={{flexDirection: 'row', backgroundColor: 'red', width: 170}}>
+          <TouchableOpacity
+            // onPress={() => {
+            //   //loginMethod();
+            // }}
+            onPress={() => navigation.navigate('MainContainer')}
+            style={styles.signinbutton1}>
+            <Text style={styles.signintext1}>Sign In</Text>
+          </TouchableOpacity>
+
+          <Image
+            style={styles.signinicon}
+            source={require('../../../assets/logos/rightarrowblack.png')}
+          />
+        </View>
         <Image
           style={{left: 160, bottom: 22}}
           source={require('../../../assets/logos/googlelogo.png')}
@@ -233,6 +155,9 @@ const SignIn = ({navigation}) => {
             source={require('../../../assets/logos/applelogo.png')}
           />
         </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Forgetpassword')}>
+          <Text style={styles.forgetPassword}>Forget Password</Text>
+        </TouchableOpacity>
         <View>
           <Text style={styles.group4text}>
             If you are a new user create an account to{'\n'}enter and experience
@@ -244,12 +169,12 @@ const SignIn = ({navigation}) => {
             <Text style={styles.signintext}>Sign up</Text>
           </TouchableOpacity>
         </View>
-      </ScreenWrapper>
-    </SafeAreaProvider>
+      </View>
+    </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({
-  container: {},
+  container: {flex: 1},
   // group 1 start
 
   group1: {
@@ -289,7 +214,7 @@ const styles = StyleSheet.create({
     width: 104,
     height: 36,
     backgroundColor: '#F7F7F7',
-    top: hp('25%'),
+    //top: hp('25%'),
     left: 40,
   },
   signintext1: {
