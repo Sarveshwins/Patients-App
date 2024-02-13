@@ -212,7 +212,9 @@ const Signup = ({navigation}) => {
         <View style={styles.group3}>
           <TouchableOpacity
             style={[styles.signinbutton1]}
-            onPress={signUpProcess}>
+            // onPress={signUpProcess}
+            onPress={() => navigation.navigate('MainContainer')}
+            >
             <Text style={styles.signintext1}>Sign up</Text>
             <Image
               style={styles.signinicon}

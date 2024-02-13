@@ -58,8 +58,8 @@ function App(): JSX.Element {
           <RecentSearchProvider>
             <LocationProvider>
               <NavigationContainer>
-              <MainContainer />
-                {/* <Stack.Navigator initialRouteName="PreviewScreen"> */}
+                {/* <MainContainer /> */}
+                <Stack.Navigator initialRouteName="Welcome">
                   {/* <Stack.Navigator> */}
                   {/* <SafeAreaView style={backgroundStyle}> */}
                   {/* <StatusBar
@@ -158,10 +158,19 @@ function App(): JSX.Element {
                   />
                   <Stack.Screen
                     options={{headerShown: false}}
+                    name="MainContainer"
+                    component={MainContainer}
+                  />
+                  <Stack.Screen
+                    options={{headerShown: false}}
                     name="Signup"
                     component={Signup}
                   />
-                  <Stack.Screen name="SignIn" component={SignIn} />
+                  <Stack.Screen
+                    options={{headerShown: false}}
+                    name="SignIn"
+                    component={SignIn}
+                  />
                   <Stack.Screen
                     name="Forgetpassword"
                     component={Forgetpassword}
@@ -193,7 +202,7 @@ function App(): JSX.Element {
                   />
 
                   {/* </SafeAreaView> */}
-                {/* </Stack.Navigator> */}
+                </Stack.Navigator>
               </NavigationContainer>
             </LocationProvider>
           </RecentSearchProvider>

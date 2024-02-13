@@ -20,6 +20,7 @@ import {
 function useStyles() {
   const {width, height} = useWindowDimensions();
 }
+
 const Welcome = ({navigation}) => {
   // const styles = useStyles();
 
@@ -120,7 +121,7 @@ const Welcome = ({navigation}) => {
             <Text style={styles.group4text}>If already have an account ?</Text>
             <TouchableOpacity
               style={styles.signinbutton}
-              onPress={() => navigation.navigate('Signin')}>
+              onPress={() => navigation.navigate('SignIn')}>
               <Text style={styles.signintext}>Sign in</Text>
               <Image
                 style={styles.signinicon}

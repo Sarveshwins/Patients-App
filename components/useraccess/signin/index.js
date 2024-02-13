@@ -9,7 +9,6 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import appleAuth from '@invertase/react-native-apple-authentication';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import { LoginAction } from '../../redux/action/Login';
@@ -62,14 +61,14 @@ const SignIn = ({navigation}) => {
       offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
     });
   }, []);
-  useEffect(() => {
-    // onCredentialRevoked returns a function that will remove the event listener. useEffect will call this function when the component unmounts
-    return appleAuth.onCredentialRevoked(async () => {
-      console.warn(
-        'If this function executes, User Credentials have been Revoked',
-      );
-    });
-  }, []);
+  // useEffect(() => {
+  //   // onCredentialRevoked returns a function that will remove the event listener. useEffect will call this function when the component unmounts
+  //   return appleAuth.onCredentialRevoked(async () => {
+  //     console.warn(
+  //       'If this function executes, User Credentials have been Revoked',
+  //     );
+  //   });
+  // }, []);
 
   if (
     signUpValues?.firstName?.length >= 3 &&
@@ -163,14 +162,14 @@ const SignIn = ({navigation}) => {
             //   loginValue?.password,
             // )}
             // value={loginValue?.password}
-            eyeValue={loginValue?.passwordeye}
+            //eyeValue={loginValue?.passwordeye}
             onFocus={() => {
               setLoginValue({...loginValue, passwordFocus: true});
             }}
             onBlur={() => {
               setLoginValue({...loginValue, passwordFocus: false});
             }}
-            passwordFocus={loginValue?.passwordFocus}
+            //passwordFocus={loginValue?.passwordFocus}
             onChangeText={e => {
               setLoginValue({...loginValue, password: e});
             }}
@@ -208,9 +207,10 @@ const SignIn = ({navigation}) => {
           <Text style={styles.forgetPassword}>Forget Password</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => {
-            loginMethod();
-          }}
+          // onPress={() => {
+          //   //loginMethod();
+          // }}
+          onPress={() => navigation.navigate('MainContainer')}
           style={styles.signinbutton1}>
           <Text style={styles.signintext1}>Sign In</Text>
         </TouchableOpacity>
