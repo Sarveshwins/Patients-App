@@ -16,7 +16,7 @@ import ISection from './isectionlist.js/isectionlist';
 import Mesection from './mesection';
 import HaveSection from './HaveSection';
 import ImagePicker from 'react-native-image-crop-picker';
-import { useTheme } from '../../ThemeContext';
+import {useTheme} from '../../ThemeContext';
 
 const Meprofile = ({navigation}) => {
   const [participants, setParticipants] = useState([]);
@@ -232,7 +232,6 @@ const Meprofile = ({navigation}) => {
     toggleModalme();
   };
 
-
   //have section
   const toggleModalHave = () => {
     setIsHaveModalVisible(!isHaveModalVisible);
@@ -291,11 +290,11 @@ const Meprofile = ({navigation}) => {
 
   const styles = StyleSheet.create({
     scrollContent: {
-      minHeight: hp('70%'),
+      //minHeight: hp('70%'),
     },
     container: {
       backgroundColor: isDarkMode ? 'black' : '#FFF',
-      flex:1
+      flex: 1,
     },
     header: {
       height: hp('26%'),
@@ -304,7 +303,7 @@ const Meprofile = ({navigation}) => {
     Addsection: {
       height: hp('15%'),
       backgroundColor: isDarkMode ? 'black' : '#FFF',
-      flex:1
+      flex: 1,
     },
     section2: {
       flexDirection: 'row',
@@ -420,7 +419,7 @@ const Meprofile = ({navigation}) => {
       color: '#626262',
       position: 'absolute',
       top: 5,
-      borderRadius: 51,
+      borderRadius: 35,
       borderColor: '#9E9E9E',
       borderWidth: 2,
       width: 70,
@@ -693,7 +692,7 @@ const Meprofile = ({navigation}) => {
   });
 
   return (
-    <View>
+    <View style={{flex:1}}>
       {showParticipantForm ? (
         <ParticipantForm
           onClose={handleCloseParticipantForm}
@@ -740,15 +739,15 @@ const Meprofile = ({navigation}) => {
                   <Text style={styles.f}>f</Text>
                 </Text>
                 <View style={styles.namesection}>
-                  <Text style={styles.fullname}>Bipin Gupta</Text>
+                  <Text style={styles.fullname}>Sarvesh Awasthi</Text>
                   <Text style={styles.gender}>{}</Text>
                 </View>
                 <Text style={styles.age}>{}</Text>
                 <Text style={styles.status}>{}</Text>
                 <Text style={styles.city}>{}</Text>
               </View>
-             </View>
-             <ScrollView>
+            </View>
+            <ScrollView>
               <View style={styles.Addsection}>
                 {participants.length < 5 && (
                   <TouchableHighlight
@@ -799,9 +798,9 @@ const Meprofile = ({navigation}) => {
                   ))}
                 </View>
               </View>
-             </ScrollView>
+            </ScrollView>
 
-             <View style={styles.Mehavei}>
+            <View style={styles.Mehavei}>
               <View style={styles.section2}>
                 <TouchableHighlight
                   underlayColor="transparent"

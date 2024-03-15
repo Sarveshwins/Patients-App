@@ -28,68 +28,95 @@ const CommonTextInput = ({
   onBlur,
   style,
   maxlength,
-  sucesss,
+  keyboardType,
+  editable,
 }) => {
-  const isPassword = label?.toLowerCase().includes('password');
-  const isConfirmPassword = label?.toLowerCase().includes('confirm password');
-
-  return (
-    <View style={{left: 40}}>
-      <View
-        style={{
-          flexDirection: 'row',
-          borderBottomColor: sucess ? appColors?.green : '#979797',
-          borderBottomWidth: 1,
-          width: hp('37%'),
-          paddingLeft: 10,
-          marginTop: 20,
-        }}>
-        <TextInput
-          secureTextEntry={isPassword && eyeValue}
-          placeholder={label}
-          onBlur={onBlur}
-          onChangeText={onChangeText}
-          value={value}
+  // const { colorScheme } = useAppCommonDataProvider();
+  console.log(!passwordFocus && value?.length !== 0, passwordFocus, value);
+  if (label?.includes("Password")) {
+    return (
+      <View style={{ height: 75 }}>
+        <View
           style={{
-            width: '90%',
-            fontSize: 17,
-            color: 'black',
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+            borderBottomColor: sucess
+              ? appColors?.green
+              : appColors?.loaderColor,
+            borderBottomWidth: 1,
+            width: 265,
+            marginTop: "10%",
           }}
-        />
-        {isPassword && (
-          <TouchableOpacity onPress={onChangeEye}>
-            {/* Add your eye icon component here */}
+        >
+          <TextInput
+            secureTextEntry={eyeValue}
+            placeholder={label}
+            onFocus={onFocus}
+            placeholderTextColor={appColors?.loaderColor}
+            onBlur={onBlur}
+            onChangeText={onChangeText}
+            value={value}
+            style={{
+              width: "90%",
+              height: 40,
+              fontSize: 17,
+              paddingBottom: 10,
+             // color:
+               // colorScheme === "light" ? appColors?.black : appColors?.white,
+            }}
+          />
+          <TouchableOpacity
+            onPress={onChangeEye}
+            style={
+              {
+                // backgroundColor: 'red',
+                // height: '80%',
+              }
+            }
+          >
+            <Image
+             // source={eyeValue ? imagePath?.eyeClose : imagePath?.eyeOpen}
+              style={{
+                height: 17,
+                width: 17,
+              }}
+            />
           </TouchableOpacity>
+        </View>
+        {console.log(value, "<---valuevalue")}
+        {value?.length !== 0 && (
+          <View>
+            <PasswordError
+              passwordFocus={passwordFocus}
+              passwordCheck={!passwordFocus && value?.length !== 0}
+              value={value}
+            />
+          </View>
         )}
       </View>
-      {(isPassword || isConfirmPassword) && (
-        <View style={{bottom: 0, left: 0, right: 0}}>
-          <PasswordError
-            passwordCheck={!passwordFocus && value?.length !== 0}
-            value={value}
-          />
-        </View>
-      )}
-    </View>
-  );
+    );
+  }
   if (initvalue) {
     return (
       <View
         style={{
           height: 75,
-          flexDirection: 'row',
-          width: hp('37%'),
+          flexDirection: "row",
+          width: 265,
           height: 40,
-          borderBottomColor: sucess ? appColors?.green : '#979797',
+          borderBottomColor: sucess ? appColors?.green : "#979797",
           borderBottomWidth: 0.6,
-        }}>
+        }}
+      >
         <Text
           style={{
-            color: 'black',
+           // color: colorScheme === "light" ? "black" : "white",
             marginRight: 10,
             fontSize: 17,
-            justifyContent: 'center',
-          }}>
+            justifyContent: "center",
+          }}
+        >
           {initvalue}
         </Text>
         <TextInput
@@ -104,7 +131,7 @@ const CommonTextInput = ({
               paddingBottom: 20,
               fontSize: 17,
 
-              color: 'black',
+            //  color: colorScheme === "light" ? "black" : "white",
             },
             style,
           ]}
@@ -113,24 +140,25 @@ const CommonTextInput = ({
     );
   }
   return (
-    <View style={{height: 75}}>
+    <View style={{ height: 75 }}>
       <TextInput
         onChangeText={onChangeText}
         value={value}
+        editable={editable}
+        
+        keyboardType={keyboardType ? keyboardType : "default"}
         placeholder={label}
         style={[
           {
-            width: hp('37%'),
             height: 40,
-            paddingBottom: 10,
-            fontSize: 17,
-            marginTop: '10%',
-            borderBottomColor: sucess ? appColors?.green : '#979797',
-            borderBottomWidth: 3,
-            color: 'black',
-            fontFamily: 'Roboto',
-            left: 40,
-            paddingLeft: 20,
+            paddingBottom: 9,
+            
+            fontSize: 16,
+            fontWeight:"500",
+            marginTop: "10%",
+            borderBottomColor: sucess ? appColors?.green : appColors?.darkblack,
+            borderBottomWidth: 1,
+            //color: colorScheme === "light" ? "black" : "white",
           },
           style,
         ]}

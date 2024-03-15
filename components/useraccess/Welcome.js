@@ -1,4 +1,11 @@
-import {View, Text, StyleSheet, TouchableOpacity, Image,SafeAreaView} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  SafeAreaView,
+} from 'react-native';
 import React, {useEffect, useState, useCallback} from 'react';
 import ScreenWrapper from '../ScreenWrapper';
 import {appColors} from '../../utils/Appcolors';
@@ -68,59 +75,59 @@ const Welcome = ({navigation}) => {
   // );
 
   return (
-    <SafeAreaView style={{flex:1}}>
-        <View style={styles.container}>
-          <View style={styles.group1}>
-            <Text style={styles.Welcometext}>Welcome to {'\n'}With ME !!</Text>
-            <Text style={styles.signup_text}>
-              Signup first to experience the app{' '}
-            </Text>
-          </View>
-          <View
-            style={{
-              justifyContent: 'center',
-              alignSelf: 'center',
-              alignItems: 'center',
-              marginTop: 170,
-            }}>
-            <TouchableOpacity style={styles.button}>
-              <Image
-                resizeMode="cover"
-                source={require('../../assets/logos/facebookButton.png')}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button}>
-              <Image
-                resizeMode="cover"
-                source={require('../../assets/logos/googleButton.png')}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => navigation.navigate('Signup')}>
-              <Image
-                resizeMode="cover"
-                source={require('../../assets/logos/emailButton.png')}
-              />
-            </TouchableOpacity>
-          </View>
-          <Text style={[styles.group3text]}>
-            If you are a new user create an account to enter and experience the
-            app
+    <SafeAreaView style={{flex: 1}}>
+      <View style={styles.container}>
+        <View style={styles.group1}>
+          <Text style={styles.Welcometext}>Welcome to {'\n'}With ME !!</Text>
+          <Text style={styles.signup_text}>
+            Signup first to experience the app{' '}
           </Text>
-          <View>
-            <Text style={styles.group4text}>If already have an account ?</Text>
-            <TouchableOpacity
-              style={styles.signinbutton}
-              onPress={() => navigation.navigate('SignIn')}>
-              <Text style={styles.signintext}>Sign in</Text>
-              <Image
-                style={styles.signinicon}
-                source={require('../../assets/logos/signin-icon.png')}
-              />
-            </TouchableOpacity>
-          </View>
         </View>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignSelf: 'center',
+            alignItems: 'center',
+            marginTop: 170,
+          }}>
+          <TouchableOpacity style={styles.button}>
+            <Image
+              resizeMode="cover"
+              source={require('../../assets/logos/facebookButton.png')}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button}>
+            <Image
+              resizeMode="cover"
+              source={require('../../assets/logos/googleButton.png')}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate('Signup')}>
+            <Image
+              resizeMode="cover"
+              source={require('../../assets/logos/emailButton.png')}
+            />
+          </TouchableOpacity>
+        </View>
+        <Text style={[styles.group3text]}>
+          If you are a new user create an account to enter and experience the
+          app
+        </Text>
+        <View>
+          <Text style={styles.group4text}>If already have an account ?</Text>
+          <TouchableOpacity
+            style={styles.signinbutton}
+            onPress={() => navigation.navigate('SignIn')}>
+            <Text style={styles.signintext}>Sign in</Text>
+            <Image
+              style={styles.signinicon}
+              source={require('../../assets/logos/signin-icon.png')}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
     </SafeAreaView>
   );
 };

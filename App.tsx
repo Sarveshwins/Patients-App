@@ -1,16 +1,8 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React from 'react';
 import {PropsWithChildren} from 'react';
 import {StyleSheet} from 'react-native';
 import store from './components/redux/store';
 import {Provider} from 'react-redux';
-
 import Meprofile from './components/internal/meprofile/meprofile';
 import {AppCommonDataProvider} from './components/UseAppCommonDataProvider';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -58,14 +50,7 @@ function App(): JSX.Element {
           <RecentSearchProvider>
             <LocationProvider>
               <NavigationContainer>
-                {/* <MainContainer /> */}
-                <Stack.Navigator initialRouteName="Welcome">
-                  {/* <Stack.Navigator> */}
-                  {/* <SafeAreaView style={backgroundStyle}> */}
-                  {/* <StatusBar
-                        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-                        backgroundColor={backgroundStyle.backgroundColor}
-                      /> */}
+                <Stack.Navigator initialRouteName="Meprofile">
                   <Stack.Screen
                     options={{headerShown: false}}
                     name="MeContactsList"

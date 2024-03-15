@@ -16,18 +16,14 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {LoginAction} from '../../redux/action/Login';
 
 const SignIn = ({navigation}) => {
-  const [signUpValues, setSignUpValues] = useState({
-    firstName: '',
-    lastName: '',
-    Phone: '',
-    Password: '',
-    confirmPassword: '',
-    passwordeye: true,
-    confirmPasswordeye: true,
-    passwordFocus: false,
-    confirmPasswordFocus: false,
-  });
 
+
+    const [loginValue, setLoginValue] = useState({
+      email: 'doctor@yopmail.com', //"9463826048",
+      password: 'Awasthi123!@#', //"Admin@1313",
+      passwordeye: false,
+      passwordFocus: false,
+    });
   const loginMethod = async () => {
     // navigation?.navigate("TabNavigator");
     // return;
@@ -69,16 +65,7 @@ const SignIn = ({navigation}) => {
   //   });
   // }, []);
 
-  if (
-    signUpValues?.firstName?.length >= 3 &&
-    signUpValues?.lastName?.length >= 3 &&
-    signUpValues?.Password?.length >= 8 &&
-    signUpValues?.confirmPassword?.length >= 8
-  ) {
-    console.log(signUpValues, '<--signUpValuessignUpValues');
-  } else {
-    console.log('Validation failed. Please check the input values.');
-  }
+
 
   const googleSign = async () => {
     await GoogleSignin.hasPlayServices();
@@ -92,73 +79,158 @@ const SignIn = ({navigation}) => {
         <View style={styles.group1}>
           <Text style={styles.Welcometext}>Welcome{'\n'}Back !!</Text>
         </View>
-        <View style={{marginTop: 70, height: 200}}>
+        <View
+          style={{
+           // marginBottom: 30,
+            height: '30%',
+            justifyContent: 'center',
+            alignSelf:'center',
+            alignItems:'center'
+          }}>
           <CommonTextInput
-            // sucess={/^(?:\d{10}|\w+@\w+\.\w{2,3})$/.test(loginValue?.email)}
-            // value={loginValue?.email}
-            style={[styles.Emailph]}
+            sucess={/^(?:\d{10}|\w+@\w+\.\w{2,3})$/.test(loginValue?.email)}
+            value={loginValue?.email}
+            style={{width: 265}}
             label={'Email Address / Phone Number'}
-            // onChangeText={e => {
-            //   setLoginValue({...loginValue, email: e});
-            // }}
+            onChangeText={e => {
+              setLoginValue({...loginValue, email: e});
+            }}
           />
           <CommonTextInput
             label={'Password'}
-            style={[styles.password, {top: 98}]}
+            style={{width: 265}}
+            sucess={/^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(
+              loginValue?.password,
+            )}
+            value={loginValue?.password}
+            eyeValue={loginValue?.passwordeye}
             onFocus={() => {
-              //setLoginValue({...loginValue, passwordFocus: true});
+              setLoginValue({...loginValue, passwordFocus: true});
             }}
             onBlur={() => {
-              //setLoginValue({...loginValue, passwordFocus: false});
+              setLoginValue({...loginValue, passwordFocus: false});
             }}
-            //passwordFocus={loginValue?.passwordFocus}
-            // onChangeText={e => {
-            //   setLoginValue({...loginValue, password: e});
-            // }}
-            // onChangeEye={() => {
-            //   setLoginValue({
-            //     ...loginValue,
-            //     passwordeye: !loginValue?.passwordeye,
-            //   });
-            // }}
+            passwordFocus={loginValue?.passwordFocus}
+            onChangeText={e => {
+              setLoginValue({...loginValue, password: e});
+            }}
+            onChangeEye={() => {
+              setLoginValue({
+                ...loginValue,
+                passwordeye: !loginValue?.passwordeye,
+              });
+            }}
           />
         </View>
-
-        <View
-          style={{flexDirection: 'row', backgroundColor: 'red', width: 170}}>
-          <TouchableOpacity
-            // onPress={() => {
-            //   //loginMethod();
-            // }}
-            onPress={() => navigation.navigate('MainContainer')}
-            style={styles.signinbutton1}>
-            <Text style={styles.signintext1}>Sign In</Text>
-          </TouchableOpacity>
-
-          <Image
-            style={styles.signinicon}
-            source={require('../../../assets/logos/rightarrowblack.png')}
-          />
-        </View>
-        <Image
-          style={{left: 160, bottom: 22}}
-          source={require('../../../assets/logos/googlelogo.png')}
-        />
-        <Image
-          style={{left: 230, bottom: 59}}
-          source={require('../../../assets/logos/facebooklogo.png')}
-        />
-        <TouchableOpacity style={styles.applebutton}>
-          <Text style={styles.appletext}>Continue with Apple</Text>
-          <Image
-            style={styles.applelogo}
-            source={require('../../../assets/logos/applelogo.png')}
-          />
-        </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('Forgetpassword')}>
           <Text style={styles.forgetPassword}>Forget Password</Text>
         </TouchableOpacity>
-        <View>
+
+        <View
+          style={{
+            flexDirection: 'row',
+            height: 45,
+            marginTop: 20,
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              borderRadius: 15, // Adjust the border radius as needed
+              height: 40,
+              width: 115,
+              backgroundColor: '#FF9393',
+              justifyContent: 'center',
+              alignItems: 'center',
+              alignSelf: 'center',
+              marginLeft: 30,
+            }}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('MainContainer')}>
+              <Text>Sign In</Text>
+            </TouchableOpacity>
+
+            <Image
+              style={styles.signinicon}
+              source={require('../../../assets/logos/rightarrowblack.png')}
+            />
+          </View>
+
+          <View
+            style={{
+              flexDirection: 'row',
+              height: 40,
+              width: 170,
+              justifyContent: 'space-evenly',
+              alignItems: 'center',
+              alignSelf: 'center',
+              alignSelf: 'center',
+              marginLeft: 20,
+            }}>
+            <Image
+              source={require('../../../assets/logos/googlelogo.png')}
+              style={{
+                width: 48,
+                height: 44,
+                backgroundColor: 'white',
+                borderColor: 'gray',
+                borderRadius: 18,
+                borderWidth: 1,
+                alignSelf: 'center',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            />
+            <Image
+              source={require('../../../assets/logos/facebooklogo.png')}
+              style={{
+                width: 48,
+                height: 44,
+                backgroundColor: 'white',
+                borderColor: 'gray',
+                borderRadius: 18,
+                borderWidth: 1,
+                alignSelf: 'center',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            />
+            {/* <View
+              style={{
+                width: 48,
+                height: 44,
+                backgroundColor: 'white',
+                borderColor: 'gray',
+                borderRadius: 18,
+                borderWidth: 1,
+                alignSelf: 'center',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Image source={require('../../../assets/logos/apple_icon.png')} />
+            </View> */}
+          </View>
+        </View>
+        <View
+          style={{
+            alignItems: 'center',
+            alignSelf: 'center',
+            justifyContent: 'space-around',
+            marginTop: 40,
+            flexDirection: 'row',
+            backgroundColor: 'red',
+            borderRadius: 20,
+          }}>
+          <TouchableOpacity>
+            <Image source={require('../../../assets/logos/applebtn.png')} />
+          </TouchableOpacity>
+        </View>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignSelf: 'center',
+            alignItems: 'center',
+            marginTop: 90,
+          }}>
           <Text style={styles.group4text}>
             If you are a new user create an account to{'\n'}enter and experience
             the app
@@ -202,7 +274,6 @@ const styles = StyleSheet.create({
   },
   forgetPassword: {
     left: 40,
-    top: hp('16%'),
     color: '#FD962A',
     fontSize: 15,
     fontWeight: '500',
@@ -211,11 +282,9 @@ const styles = StyleSheet.create({
 
   signinbutton1: {
     borderRadius: 15, // Adjust the border radius as needed
-    width: 104,
     height: 36,
+    width: 105,
     backgroundColor: '#F7F7F7',
-    //top: hp('25%'),
-    left: 40,
   },
   signintext1: {
     color: '#2E2525',
@@ -229,33 +298,9 @@ const styles = StyleSheet.create({
 
   appletext: {
     color: '#FFF',
-    alignItems: 'center',
-    textAlign: 'center',
+
     fontSize: hp('2%'),
     fontWeight: '600',
-    left: 17,
-    top: 3,
-  },
-  applebutton: {
-    backgroundColor: '#454545',
-    shadowColor: 'rgba(0, 0, 0, 0.15)',
-    shadowRadius: 11,
-    elevation: 11,
-    shadowOpacity: 1,
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    borderRadius: 15,
-    height: hp('4%'),
-    width: 270,
-    top: hp('28%'),
-    left: 41,
-  },
-  applelogo: {
-    left: 33,
-    bottom: hp('2%'),
-    height: hp('2.2%'),
   },
 
   //   group 3 end
@@ -265,9 +310,9 @@ const styles = StyleSheet.create({
     fontSize: hp('1.8%'),
     fontWeight: '500',
     color: '#454545',
-    right: hp('3.5%'),
-    top: hp('42%'),
-    textAlign: 'center',
+    // right: hp('3.5%'),
+    // top: hp('42%'),
+    //textAlign: 'center',
   },
   signinbutton: {
     borderRadius: 15, // Adjust the border radius as needed
@@ -277,11 +322,12 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 0, height: 5},
     shadowOpacity: 0.35,
     shadowRadius: 12,
-    width: hp('20%'),
+    width: hp('16%'),
     height: 36,
     backgroundColor: '#FF9393',
-    top: hp('45%'),
-    left: hp('23%'),
+    //top: hp('45%'),
+    marginTop:20,
+    left: hp('13%'),
   },
   signintext: {
     color: '#FFF',
@@ -293,8 +339,6 @@ const styles = StyleSheet.create({
   signinicon: {
     width: 20,
     height: 20,
-    left: 79,
-    top: 8,
   },
   leftbutton: {
     borderRadius: 15, // Adjust the border radius as needed

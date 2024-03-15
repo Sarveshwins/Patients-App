@@ -19,6 +19,7 @@ import {appColors} from '../../../utils/Appcolors';
 import {useAppCommonDataProvider} from '../../UseAppCommonDataProvider';
 import {useDispatch, useSelector} from 'react-redux';
 import {SignUpAction} from '../../redux/action/Signup';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 // import { useAppCommonDataProvider } from '../../../useAppCommonDataProvider'
 
@@ -97,26 +98,43 @@ const Signup = ({navigation}) => {
   };
 
   return (
-    <SafeAreaView style={{flex:1}}>
-    
-       
-        <View style={styles.container}>
-          <View style={styles.group1}>
+    <SafeAreaView style={{flex:1, backgroundColor:'red'}}>
+      <ScreenWrapper
+        statusBarColor={colorScheme === 'light' ? appColors?.white : 'black'}>
+        {/* <KeyboardAwareScrollView
+          keyboardShouldPersistTaps="always"
+          enableOnAndroid={true}
+          contentContainerStyle={{paddingBottom: 20}}
+          style={{
+            flex: 1,
+            paddingHorizontal: '10%',
+            paddingTop: 28,
+            backgroundColor:
+              colorScheme === 'light' ? appColors?.white : appColors?.black,
+          }}> */}
+          <View style={{margintTop: 10, flex: 0.2, backgroundColor: 'red'}}>
             <Text
-              style={[
-                styles.Signup,
-                {color: colorScheme === 'light' ? 'black' : 'white'},
-              ]}>
+              style={{
+                fontSize: 37,
+                fontWeight: '500',
+                color: colorScheme === 'light' ? 'black' : 'white',
+              }}>
               Sign Up
             </Text>
-            <Text style={styles.signup_text}>
-              Sign up to register yourself on this{'\n'}Platform{' '}
+            <Text
+              style={{
+                fontSize: 19,
+                fontWeight: '500',
+                color: '#C0C0C0',
+                marginTop: '4%',
+                lineHeight: 22,
+              }}>
+              Sign up to register yourself{'\n'}on this Platfom
             </Text>
           </View>
-          <View style={styles.group2}>
-            <View style={styles.inputs}>
+          <View contentContainerStyle={{flex: 9}}>
+            <View style={{flex: 0.78}}>
               <CommonTextInput
-                style={[styles.Firstname]}
                 label="First Name"
                 value={signUpValues?.firstName}
                 sucess={signUpValues?.firstName?.length >= 3}
@@ -125,7 +143,6 @@ const Signup = ({navigation}) => {
                 }}
               />
               <CommonTextInput
-                style={styles.Lastname}
                 label="Last Name"
                 value={signUpValues?.lastName}
                 sucess={signUpValues?.lastName?.length >= 3}
@@ -134,8 +151,7 @@ const Signup = ({navigation}) => {
                 }}
               />
               <CommonTextInput
-                style={styles.Emailph}
-                label="Email/Phone number"
+                label="Email/Phone"
                 value={signUpValues?.Phone}
                 sucess={/^(?:\d{10}|\w+@\w+\.\w{2,3})$/.test(
                   signUpValues?.Phone,
@@ -145,7 +161,6 @@ const Signup = ({navigation}) => {
                 }}
               />
               <CommonTextInput
-                style={styles.password}
                 label="Password"
                 value={signUpValues?.Password}
                 passwordFocus={signUpValues?.passwordFocus}
@@ -167,7 +182,6 @@ const Signup = ({navigation}) => {
                 }}
               />
               <CommonTextInput
-                style={styles.confirmpw}
                 label="Confirm Password"
                 value={signUpValues?.confirmPassword}
                 passwordFocus={signUpValues?.confirmPasswordFocus}
@@ -195,65 +209,86 @@ const Signup = ({navigation}) => {
                 }}
               />
             </View>
-            {/* <View>
-        <Text style={styles.group4text}>If already have an account ?</Text>
-        <TouchableOpacity style={styles.signinbutton}>
-            
-            <Text style={styles.signintext}>Sign in</Text>
-            <Image style={styles.signinicon} source={require("../../../../assets/logos/signin-icon.png")}/>
+            <View
+              style={{
+                marginTop: '15%',
 
-        </TouchableOpacity>
-      </View> */}
+                width: '100%',
+                flex: 0.2,
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}>
+                {/* <CommonButton
+                  buttonText={'Sign Up'}
+                  onPress={() => {
+                    signUpProcess();
+                    //navigation?.navigate('Verification');
+                  }}
+                /> */}
+                {/* <View
+                style={{
+                  flexDirection: "row",
+                  flex: 0.8,
+                  justifyContent: "space-between",
+                }}
+              >
+                <Image source={imagePath?.googleIcon} />
+                <Image source={imagePath?.facebookIcon} />
+              </View> */}
+              </View>
+              <Text
+                style={{marginTop: '5%', color: appColors?.gray, fontSize: 15}}>
+                Or Sign Up with any of the Providers
+              </Text>
+              <View
+                style={{
+                  marginTop: '5%',
+                  flexDirection: 'row',
+                  justifyContent: 'space-evenly',
+                  width: 180,
+                }}>
+                {/* <TouchableOpacity >
+                  <Image source={imagePath?.facebookIcon} />
+                </TouchableOpacity>
+                <TouchableOpacity >
+                  <Image source={imagePath?.googleIcon} />
+                </TouchableOpacity> */}
+                <TouchableOpacity onPress={() => onAppleButtonPress()}>
+                  <View
+                    style={{
+                      width: 48,
+                      height: 44,
+                      backgroundColor: 'white',
+                      borderColor: appColors.gray,
+                      borderRadius: 18,
+                      borderWidth: 1,
+                      alignSelf: 'center',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    {/* <Image source={imagePath?.Apple} /> */}
+                  </View>
+                </TouchableOpacity>
+              </View>
+            </View>
+            <View style={{flex: 0.1, flexDirection: 'row', marginTop: 10}}>
+              <Text style={{color: appColors?.gray}}>
+                If you already have an account ?
+              </Text>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation?.navigate('Login');
+                }}>
+                <Text style={{color: appColors?.orange}}>{' Sign in'}</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-        <View style={styles.group3}>
-          <TouchableOpacity
-            style={[styles.signinbutton1]}
-            // onPress={signUpProcess}
-            onPress={() => navigation.navigate('MainContainer')}
-            >
-            <Text style={styles.signintext1}>Sign up</Text>
-            <Image
-              style={styles.signinicon}
-              source={require('../../../assets/logos/rightarrowblack.png')}
-            />
-
-            <Image
-              style={{left: hp('22%'), bottom: 16, height: 30}}
-              source={require('../../../assets/logos/googlelogo.png')}
-            />
-            <Image
-              style={{left: hp('34%'), bottom: 50, height: 35}}
-              source={require('../../../assets/logos/facebooklogo.png')}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.applebutton}>
-            <Text style={styles.appletext}>Continue with Apple</Text>
-            <Image
-              style={styles.applelogo}
-              source={require('../../../assets/logos/applelogo.png')}
-            />
-          </TouchableOpacity>
-          <View></View>
-          <View style={styles.group4}>
-            <Text style={styles.group4text}>If already have an account ?</Text>
-            <TouchableOpacity
-              style={styles.signinbutton}
-              onPress={() => navigation.navigate('SignIn')}>
-              <Text style={styles.signintext}>Sign in</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.leftbutton}
-              onPress={() => navigation.navigate('Welcome')}>
-              <Image
-                style={styles.group5logo}
-                source={require('../../../assets/logos/leftlogo.png')}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
         {/* </KeyboardAwareScrollView> */}
-    
+      </ScreenWrapper>
     </SafeAreaView>
   );
 };
