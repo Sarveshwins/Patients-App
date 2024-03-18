@@ -37,17 +37,20 @@ const CustomSearchBar = () => {
       width: wp(91),
       flexDirection: 'row',
       alignSelf: 'center',
+      justifyContent:'center',
+      alignItems:'center',
       borderRadius: 22,
       backgroundColor: isDarkMode ? 'rgba(158, 158, 158, 0.60)' : '#F2F2F2',
       paddingHorizontal: wp(4),
       marginTop: hp(3),
+      height:45
     },
     searchIcon: {
       width: wp(5),
       height: hp(2.46),
       marginLeft: wp(1),
       marginRight: wp(0.81),
-      marginTop: hp(1.65),
+     // marginTop: hp(1.65),
     },
     input: {
       fontSize: 15,

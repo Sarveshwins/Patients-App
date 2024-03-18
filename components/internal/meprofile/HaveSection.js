@@ -42,7 +42,7 @@ const HaveSection = ({
             <Text style={{color: 'black'}}>{item.text} </Text>
             {item.answerHave ? (
               <Text style={{color: 'black', fontWeight: '400'}}>
-                 {item.answerHave}
+                {item.answerHave}
               </Text>
             ) : null}
           </Text>
@@ -95,6 +95,7 @@ const HaveSection = ({
       <Modal
         animationType="slide"
         transparent={true}
+        presentationStyle="overFullScreen"
         visible={isHaveModalVisible}
         onRequestClose={() => toggleModalHave()}>
         <View style={styles.modalContainer}>
@@ -128,7 +129,7 @@ const HaveSection = ({
                     <Text style={styles.sectiontextsslider}>
                       {defaultAnswer}
                       {selectedDefaultAnswerHave === defaultAnswer && (
-                        <Text style={styles.checkmark}>  ✓</Text>
+                        <Text style={styles.checkmark}> ✓</Text>
                       )}
                     </Text>
                   </TouchableHighlight>
@@ -169,6 +170,7 @@ const HaveSection = ({
 const styles = StyleSheet.create({
   meContent: {
     position: 'absolute',
+    width: '100%',
   },
   scrollContent: {
     minHeight: hp('50%'),
@@ -221,10 +223,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
-    height: hp('70%'),
+    // height: hp('70%'),
     backgroundColor: '#FFF',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
   },
   modalText: {
     fontSize: 18,

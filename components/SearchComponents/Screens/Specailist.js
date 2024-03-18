@@ -26,7 +26,9 @@ const Specailist = () => {
   const {isDarkMode} = useTheme();
 
   function handleArrowClick() {
-    navigation.navigate('SearchHome');
+    //navigation.navigate('SearchHome');
+        navigation.navigate('MainContainer', {screen: 'SearchHome'});
+
   }
 
   const styles = StyleSheet.create({

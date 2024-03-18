@@ -66,7 +66,9 @@ const Search = () => {
     if (userClicked === true) {
       navigation.navigate('RecentSearch');
     } else {
-      navigation.navigate('SearchHome');
+     // navigation.navigate('SearchHome');
+          navigation.navigate('MainContainer', {screen: 'SearchHome'});
+
     }
   }
 
@@ -297,7 +299,7 @@ const Search = () => {
                 <Image source={searchIcon} style={styles.searchIcon} />
               )}
               <TextInput
-                placeholder="Search my city, locality"
+                placeholder="Search2 my city, locality"
                 placeholderTextColor={isDarkMode ? '#fff' : '#4A4A4A'}
                 clearButtonMode="always"
                 style={styles.input}

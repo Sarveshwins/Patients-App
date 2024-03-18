@@ -50,7 +50,7 @@ function App(): JSX.Element {
           <RecentSearchProvider>
             <LocationProvider>
               <NavigationContainer>
-                <Stack.Navigator initialRouteName="Meprofile">
+                <Stack.Navigator initialRouteName="Welcome">
                   <Stack.Screen
                     options={{headerShown: false}}
                     name="MeContactsList"

@@ -26,7 +26,9 @@ const Issues = () => {
   const {leftSideIssueData, rightSideIssueData} = useRecentSearch();
 
   function handleArrowClick() {
-    navigation.navigate('SearchHome');
+   // navigation.navigate('SearchHome');
+        navigation.navigate('MainContainer', {screen: 'SearchHome'});
+
   }
 
   const styles = StyleSheet.create({

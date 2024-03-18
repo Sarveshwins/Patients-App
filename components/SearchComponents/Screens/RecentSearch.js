@@ -33,7 +33,9 @@ const RecentSearch = () => {
   const {isDarkMode} = useTheme();
 
   function handleArrowClick() {
-    navigation.navigate('SearchHome');
+    //navigation.navigate('SearchHome');
+        navigation.navigate('MainContainer', {screen: 'SearchHome'});
+
   }
 
   const truncateName = name => {
@@ -166,7 +168,7 @@ const RecentSearch = () => {
               )}
               <TextInput
                 style={styles.input}
-                placeholder="Search for Doctor’s, Clinic’s, Services & more.."
+                placeholder="Search2 for Doctor’s, Clinic’s, Services & more.."
                 placeholderTextColor={isDarkMode ? '#fff' : '#A5A5A5'}
                 onPress={() => navigation.navigate('Search')}
                 onPressIn={() => navigation.navigate('Search')}

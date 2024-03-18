@@ -75,13 +75,13 @@ const Header = () => {
       fontWeight: '700',
       lineHeight: 16,
       letterSpacing: 0.4,
-      textAlignVertical: 'center',
+      alignSelf: 'center',
     },
     ViewArea: {
       flexDirection: 'row',
       width: wp(47),
       marginLeft: 'auto',
-      textAlign: "right",
+      textAlign: 'right',
     },
     LocationNameStyle: {
       flexDirection: 'row',
@@ -93,8 +93,8 @@ const Header = () => {
       fontStyle: 'normal',
       fontWeight: '500',
       lineHeight: undefined,
-      textAlignVertical: 'center',
-      textAlign: "right",
+      textAlign: 'right',
+      alignSelf: 'center',
       width: wp(40),
     },
     TextLocation2: {
@@ -104,8 +104,8 @@ const Header = () => {
       fontStyle: 'normal',
       fontWeight: '500',
       lineHeight: undefined,
-      textAlignVertical: 'center',
-      textAlign: "right",
+      alignSelf: 'center',
+      textAlign: 'right',
       width: wp(40),
     },
     locationIcon: {

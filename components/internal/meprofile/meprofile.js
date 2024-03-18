@@ -294,16 +294,12 @@ const Meprofile = ({navigation}) => {
     },
     container: {
       backgroundColor: isDarkMode ? 'black' : '#FFF',
-      flex: 1,
     },
     header: {
-      height: hp('26%'),
-      backgroundColor: isDarkMode ? 'black' : '#FFF',
+      height: 200,
     },
     Addsection: {
-      height: hp('15%'),
-      backgroundColor: isDarkMode ? 'black' : '#FFF',
-      flex: 1,
+      height: 102,
     },
     section2: {
       flexDirection: 'row',
@@ -311,8 +307,8 @@ const Meprofile = ({navigation}) => {
     },
 
     Mehavei: {
-      height: hp('53%'),
       backgroundColor: isDarkMode ? 'black' : '#FFF',
+    
     },
     footer: {
       height: hp('7%'),
@@ -411,11 +407,11 @@ const Meprofile = ({navigation}) => {
       position: 'absolute',
     },
     text5: {
-      left: 300,
+      // left: 300,
       fontSize: 23,
       fontWeight: '500',
       textAlign: 'center',
-      verticalAlign: 'middle',
+      //verticalAlign: 'middle',
       color: '#626262',
       position: 'absolute',
       top: 5,
@@ -692,7 +688,7 @@ const Meprofile = ({navigation}) => {
   });
 
   return (
-    <View style={{flex:1}}>
+    <View style={{flex: 1, backgroundColor: isDarkMode ? 'black' : '#FFF'}}>
       {showParticipantForm ? (
         <ParticipantForm
           onClose={handleCloseParticipantForm}
@@ -740,37 +736,40 @@ const Meprofile = ({navigation}) => {
                 </Text>
                 <View style={styles.namesection}>
                   <Text style={styles.fullname}>Sarvesh Awasthi</Text>
-                  <Text style={styles.gender}>{}</Text>
+                  <Text style={styles.gender}>F/ 23 Single</Text>
                 </View>
-                <Text style={styles.age}>{}</Text>
-                <Text style={styles.status}>{}</Text>
-                <Text style={styles.city}>{}</Text>
+
+                <Text style={styles.city}>Pune</Text>
               </View>
             </View>
-            <ScrollView>
+            <ScrollView horizontal={true}>
               <View style={styles.Addsection}>
                 {participants.length < 5 && (
                   <TouchableHighlight
                     onPress={addParticipant}
                     underlayColor="transparent">
                     <>
-                      <Text
+                      {/* <Text
                         style={[styles.text5, {left: calculateButtonLeft()}]}>
                         +
-                      </Text>
-                      <Text
-                        style={[
-                          {
-                            color: '#212121',
-                            top: 82,
-                            left: 27,
-                            fontSize: 13,
-                            fontWeight: '400',
-                          },
-                          {left: calculateButtonLeft()},
-                        ]}>
-                        Click to add
-                      </Text>
+                      </Text> */}
+                      <View
+                        style={{
+                          alignItems: 'center',
+                          width: 100,
+                        }}>
+                        <Text
+                          style={
+                            {
+                              marginTop: 45,
+                              fontSize: 23,
+                              fontWeight: '500',
+                            }
+                            // {left: calculateButtonLeft()},
+                          }>
+                          +
+                        </Text>
+                      </View>
                     </>
                   </TouchableHighlight>
                 )}
@@ -820,76 +819,76 @@ const Meprofile = ({navigation}) => {
                     <View style={styles.borderBottom} />
                   </View>
                 </TouchableHighlight>
-
-                {selectedTab === 'Me' && (
-                  <Mesection
-                    ismeModalVisible={ismeModalVisible}
-                    toggleModalme={toggleModalme}
-                    handleTabClickme={handleTabClickme}
-                    meListData={meListData}
-                    questionMapme={questionMapme}
-                    handleAnswerSubmitme={handleAnswerSubmitme}
-                    defaultAnswersme={defaultAnswersme}
-                    selectedItemme={selectedItemme}
-                    answer={answer}
-                    setAnswerme={setAnswerme}
-                    selectedDefaultAnswerme={selectedDefaultAnswerme}
-                    setSelectedDefaultAnswerme={setSelectedDefaultAnswerme}
-                  />
-                )}
-                <TouchableHighlight
-                  underlayColor="transparent"
-                  style={[
-                    styles.havesection,
-                    selectedTab === 'Have' ? styles.selectedTab : null,
-                  ]}
-                  onPress={() => handleTabClickHave('Have')}>
-                  <View style={styles.havesection}>
-                    <Text
-                      style={[
-                        styles.havetext,
-                        selectedTab === 'Have' ? styles.boldText : null,
-                      ]}>
-                      Have
-                    </Text>
-                    <View style={styles.borderBottomHave} />
-                  </View>
-                </TouchableHighlight>
-                {selectedTab === 'Have' && (
-                  <HaveSection
-                    isHaveModalVisible={isHaveModalVisible}
-                    toggleModalHave={toggleModalHave}
-                    handleTabClickHave={handleTabClickHave}
-                    haveListData={haveListData}
-                    questionMapHave={questionMapHave}
-                    handleAnswerSubmitHave={handleAnswerSubmitHave}
-                    defaultAnswersHave={defaultAnswerHave}
-                    selectedItemHave={selectedItemHave}
-                    answerHave={answerHave}
-                    setAnswerHave={setAnswerHave}
-                    selectedDefaultAnswerHave={selectedDefaultAnswerHave}
-                    setSelectedDefaultAnswerHave={setSelectedDefaultAnswerHave}
-                  />
-                )}
-                <TouchableHighlight
-                  underlayColor="transparent"
-                  style={[
-                    styles.isection,
-                    selectedTab === 'I' ? styles.selectedTab : null,
-                  ]}
-                  onPress={() => handleTabClick('I')}>
-                  <View style={styles.itext}>
-                    <Text
-                      style={[
-                        styles.itext,
-                        selectedTab === 'I' ? styles.boldText : null,
-                      ]}>
-                      i
-                    </Text>
-                    <View style={styles.borderBottom} />
-                  </View>
-                </TouchableHighlight>
-              </View>
+             
+              {selectedTab === 'Me' && (
+                <Mesection
+                  ismeModalVisible={ismeModalVisible}
+                  toggleModalme={toggleModalme}
+                  handleTabClickme={handleTabClickme}
+                  meListData={meListData}
+                  questionMapme={questionMapme}
+                  handleAnswerSubmitme={handleAnswerSubmitme}
+                  defaultAnswersme={defaultAnswersme}
+                  selectedItemme={selectedItemme}
+                  answer={answer}
+                  setAnswerme={setAnswerme}
+                  selectedDefaultAnswerme={selectedDefaultAnswerme}
+                  setSelectedDefaultAnswerme={setSelectedDefaultAnswerme}
+                />
+              )}
+              <TouchableHighlight
+                underlayColor="transparent"
+                style={[
+                  styles.havesection,
+                  selectedTab === 'Have' ? styles.selectedTab : null,
+                ]}
+                onPress={() => handleTabClickHave('Have')}>
+                <View style={styles.havesection}>
+                  <Text
+                    style={[
+                      styles.havetext,
+                      selectedTab === 'Have' ? styles.boldText : null,
+                    ]}>
+                    Have
+                  </Text>
+                  <View style={styles.borderBottomHave} />
+                </View>
+              </TouchableHighlight>
+              {selectedTab === 'Have' && (
+                <HaveSection
+                  isHaveModalVisible={isHaveModalVisible}
+                  toggleModalHave={toggleModalHave}
+                  handleTabClickHave={handleTabClickHave}
+                  haveListData={haveListData}
+                  questionMapHave={questionMapHave}
+                  handleAnswerSubmitHave={handleAnswerSubmitHave}
+                  defaultAnswersHave={defaultAnswerHave}
+                  selectedItemHave={selectedItemHave}
+                  answerHave={answerHave}
+                  setAnswerHave={setAnswerHave}
+                  selectedDefaultAnswerHave={selectedDefaultAnswerHave}
+                  setSelectedDefaultAnswerHave={setSelectedDefaultAnswerHave}
+                />
+              )}
+              <TouchableHighlight
+                underlayColor="transparent"
+                style={[
+                  styles.isection,
+                  selectedTab === 'I' ? styles.selectedTab : null,
+                ]}
+                onPress={() => handleTabClick('I')}>
+                <View style={styles.itext}>
+                  <Text
+                    style={[
+                      styles.itext,
+                      selectedTab === 'I' ? styles.boldText : null,
+                    ]}>
+                    i
+                  </Text>
+                  <View style={styles.borderBottom} />
+                </View>
+              </TouchableHighlight>
+              </View> 
 
               {selectedTab === 'I' && (
                 <ISection
@@ -909,7 +908,7 @@ const Meprofile = ({navigation}) => {
               )}
             </View>
           </View>
-          <View style={styles.footer}></View>
+          {/* <View style={styles.footer}></View> */}
         </>
       )}
     </View>

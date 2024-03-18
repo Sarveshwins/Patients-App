@@ -12,6 +12,7 @@ import {
   Animated,
   Dimensions,
   ScrollView,
+  SafeAreaView,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -130,159 +131,163 @@ const ParticipantForm = ({
     });
   };
   return (
-    <ScrollView contentContainerStyle={styles.scrollViewContainer}>
-      <View style={styles.formContainer}>
-        <Text style={styles.label}>Relationships</Text>
-        <FlatList
-          data={defaultRelationships}
-          renderItem={({item}) => (
-            <TouchableOpacity
-              onPress={() => setSelectedRelationship(item)}
-              style={[
-                styles.defaultRelationship,
-                selectedRelationship === item
-                  ? styles.selectedRelationship
-                  : null,
-              ]}>
-              <Text style={styles.relationshipText}>{item}</Text>
-              {selectedRelationship === item && (
-                <Text style={styles.tickMark}>✓</Text>
-              )}
-            </TouchableOpacity>
-          )}
-          keyExtractor={item => item}
-          style={styles.defaultRelationshipList}
-        />
+    <SafeAreaView>
 
-        {/* <TextInput
+        <View style={styles.formContainer}>
+          <Text style={styles.label}>Relationships</Text>
+          <FlatList
+            data={defaultRelationships}
+            renderItem={({item}) => (
+              <TouchableOpacity
+                onPress={() => setSelectedRelationship(item)}
+                style={[
+                  styles.defaultRelationship,
+                  selectedRelationship === item
+                    ? styles.selectedRelationship
+                    : null,
+                ]}>
+                <Text style={styles.relationshipText}>{item}</Text>
+                {selectedRelationship === item && (
+                  <Text style={styles.tickMark}>✓</Text>
+                )}
+              </TouchableOpacity>
+            )}
+            keyExtractor={item => item}
+            style={styles.defaultRelationshipList}
+          />
+
+          {/* <TextInput
         style={styles.input}
         placeholder="Or enter a custom relationship"
         value={relationship}
         onChangeText={(text) => setRelationship(text)}
       /> */}
 
-        {/* Slider/Modal for additional information */}
-        {sliderVisible && (
-          <>
-            <View style={styles.overlay} />
+          {/* Slider/Modal for additional information */}
+          {sliderVisible && (
+            <>
+              <View style={styles.overlay} />
 
-            <View style={styles.sliderContainer}>
-              <TouchableOpacity
-                style={styles.saveButton}
-                onPress={handleSliderSave}>
-                <Text style={styles.saveButtonText}>Done</Text>
-              </TouchableOpacity>
+              <View style={styles.sliderContainer}>
+                <TouchableOpacity
+                  style={styles.saveButton}
+                  onPress={handleSliderSave}>
+                  <Text style={styles.saveButtonText}>Done</Text>
+                </TouchableOpacity>
 
-              <Text style={[styles.labelbrother, {}]}>
-                {selectedRelationship}
-              </Text>
-              <TouchableOpacity style={styles.imagepicker} onPress={imagepick}>
-                <>
-                  <Image
-                    style={styles.imagelogo}
-                    source={
-                      profile
-                        ? {uri: profile}
-                        : require('../../../assets/isection/imagepicker.png')
-                    }
-                  />
-                  <Text
-                    style={[
-                      styles.edittext,
-                      {
-                        textAlign: 'center',
-                        top: 80,
-                        color: '#212121',
-                        fontWeight: '300',
-                        backgroundColor: '#A5A5A5',
-                        borderBottomLeftRadius: 991,
-                        borderBottomRightRadius: 991,
-                        paddingVertical: 0,
-                        left: 13,
-                        right: 13,
-                        position: 'absolute',
-                      },
-                    ]}>
-                    Edit
-                  </Text>
-                </>
-              </TouchableOpacity>
-              {enteredAge !== '' && (
-                <Text style={styles.enteredAgeText}>{enteredAge}</Text>
-              )}
-              {/* First Name */}
-              <TextInput
-                style={styles.sliderinput}
-                placeholder="First Name:"
-                value={firstName}
-                onChangeText={text => setFirstName(text)}
-              />
-
-              {/* Last Name */}
-              <TextInput
-                style={styles.sliderinput}
-                placeholder="Last Name"
-                value={lastName}
-                onChangeText={text => setLastName(text)}
-              />
-
-              {/* Phone Number */}
-              <TextInput
-                style={styles.sliderinput}
-                placeholder="Phone Number"
-                value={phoneNo}
-                onChangeText={text => setPhoneNo(text)}
-                keyboardType="numeric"
-              />
-              <View>
+                <Text style={[styles.labelbrother, {}]}>
+                  {selectedRelationship}
+                </Text>
+                <TouchableOpacity
+                  style={styles.imagepicker}
+                  onPress={imagepick}>
+                  <>
+                    <Image
+                      style={styles.imagelogo}
+                      source={
+                        profile
+                          ? {uri: profile}
+                          : require('../../../assets/isection/imagepicker.png')
+                      }
+                    />
+                    <Text
+                      style={[
+                        styles.edittext,
+                        {
+                          textAlign: 'center',
+                          top: 80,
+                          color: '#212121',
+                          fontWeight: '300',
+                          backgroundColor: '#A5A5A5',
+                          borderBottomLeftRadius: 991,
+                          borderBottomRightRadius: 991,
+                          paddingVertical: 0,
+                          left: 13,
+                          right: 13,
+                          position: 'absolute',
+                        },
+                      ]}>
+                      Edit
+                    </Text>
+                  </>
+                </TouchableOpacity>
+                {enteredAge !== '' && (
+                  <Text style={styles.enteredAgeText}>{enteredAge}</Text>
+                )}
+                {/* First Name */}
                 <TextInput
                   style={styles.sliderinput}
-                  placeholder="Age"
-                  value={enteredAge}
-                  onChangeText={text => {
-                    setAge(text);
-                    setEnteredAge(text); // Update enteredAge instantly
-                  }}
+                  placeholder="First Name:"
+                  value={firstName}
+                  onChangeText={text => setFirstName(text)}
                 />
-                <TouchableOpacity onPress={() => setShowDatePicker(true)}>
-                  <AntDesign
-                    style={styles.datepicker}
-                    name="calendar"
-                    size={25}
-                    color="#D9D9D9"
+
+                {/* Last Name */}
+                <TextInput
+                  style={styles.sliderinput}
+                  placeholder="Last Name"
+                  value={lastName}
+                  onChangeText={text => setLastName(text)}
+                />
+
+                {/* Phone Number */}
+                <TextInput
+                  style={styles.sliderinput}
+                  placeholder="Phone Number"
+                  value={phoneNo}
+                  onChangeText={text => setPhoneNo(text)}
+                  keyboardType="numeric"
+                />
+                <View>
+                  <TextInput
+                    style={styles.sliderinput}
+                    placeholder="Age"
+                    value={enteredAge}
+                    onChangeText={text => {
+                      setAge(text);
+                      setEnteredAge(text); // Update enteredAge instantly
+                    }}
                   />
-                </TouchableOpacity>
-              </View>
-              {/* Add the following code for the DatePicker */}
+                  <TouchableOpacity onPress={() => setShowDatePicker(true)}>
+                    <AntDesign
+                      style={styles.datepicker}
+                      name="calendar"
+                      size={25}
+                      color="#D9D9D9"
+                    />
+                  </TouchableOpacity>
+                </View>
+                {/* Add the following code for the DatePicker */}
 
-              {/* Add the following code for the DatePicker */}
-              {showDatePicker && (
-                <DatePicker
-                  modal
-                  open={showDatePicker}
-                  date={date}
-                  mode="date" // Set the mode to 'date'
-                  onConfirm={selectedDate => {
-                    setShowDatePicker(false);
-                    setDate(selectedDate);
-                    const age = calculateAge(selectedDate); // Use the calculateAge function
-                    setEnteredAge(age.toString());
-                  }}
-                  onCancel={() => setShowDatePicker(false)}
+                {/* Add the following code for the DatePicker */}
+                {showDatePicker && (
+                  <DatePicker
+                    modal
+                    open={showDatePicker}
+                    date={date}
+                    mode="date" // Set the mode to 'date'
+                    onConfirm={selectedDate => {
+                      setShowDatePicker(false);
+                      setDate(selectedDate);
+                      const age = calculateAge(selectedDate); // Use the calculateAge function
+                      setEnteredAge(age.toString());
+                    }}
+                    onCancel={() => setShowDatePicker(false)}
+                  />
+                )}
+
+                <TextInput
+                  style={[styles.sliderinput, {bottom: 30}]}
+                  placeholder="Gender"
+                  value={Gender}
+                  onChangeText={text => setGender(text)}
                 />
-              )}
-
-              <TextInput
-                style={[styles.sliderinput, {bottom: 30}]}
-                placeholder="Gender"
-                value={Gender}
-                onChangeText={text => setGender(text)}
-              />
-            </View>
-          </>
-        )}
-      </View>
-    </ScrollView>
+              </View>
+            </>
+          )}
+        </View>
+    
+    </SafeAreaView>
   );
 };
 

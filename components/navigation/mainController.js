@@ -1,67 +1,82 @@
 import * as React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-
-// Screens
+import {StyleSheet, Text, View, Animated, Image} from 'react-native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Meprofile from '../internal/meprofile/meprofile';
 import SearchHome from '../SearchComponents/SearchHome';
 import EventScreen from './screens/events';
-import AchivementScreen from './screens/achivement';
 import SettingsScreen from './screens/settings';
-
-
-//Screen names
-const meProfile = "Meprofile";
-const searchHome = "SearchHome";
-const eventName = "Event";
-const achivementName = "Achivement";
-const settingsName = "Settings";
-
+import {imagePath} from '../../utils/imagePath';
 const Tab = createBottomTabNavigator();
 
 function MainContainer() {
   return (
-      <Tab.Navigator
-        initialRouteName={meProfile}
-        screenOptions={({ route }) => ({
-          
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
-            let rn = route.name;
-
-            if (rn === meProfile) {
-              iconName = focused ? 'home' : 'home-outline';
-
-            } else if (rn === searchHome) {
-              iconName = focused ? 'search' : 'search-outline';
-
-            } else if (rn === eventName) {
-                iconName = focused ? 'bookmarks' : 'bookmarks-outline';
-
-            } else if (rn === achivementName) {
-                iconName = focused ? 'medal' : 'medal-outline';
-
-            } else if (rn === settingsName) {
-              iconName = focused ? 'settings' : 'settings-outline';
-            }
-
-            // You can return any component that you like here!
-            return <Ionicons name={iconName} size={size} color={color} />;
-          },
-        })}
-        tabBarOptions={{
-          activeTintColor: 'green',
-          inactiveTintColor: 'grey',
-          labelStyle: { paddingBottom: 5, fontSize: 10 },
-          style: { padding: 10, height: 70}
-        }}>
-        <Tab.Screen name={meProfile} component={Meprofile} />
-        <Tab.Screen name={searchHome} component={SearchHome} />
-        <Tab.Screen name={eventName} component={EventScreen} />
-        <Tab.Screen name={achivementName} component={AchivementScreen} />
-        <Tab.Screen name={settingsName} component={SettingsScreen} />
-
-      </Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+      initialRouteName="meProfile">
+      <Tab.Screen
+        name="meProfile"
+        component={Meprofile}
+        options={{
+          tabBarLabel: 'meProfile',
+          tabBarIcon: ({color, size, focused}) => (
+            <View>
+              <Image
+                style={{width: 20, height: 20}}
+                source={imagePath?.profileIcon}
+              />
+            </View>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="SearchHome"
+        component={SearchHome}
+        options={{
+          tabBarLabel: 'SearchHome',
+          tabBarIcon: ({color, size, focused}) => (
+            <View>
+              <Image
+                style={{width: 20, height: 20}}
+                source={imagePath?.calendarIcon}
+              />
+            </View>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="EventScreen"
+        component={EventScreen}
+        options={{
+          tabBarLabel: 'EventScreen',
+          tabBarIcon: ({color, size, focused}) => (
+            <View>
+              <Image
+                style={{width: 20, height: 20}}
+                source={imagePath?.profileIcon}
+              />
+            </View>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="SettingsScreen"
+        component={SettingsScreen}
+        options={{
+          tabBarLabel: 'SettingsScreen',
+          tabBarIcon: ({color, size, focused}) => (
+            <View>
+              <Image
+                style={{width: 20, height: 20}}
+                source={imagePath?.displayIcon}
+              />
+            </View>
+          ),
+        }}
+      />
+     
+    </Tab.Navigator>
   );
 }
 

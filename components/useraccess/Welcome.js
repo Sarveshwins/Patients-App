@@ -104,7 +104,8 @@ const Welcome = ({navigation}) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate('Signup')}>
+            //onPress={() => navigation.navigate('Signup')}>
+            onPress={() => navigation.navigate('MainContainer')}>
             <Image
               resizeMode="cover"
               source={require('../../assets/logos/emailButton.png')}

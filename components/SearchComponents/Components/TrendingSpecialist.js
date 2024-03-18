@@ -57,6 +57,7 @@ const TrendingSpecialist = () => {
     ImagesContainer: {
       marginTop: hp(2.5),
       //marginLeft: -16,
+      marginBottom: "8%",
     },
     ImagesRow: {
       flexDirection: 'row',

@@ -43,7 +43,7 @@ const Location = () => {
     topLocalitiesDelhi,
     topLocalitiesPune,
   } = useLocation();
-  
+
   const [isTyping, setIsTyping] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [filteredCities, setFilteredCities] = useState([]);
@@ -66,7 +66,9 @@ const Location = () => {
   }
   function handleCurrentLocality(localityName) {
     handleLocality(localityName);
-    navigation.navigate('SearchHome');
+   // navigation.navigate('SearchHome');
+        navigation.navigate('MainContainer', {screen: 'SearchHome'});
+
   }
 
   function handleCurrentLocation(cityName) {
@@ -106,7 +108,8 @@ const Location = () => {
   }
 
   function handleArrowClick() {
-    navigation.navigate('SearchHome');
+    // navigation.navigate('SearchHome');
+    navigation.navigate('MainContainer', {screen: 'SearchHome'});
   }
 
   const styles = StyleSheet.create({
@@ -250,7 +253,7 @@ const Location = () => {
                 <Image source={searchIcon} style={styles.searchIcon} />
               )}
               <TextInput
-                placeholder="Search my city, locality"
+                placeholder="Search1 my city, locality"
                 placeholderTextColor={isDarkMode ? '#fff' : '#4A4A4A'}
                 clearButtonMode="always"
                 style={styles.input}

@@ -92,9 +92,10 @@ const Mesection = ({
 
   return (
     <View style={styles.meContent}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+      <ScrollView style={{minHeight: hp('100%')}}>
         {meListData.map(item => renderItemContent(item))}
       </ScrollView>
+
       <Modal
         animationType="slide"
         transparent={true}
@@ -103,21 +104,6 @@ const Mesection = ({
         style={{}}>
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            {/* Done button */}
-            {/* <BlurView
-              style={styles.groupItem}
-              blurType="light"
-              blurAmount={22}
-              reducedTransparencyFallbackColor="white"
-            />
-            <View style={styles.groupItemPosition}>
-              <View
-                style={{
-                  ...styles.groupItem,
-                  backgroundColor: 'transparent',
-                }}
-              />
-            </View> */}
             <View underlayColor="transparent" style={styles.GlassMorphism}>
               <TouchableHighlight
                 underlayColor="transparent"
@@ -127,7 +113,6 @@ const Mesection = ({
               </TouchableHighlight>
               <Text style={styles.Sliderfirsttext}>{selectedItemme?.text}</Text>
             </View>
-            {/* Display default answers as selectable options */}
             <ScrollView
               contentContainerStyle={styles.scrollContent}
               keyboardShouldPersistTaps="handled"
@@ -193,9 +178,10 @@ const Mesection = ({
 const styles = StyleSheet.create({
   meContent: {
     position: 'absolute',
+    width: '100%',
   },
   scrollContent: {
-    minHeight: hp('50%'),
+    backgroundColor: '#FFF',
   },
 
   footer: {
@@ -231,17 +217,18 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   listItem: {
-    left: 30,
-    marginTop: 29,
+    left: 20,
+    marginTop: 30,
     borderBottomWidth: 0.6,
     borderBottomColor: '#CC9B66',
-    height: 30,
+    height: 40,
     width: 374,
-    top: 30,
+    top: 10,
   },
   GlassMorphism: {
     backgroundColor: 'rgba(255, 255, 255)',
-    height: hp('15%'),
+    height: hp('10%'),
+    // backgroundColor: 'red',
   },
   sectiontexts: {
     fontSize: 17,
@@ -290,36 +277,30 @@ const styles = StyleSheet.create({
     color: '#CC9B66',
     fontSize: 28,
     fontWeight: '600',
-    left: 30,
-    top: 71,
+    left: 20,
+    top: 50,
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
   },
   listItemslider: {
-    left: 30,
-    marginTop: 29,
+    marginTop: 9,
     borderBottomWidth: 0.6,
     borderBottomColor: '#CC9B66',
-    height: 30,
-    width: 345,
+    height: 40,
     fontWeight: '500',
     color: '#291E17',
-    top: 100,
   },
   sectiontextsslider: {
     fontSize: 17,
     left: 14,
     fontWeight: '500',
     color: '#291E17',
-    bottom: 5,
-    paddingRight: 100,
-    flexDirection: 'row',
+    height: 40,
   },
 
   checkmark: {
-    letterSpacing: 70,
-    position: 'absolute',
-    top: '50%',
-    color: '#000000',
+    color: 'blue',
+    textAlign: 'right',
+    width: 30,
   },
   // powered by doc
   bottomparent: {

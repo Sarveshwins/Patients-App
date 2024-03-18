@@ -27,7 +27,9 @@ const MyDoctorScreen = () => {
   const [isBookPressed, setBookPressed] = useState(false);
 
   function handleArrowClick() {
-    navigation.navigate('SearchHome');
+        navigation.navigate('MainContainer', {screen: 'SearchHome'});
+
+    //navigation.navigate('SearchHome');
   }
 
   const handleBookPress = () => {
