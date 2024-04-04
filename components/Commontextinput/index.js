@@ -33,22 +33,21 @@ const CommonTextInput = ({
 }) => {
   // const { colorScheme } = useAppCommonDataProvider();
   console.log(!passwordFocus && value?.length !== 0, passwordFocus, value);
-  if (label?.includes("Password")) {
+  if (label?.includes('Password')) {
     return (
-      <View style={{ height: 75 }}>
+      <View style={{height: 75}}>
         <View
           style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
             borderBottomColor: sucess
               ? appColors?.green
               : appColors?.loaderColor,
             borderBottomWidth: 1,
             width: 265,
-            marginTop: "10%",
-          }}
-        >
+            marginTop: '10%',
+          }}>
           <TextInput
             secureTextEntry={eyeValue}
             placeholder={label}
@@ -58,12 +57,12 @@ const CommonTextInput = ({
             onChangeText={onChangeText}
             value={value}
             style={{
-              width: "90%",
+              width: '90%',
               height: 40,
               fontSize: 17,
               paddingBottom: 10,
-             // color:
-               // colorScheme === "light" ? appColors?.black : appColors?.white,
+              // color:
+              // colorScheme === "light" ? appColors?.black : appColors?.white,
             }}
           />
           <TouchableOpacity
@@ -73,10 +72,9 @@ const CommonTextInput = ({
                 // backgroundColor: 'red',
                 // height: '80%',
               }
-            }
-          >
+            }>
             <Image
-             // source={eyeValue ? imagePath?.eyeClose : imagePath?.eyeOpen}
+              // source={eyeValue ? imagePath?.eyeClose : imagePath?.eyeOpen}
               style={{
                 height: 17,
                 width: 17,
@@ -84,7 +82,7 @@ const CommonTextInput = ({
             />
           </TouchableOpacity>
         </View>
-        {console.log(value, "<---valuevalue")}
+        {console.log(value, '<---valuevalue')}
         {value?.length !== 0 && (
           <View>
             <PasswordError
@@ -102,21 +100,19 @@ const CommonTextInput = ({
       <View
         style={{
           height: 75,
-          flexDirection: "row",
+          flexDirection: 'row',
           width: 265,
           height: 40,
-          borderBottomColor: sucess ? appColors?.green : "#979797",
+          borderBottomColor: sucess ? appColors?.green : '#979797',
           borderBottomWidth: 0.6,
-        }}
-      >
+        }}>
         <Text
           style={{
-           // color: colorScheme === "light" ? "black" : "white",
+            // color: colorScheme === "light" ? "black" : "white",
             marginRight: 10,
             fontSize: 17,
-            justifyContent: "center",
-          }}
-        >
+            justifyContent: 'center',
+          }}>
           {initvalue}
         </Text>
         <TextInput
@@ -131,7 +127,7 @@ const CommonTextInput = ({
               paddingBottom: 20,
               fontSize: 17,
 
-            //  color: colorScheme === "light" ? "black" : "white",
+              //  color: colorScheme === "light" ? "black" : "white",
             },
             style,
           ]}
@@ -140,24 +136,26 @@ const CommonTextInput = ({
     );
   }
   return (
-    <View style={{ height: 75 }}>
+    <View style={{height: 75}}>
       <TextInput
         onChangeText={onChangeText}
         value={value}
         editable={editable}
-        
-        keyboardType={keyboardType ? keyboardType : "default"}
+        keyboardType={keyboardType ? keyboardType : 'default'}
         placeholder={label}
+        placeholderTextColor={appColors?.textPlaceholder}
         style={[
           {
             height: 40,
             paddingBottom: 9,
-            
+            paddingLeft: 10,
             fontSize: 16,
-            fontWeight:"500",
-            marginTop: "10%",
-            borderBottomColor: sucess ? appColors?.green : appColors?.darkblack,
-            borderBottomWidth: 1,
+            fontWeight: '500',
+            marginTop: '10%',
+            borderBottomColor: sucess
+              ? appColors?.green
+              : appColors?.bottomGray,
+            borderBottomWidth: 3,
             //color: colorScheme === "light" ? "black" : "white",
           },
           style,

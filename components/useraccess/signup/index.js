@@ -20,6 +20,8 @@ import {useAppCommonDataProvider} from '../../UseAppCommonDataProvider';
 import {useDispatch, useSelector} from 'react-redux';
 import {SignUpAction} from '../../redux/action/Signup';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {imagePath} from '../../../utils/imagePath';
+import CommonButton from '../../CommonButton';
 
 // import { useAppCommonDataProvider } from '../../../useAppCommonDataProvider'
 
@@ -80,7 +82,7 @@ const Signup = ({navigation}) => {
             console.log('signupResponse', signupResponse);
             if (signupResponse?.status === 201) {
               if (signupResponse?.data?.status == 'success') {
-                navigation.navigate('Successful')
+                navigation.navigate('Successful');
                 // , {
                 //   contact: signUpValues?.Phone,
                 // });
@@ -98,197 +100,156 @@ const Signup = ({navigation}) => {
   };
 
   return (
-    <SafeAreaView style={{flex:1, backgroundColor:'red'}}>
-      <ScreenWrapper
-        statusBarColor={colorScheme === 'light' ? appColors?.white : 'black'}>
-        {/* <KeyboardAwareScrollView
-          keyboardShouldPersistTaps="always"
-          enableOnAndroid={true}
-          contentContainerStyle={{paddingBottom: 20}}
-          style={{
-            flex: 1,
-            paddingHorizontal: '10%',
-            paddingTop: 28,
-            backgroundColor:
-              colorScheme === 'light' ? appColors?.white : appColors?.black,
-          }}> */}
-          <View style={{margintTop: 10, flex: 0.2, backgroundColor: 'red'}}>
-            <Text
-              style={{
-                fontSize: 37,
-                fontWeight: '500',
-                color: colorScheme === 'light' ? 'black' : 'white',
-              }}>
-              Sign Up
-            </Text>
-            <Text
-              style={{
-                fontSize: 19,
-                fontWeight: '500',
-                color: '#C0C0C0',
-                marginTop: '4%',
-                lineHeight: 22,
-              }}>
-              Sign up to register yourself{'\n'}on this Platfom
-            </Text>
+    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
+      <KeyboardAwareScrollView
+        keyboardShouldPersistTaps="always"
+        enableOnAndroid={true}
+        contentContainerStyle={{paddingBottom: 20}}
+        style={{
+          flex: 1,
+          paddingHorizontal: '10%',
+          paddingTop: 28,
+          backgroundColor:
+            colorScheme === 'light' ? appColors?.white : appColors?.black,
+        }}>
+        <View style={{margintTop: 10, flex: 1}}>
+          <Text
+            style={{
+              fontSize: 37,
+              fontWeight: '500',
+              color: colorScheme === 'light' ? 'black' : 'white',
+            }}>
+            Sign Up
+          </Text>
+          <Text
+            style={{
+              fontSize: 19,
+              fontWeight: '500',
+              color: '#C0C0C0',
+              marginTop: '4%',
+              lineHeight: 22,
+            }}>
+            Sign up to register your self on this {'\n'}Platfom
+          </Text>
+        </View>
+        <View contentContainerStyle={{flex: 1}}>
+          <View style={{flex: 1}}>
+            <CommonTextInput
+              label="Enter Phone Number"
+              value={signUpValues?.Phone}
+              sucess={/^(?:\d{10}|\w+@\w+\.\w{2,3})$/.test(signUpValues?.Phone)}
+              onChangeText={e => {
+                setSignUpValues({...signUpValues, Phone: e});
+              }}
+            />
+            <CommonTextInput
+              label="First Name"
+              value={signUpValues?.firstName}
+              sucess={signUpValues?.firstName?.length >= 3}
+              onChangeText={e => {
+                setSignUpValues({...signUpValues, firstName: e});
+              }}
+            />
+            <CommonTextInput
+              label="Last Name"
+              value={signUpValues?.lastName}
+              sucess={signUpValues?.lastName?.length >= 3}
+              onChangeText={e => {
+                setSignUpValues({...signUpValues, lastName: e});
+              }}
+            />
           </View>
-          <View contentContainerStyle={{flex: 9}}>
-            <View style={{flex: 0.78}}>
-              <CommonTextInput
-                label="First Name"
-                value={signUpValues?.firstName}
-                sucess={signUpValues?.firstName?.length >= 3}
-                onChangeText={e => {
-                  setSignUpValues({...signUpValues, firstName: e});
-                }}
-              />
-              <CommonTextInput
-                label="Last Name"
-                value={signUpValues?.lastName}
-                sucess={signUpValues?.lastName?.length >= 3}
-                onChangeText={e => {
-                  setSignUpValues({...signUpValues, lastName: e});
-                }}
-              />
-              <CommonTextInput
-                label="Email/Phone"
-                value={signUpValues?.Phone}
-                sucess={/^(?:\d{10}|\w+@\w+\.\w{2,3})$/.test(
-                  signUpValues?.Phone,
-                )}
-                onChangeText={e => {
-                  setSignUpValues({...signUpValues, Phone: e});
-                }}
-              />
-              <CommonTextInput
-                label="Password"
-                value={signUpValues?.Password}
-                passwordFocus={signUpValues?.passwordFocus}
-                onFocus={() => {
-                  setSignUpValues({...signUpValues, passwordFocus: true});
-                }}
-                onBlur={() => {
-                  setSignUpValues({...signUpValues, passwordFocus: false});
-                }}
-                eyeValue={signUpValues?.passwordeye}
-                onChangeEye={() => {
-                  setSignUpValues({
-                    ...signUpValues,
-                    passwordeye: !signUpValues?.passwordeye,
-                  });
-                }}
-                onChangeText={e => {
-                  setSignUpValues({...signUpValues, Password: e});
-                }}
-              />
-              <CommonTextInput
-                label="Confirm Password"
-                value={signUpValues?.confirmPassword}
-                passwordFocus={signUpValues?.confirmPasswordFocus}
-                onFocus={() => {
-                  setSignUpValues({
-                    ...signUpValues,
-                    confirmPasswordFocus: true,
-                  });
-                }}
-                onBlur={() => {
-                  setSignUpValues({
-                    ...signUpValues,
-                    confirmPasswordFocus: false,
-                  });
-                }}
-                eyeValue={signUpValues?.confirmPasswordeye}
-                onChangeEye={() => {
-                  setSignUpValues({
-                    ...signUpValues,
-                    confirmPasswordeye: !signUpValues?.confirmPasswordeye,
-                  });
-                }}
-                onChangeText={e => {
-                  setSignUpValues({...signUpValues, confirmPassword: e});
-                }}
-              />
-            </View>
+          <View
+            style={{
+              marginTop: '15%',
+
+              width: '100%',
+              flex: 0.2,
+            }}>
             <View
               style={{
-                marginTop: '15%',
-
-                width: '100%',
-                flex: 0.2,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
               }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}>
-                {/* <CommonButton
-                  buttonText={'Sign Up'}
-                  onPress={() => {
-                    signUpProcess();
-                    //navigation?.navigate('Verification');
-                  }}
-                /> */}
-                {/* <View
-                style={{
-                  flexDirection: "row",
-                  flex: 0.8,
-                  justifyContent: "space-between",
+              <CommonButton
+                buttonText={'Sign up'}
+                onPress={() => {
+                  signUpProcess();
                 }}
-              >
-                <Image source={imagePath?.googleIcon} />
-                <Image source={imagePath?.facebookIcon} />
-              </View> */}
-              </View>
-              <Text
-                style={{marginTop: '5%', color: appColors?.gray, fontSize: 15}}>
-                Or Sign Up with any of the Providers
-              </Text>
+              />
               <View
                 style={{
-                  marginTop: '5%',
                   flexDirection: 'row',
-                  justifyContent: 'space-evenly',
-                  width: 180,
+                  justifyContent: 'flex-end',
                 }}>
-                {/* <TouchableOpacity >
+                <TouchableOpacity>
+                  <Image source={imagePath?.GoogleIcon} />
+                </TouchableOpacity>
+                <TouchableOpacity>
                   <Image source={imagePath?.facebookIcon} />
                 </TouchableOpacity>
-                <TouchableOpacity >
-                  <Image source={imagePath?.googleIcon} />
-                </TouchableOpacity> */}
-                <TouchableOpacity onPress={() => onAppleButtonPress()}>
-                  <View
-                    style={{
-                      width: 48,
-                      height: 44,
-                      backgroundColor: 'white',
-                      borderColor: appColors.gray,
-                      borderRadius: 18,
-                      borderWidth: 1,
-                      alignSelf: 'center',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}>
-                    {/* <Image source={imagePath?.Apple} /> */}
-                  </View>
-                </TouchableOpacity>
               </View>
             </View>
-            <View style={{flex: 0.1, flexDirection: 'row', marginTop: 10}}>
-              <Text style={{color: appColors?.gray}}>
-                If you already have an account ?
-              </Text>
-              <TouchableOpacity
-                onPress={() => {
-                  navigation?.navigate('Login');
-                }}>
-                <Text style={{color: appColors?.orange}}>{' Sign in'}</Text>
-              </TouchableOpacity>
-            </View>
           </View>
-        {/* </KeyboardAwareScrollView> */}
-      </ScreenWrapper>
+          <View
+            style={{
+              justifyContent: 'center',
+              alignSelf: 'center',
+              alignItems: 'center',
+            }}>
+           
+              <TouchableOpacity>
+                <Image style={{width: 360}} source={imagePath?.AppleLogin} />
+              </TouchableOpacity>
+            <Text
+              style={{
+                marginTop: '5%',
+                color: appColors?.gray,
+                fontSize: 15,
+              }}>
+              Or Sign Up with any of the Providers
+            </Text>
+          </View>
+          <View
+            style={{
+              flex: 0.1,
+              flexDirection: 'row',
+              marginTop: '35%',
+              alignSelf: 'center',
+              alignItems: 'center',
+            }}>
+            {/* <Text style={{color: appColors?.gray}}>
+              If you already have an account ?
+            </Text>
+            <TouchableOpacity
+              onPress={() => {
+                navigation?.navigate('Login');
+              }}>
+              <Text
+                style={{
+                  color: appColors?.orange,
+                  fontSize: 25,
+                  fontWeight: 500,
+                  textDecorationLine: 'underline',
+                }}>
+                {' Sign in'}
+              </Text>
+            </TouchableOpacity> */}
+          </View>
+        </View>
+        <Text style={styles.group4text}>
+          If you already have an Account then,
+        </Text>
+        <View
+          style={{
+            alignSelf: 'flex-end',
+            marginRight: 30,
+          }}>
+          <TouchableOpacity onPress={() => navigation?.navigate('SignIn')}>
+            <Image source={imagePath?.SignInBtn} />
+          </TouchableOpacity>
+        </View>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 };
@@ -296,6 +257,12 @@ const Signup = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     // backgroundColor:"white"
+  },
+  group4text: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#454545',
+    left: 54,
   },
   // group 1 start
   group2: {

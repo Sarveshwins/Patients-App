@@ -41,7 +41,7 @@ const Issues = () => {
     },
     ViewWrapper: {
       flexDirection: 'row',
-      marginTop: hp(1.85),
+      marginTop: 10,
       marginLeft: 8,
     },
     DoctorText: {
@@ -119,7 +119,7 @@ const Issues = () => {
   });
 
   return (
-    <SafeAreaView style={{height: hp(100)}}>
+    <SafeAreaView style={{flex:1}}>
       <View style={styles.container}>
         <View style={styles.ViewWrapper}>
         <TouchableOpacity onPress={handleArrowClick}>

@@ -36,7 +36,7 @@ import Changepwsuccess from './components/verification/changepwsuccess';
 import SignIn from './components/useraccess/signin';
 import Forgetpassword from './components/useraccess/signin/forgetpassword';
 import PreviewScreen from './components/previewScreen/PreviewScreen';
-
+'react-native-devsettings';
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;

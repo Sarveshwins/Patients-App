@@ -27,7 +27,7 @@ const MyDoctorScreen = () => {
   const [isBookPressed, setBookPressed] = useState(false);
 
   function handleArrowClick() {
-        navigation.navigate('MainContainer', {screen: 'SearchHome'});
+    navigation.navigate('MainContainer', {screen: 'SearchHome'});
 
     //navigation.navigate('SearchHome');
   }
@@ -69,27 +69,27 @@ const MyDoctorScreen = () => {
     },
     DoctorCard: {
       flexDirection: 'row',
-      marginBottom: hp(1.35),
+      height: 80,
+      alignItems: 'center',
     },
     DoctorImage: {
-      width: wp(12.2),
-      height: hp(5.7),
-      borderRadius: 23,
+      width: 49,
+      height: 49,
+      borderRadius: 20,
       overflow: 'hidden',
       borderWidth: 1.7,
+      shadowColor: '#000',
       shadowOffset: {width: 0, height: 2},
       shadowOpacity: 0.35,
-      shadowRadius: 3,
-      marginLeft: 3,
-      marginTop: 4
+      shadowRadius: 2,
     },
     DoctorBorderImage: {
-      position: "absolute"
+      position: 'absolute',
     },
     DoctorTextView: {
       marginLeft: wp(3.2),
-      width: wp(40),
-      flexDirection: 'column',
+      width: '100%',
+  
     },
     TextName: {
       color: isDarkMode ? '#fff' : '#000',
@@ -116,28 +116,31 @@ const MyDoctorScreen = () => {
       lineHeight: 16,
     },
     ButtonView: {
-      marginLeft: wp(12.25),
       flexDirection: 'row',
+      width:130,
+      justifyContent:"space-evenly"
+      
     },
     DoctorButton: {
-      borderRadius: 31,
+      width: 58,
+      height: 25,
+      borderRadius: 7,
+      backgroundColor: isDarkMode ? '#000' : '#1A936F',
+      borderColor: isDarkMode ? '#1A936F' : undefined,
       borderWidth: 1,
-      borderColor: '#1A936F',
-      height: hp(3),
-      width: wp(19),
+      //margin: 7,
     },
     DoctorButtonHovered: {
       backgroundColor: '#147e5a',
     },
     buttonText: {
-      color: '#1A936F',
-      fontFamily: 'SFProDisplay-Regular',
-      fontSize: 12,
+      color: isDarkMode ? '#1A936F' : '#FFF',
+      fontFamily: 'SFProDisplay-Bold',
+      fontSize: 15,
       fontStyle: 'normal',
-      fontWeight: '500',
-      lineHeight: 16,
+      fontWeight: isDarkMode ? '500' : '700',
+      lineHeight: 22,
       textAlign: 'center',
-      marginTop: 3,
     },
   });
 
@@ -159,23 +162,66 @@ const MyDoctorScreen = () => {
           showsVerticalScrollIndicator={false}>
           <View style={styles.DoctorsCard}>
             {myDoctorsData.map(doctor => (
-              <View style={styles.DoctorCard} key={doctor.key}>
-                <Image style={styles.DoctorImage} source={doctor.image} />
-                <Image style={styles.DoctorBorderImage} source={Border} />
+              <View
+                style={[
+                  styles.DoctorCard,
+                  {
+                    borderBottomColor: 'black',
+                    borderBottomWidth: 1,
+                  },
+                ]}
+                key={doctor.key}>
+                <View
+                  style={{
+                    height: 57,
+                    width: 57,
+                    backgroundColor: 'blue',
+                    alignSelf: 'center',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    borderRadius: 23,
+                    borderWidth: 1.7,
+                  }}>
+                  <Image style={styles.DoctorImage} source={doctor.image} />
+                </View>
                 <View style={styles.DoctorTextView}>
                   <Text style={styles.TextName}>{doctor.name}</Text>
                   <Text style={styles.TextSpecialist}>{doctor.specialist}</Text>
-                  <Text style={styles.TextArea}>{doctor.area}</Text>
-                </View>
-                <View style={styles.ButtonView}>
-                  <TouchableOpacity
-                    onPress={handleBookPress}
-                    style={[
-                      styles.DoctorButton,
-                      isBookPressed && styles.DoctorButtonHovered,
-                    ]}>
-                    <Text style={styles.buttonText}>Book a call</Text>
-                  </TouchableOpacity>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      width: '75%',
+                      justifyContent: 'space-between',
+                    }}>
+                    <Text style={styles.TextArea}>{doctor.area}</Text>
+                    {/* <View
+                      style={{
+                        alignSelf: 'center',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        borderRadius: 31,
+                        borderWidth: 1,
+                        borderColor: '#1A936F',
+                        backgroundColor:'red'
+                      }}>
+                      <TouchableOpacity
+                        onPress={handleBookPress}
+                        style={[
+                          styles.DoctorButton,
+                          isBookPressed && styles.DoctorButtonHovered,
+                        ]}>
+                        <Text style={styles.buttonText}>Book a call</Text>
+                      </TouchableOpacity>
+                    </View> */}
+                     <View style={styles.ButtonView}> 
+                      <TouchableOpacity style={[styles.DoctorButton]}>
+                        <Text style={styles.buttonText}>Book</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity style={[styles.DoctorButton]}>
+                        <Text style={styles.buttonText}>Call</Text>
+                      </TouchableOpacity>
+                     </View> 
+                  </View>
                 </View>
               </View>
             ))}

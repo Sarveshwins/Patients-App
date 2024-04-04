@@ -49,28 +49,23 @@ const MyDoctors = () => {
     DoctorsCard: {
       flexDirection: 'column',
       marginTop: hp(2.2),
-      width: wp(89.3),
+      width: wp(87),
       alignSelf: 'center',
     },
     DoctorCard: {
       flexDirection: 'row',
       marginBottom: hp(1.35),
-      // borderBottomColor: 'white',
-      // borderBottomWidth: 0.5,
     },
     DoctorImage: {
-      width: wp(12.2),
-      height: hp(5.7),
-      borderRadius: 23,
+      width: 49,
+      height: 49,
+      borderRadius: 20,
       overflow: 'hidden',
       borderWidth: 1.7,
-      //borderColor: isDarkMode ? '#000' : '#E923BD',
       shadowColor: '#000',
       shadowOffset: {width: 0, height: 2},
       shadowOpacity: 0.35,
-      shadowRadius: 3,
-      marginLeft: 3,
-      marginTop: 4,
+      shadowRadius: 2,
     },
     DoctorBorderImage: {
       position: 'absolute',
@@ -87,14 +82,14 @@ const MyDoctors = () => {
       fontFamily: 'SFProDisplay-Bold',
       fontSize: 15,
       fontStyle: 'normal',
-      fontWeight: '700',
+      fontWeight: '600',
       lineHeight: 20,
     },
     TextSpecialist: {
       color: isDarkMode ? '#fff' : '#000',
       fontFamily: 'SFProDisplay-Regular',
       marginTop: hp(2.5),
-      fontSize: 11,
+      fontSize: 13,
       fontStyle: 'normal',
       fontWeight: '400',
       lineHeight: 16,
@@ -103,7 +98,7 @@ const MyDoctors = () => {
       color: isDarkMode ? '#fff' : '#000',
       fontFamily: 'SFProDisplay-Regular',
       marginTop: hp(0.5),
-      fontSize: 11,
+      fontSize: 13,
       fontStyle: 'normal',
       fontWeight: '400',
       lineHeight: 16,
@@ -114,9 +109,9 @@ const MyDoctors = () => {
       marginTop: hp(3),
     },
     DoctorButton: {
-      width: wp(15.46),
-      height: hp(2.95),
-      borderRadius: 10,
+      width: 58,
+      height: 25,
+      borderRadius: 7,
       backgroundColor: isDarkMode ? '#000' : '#1A936F',
       borderColor: isDarkMode ? '#1A936F' : undefined,
       borderWidth: 1,
@@ -157,16 +152,24 @@ const MyDoctors = () => {
                 style={[
                   styles.DoctorCard,
                   {
-                    borderBottomColor:
-                      index > 1
-                        ? 'transparent'
-                        : 'white',
-                    borderBottomWidth:
-                      index > 1 ? 0 : 0.5,
+                    borderBottomColor: index > 1 ? 'white' : 'black',
+                    borderBottomWidth: index > 1 ? 0 : 0.5,
                   },
                 ]}>
-                <Image style={styles.DoctorImage} source={doctor.image} />
-                <Image style={styles.DoctorBorderImage} source={Border} />
+                <View
+                  style={{
+                    height: 57,
+                    width: 57,
+                    backgroundColor: 'blue',
+                    alignSelf: 'center',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    borderRadius: 23,
+                    borderWidth: 1.7,
+                  }}>
+                  <Image style={styles.DoctorImage} source={doctor.image} />
+                </View>
+                {/* <Image style={styles.DoctorBorderImage} source={Border} /> */}
                 <View style={styles.DoctorTextView}>
                   <Text style={styles.TextName}>{doctor.name}</Text>
                   <Text style={styles.TextSpecialist}>{doctor.specialist}</Text>
@@ -174,10 +177,10 @@ const MyDoctors = () => {
                 </View>
                 <View style={styles.ButtonView}>
                   <TouchableOpacity style={[styles.DoctorButton]}>
-                    <Text style={styles.buttonText}>Call</Text>
+                    <Text style={styles.buttonText}>Book</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={[styles.DoctorButton]}>
-                    <Text style={styles.buttonText}>Book</Text>
+                    <Text style={styles.buttonText}>Call</Text>
                   </TouchableOpacity>
                 </View>
               </View>

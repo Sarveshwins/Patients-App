@@ -31,7 +31,7 @@ const SearchHome = () => {
   });
 
   return (
-    <SafeAreaView style={{height: hp(100)}}>
+    <SafeAreaView style={{height: hp(100),backgroundColor:'white'}}>
       <View style={styles.container}>
         <View style={styles.Header}>
           <Header />

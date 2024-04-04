@@ -5,6 +5,7 @@ import {
   Image,
   ScrollView,
   TouchableHighlight,
+  SafeAreaView,
 } from 'react-native';
 import React, {useState} from 'react';
 import {
@@ -77,12 +78,18 @@ const Meprofile = ({navigation}) => {
 
   // mesection
   const [meListData, setmeListData] = useState([
-    {key: '5', text: 'Contacts :', answerme: null},
+    {key: '5', text: 'Contact : ', answerme: null},
     {key: '6', text: 'Emergency Contact :', answerme: null},
     {key: '7', text: 'Email :', answerme: null},
-    {key: '8', text: 'D.O.B :', answerme: null},
-    {key: '9', text: 'Status :', answerme: null},
-    {key: '10', text: 'State :', answerme: null},
+    {key: '8', text: 'Gender : ', answerme: null},
+    {key: '9', text: 'D.O.B :', answerme: null},
+    {key: '10', text: 'Height :', answerme: null},
+    {key: '11', text: 'Weight :', answerme: null},
+    {key: '12', text: 'Status :', answerme: null},
+    {key: '13', text: 'Occupation :', answerme: null},
+    {key: '14', text: 'State :', answerme: null},
+    {key: '15', text: 'City : ', answerme: null},
+    {key: '16', text: 'Locality :', answerme: null},
   ]);
   const [haveListData, setHaveListData] = useState([
     {key: '15', text: 'Pain :', answerme: null},
@@ -293,22 +300,27 @@ const Meprofile = ({navigation}) => {
       //minHeight: hp('70%'),
     },
     container: {
-      backgroundColor: isDarkMode ? 'black' : '#FFF',
+      backgroundColor: "red",//isDarkMode ? 'black' : '#FFF',
+      flex: 1,
+    
     },
     header: {
-      height: 200,
+      height: 220,
     },
     Addsection: {
       height: 102,
+      backgroundColor: 'red',
     },
     section2: {
       flexDirection: 'row',
       justifyContent: 'space-between',
+      backgroundColor: 'red',
+     
     },
 
     Mehavei: {
-      backgroundColor: isDarkMode ? 'black' : '#FFF',
-    
+      backgroundColor: 'blue', //isDarkMode ? 'black' : '#FFF',
+     
     },
     footer: {
       height: hp('7%'),
@@ -317,7 +329,6 @@ const Meprofile = ({navigation}) => {
 
     // header section
     imageprofile: {
-      top: 41,
       marginLeft: 25,
       borderRadius: 51,
       width: hp(17),
@@ -688,29 +699,29 @@ const Meprofile = ({navigation}) => {
   });
 
   return (
-    <View style={{flex: 1, backgroundColor: isDarkMode ? 'black' : '#FFF'}}>
-      {showParticipantForm ? (
-        <ParticipantForm
-          onClose={handleCloseParticipantForm}
-          onSave={handleSaveParticipant}
-          defaultRelationships={[
-            'Brother',
-            'Sister',
-            'Mother',
-            'Father',
-            'Friend',
-            'Spouse',
-            'Grandfather',
-            'Grandmother',
-            'Son',
-            'Daughter',
-            'Child',
-          ]}
-        />
-      ) : (
-        <>
+    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
+      <View style={{flex: 1, backgroundColor: isDarkMode ? 'black' : '#FFF'}}>
+        {showParticipantForm ? (
+          <ParticipantForm
+            onClose={handleCloseParticipantForm}
+            onSave={handleSaveParticipant}
+            defaultRelationships={[
+              'Brother',
+              'Sister',
+              'Mother',
+              'Father',
+              'Friend',
+              'Spouse',
+              'Grandfather',
+              'Grandmother',
+              'Son',
+              'Daughter',
+              'Child',
+            ]}
+          />
+        ) : (
           <View style={styles.container}>
-            <View style={styles.header}>
+            <View style={{height:200,width:"100%",backgroundColor:'blue',alignSelf:'center',justifyContent:'space-between'}}>
               <TouchableHighlight
                 underlayColor="transparent"
                 onLongPress={handleLongPress}
@@ -725,193 +736,209 @@ const Meprofile = ({navigation}) => {
                   }
                 />
               </TouchableHighlight>
-              <View style={styles.HeaderTextWrapper}>
-                <Text style={styles.myself}>
-                  <Text style={styles.m}>M</Text>
-                  <Text style={styles.y}>y</Text>
-                  <Text style={styles.s}>s</Text>
-                  <Text style={styles.e}>e</Text>
-                  <Text style={styles.l}>l</Text>
-                  <Text style={styles.f}>f</Text>
-                </Text>
-                <View style={styles.namesection}>
-                  <Text style={styles.fullname}>Sarvesh Awasthi</Text>
-                  <Text style={styles.gender}>F/ 23 Single</Text>
-                </View>
-
-                <Text style={styles.city}>Pune</Text>
-              </View>
             </View>
-            <ScrollView horizontal={true}>
-              <View style={styles.Addsection}>
-                {participants.length < 5 && (
-                  <TouchableHighlight
-                    onPress={addParticipant}
-                    underlayColor="transparent">
-                    <>
-                      {/* <Text
-                        style={[styles.text5, {left: calculateButtonLeft()}]}>
-                        +
-                      </Text> */}
-                      <View
-                        style={{
-                          alignItems: 'center',
-                          width: 100,
-                        }}>
-                        <Text
-                          style={
-                            {
-                              marginTop: 45,
-                              fontSize: 23,
-                              fontWeight: '500',
-                            }
-                            // {left: calculateButtonLeft()},
-                          }>
-                          +
-                        </Text>
-                      </View>
-                    </>
-                  </TouchableHighlight>
-                )}
-                <View style={styles.smp04Parent}>
-                  {participants.map((participant, index) => (
-                    <View
-                      key={index}
-                      style={[styles.participantContainer, {left: 86 * index}]}>
-                      <TouchableHighlight underlayColor="transparent">
-                        <Image
-                          style={[styles.addfirst, styles.iconLayout]}
-                          resizeMode="cover"
-                          source={{uri: participant.selectedImage}}
-                        />
-                      </TouchableHighlight>
-                      <Text style={[styles.partner, styles.sisterTypo]}>
-                        {participant.relationship.length > 7
-                          ? `${participant.relationship.slice(
-                              0,
-                              7,
-                            )}\n${participant.relationship.slice(7)}`
-                          : participant.relationship}
-                      </Text>
-                    </View>
-                  ))}
-                </View>
-              </View>
-            </ScrollView>
-
-            <View style={styles.Mehavei}>
-              <View style={styles.section2}>
+            {/* <View style={styles.header}>
                 <TouchableHighlight
                   underlayColor="transparent"
-                  style={[
-                    styles.mesection,
-                    selectedTab === 'Me' ? styles.selectedTab : null,
-                  ]}
-                  onPress={() => handleTabClickme('Me')}>
-                  <View>
-                    <Text
-                      style={[
-                        styles.metext,
-                        selectedTabme === 'Me' ? styles.boldText : null,
-                      ]}>
-                      Me
-                    </Text>
-                    <View style={styles.borderBottom} />
-                  </View>
+                  onLongPress={handleLongPress}
+                  onPress={imagepick}>
+                  <Image
+                    style={styles.imageprofile}
+                    resizeMode="cover"
+                    source={
+                      profile
+                        ? {uri: profile}
+                        : require('../../../assets/isection/emptyavator.png')
+                    }
+                  />
                 </TouchableHighlight>
-             
-              {selectedTab === 'Me' && (
-                <Mesection
-                  ismeModalVisible={ismeModalVisible}
-                  toggleModalme={toggleModalme}
-                  handleTabClickme={handleTabClickme}
-                  meListData={meListData}
-                  questionMapme={questionMapme}
-                  handleAnswerSubmitme={handleAnswerSubmitme}
-                  defaultAnswersme={defaultAnswersme}
-                  selectedItemme={selectedItemme}
-                  answer={answer}
-                  setAnswerme={setAnswerme}
-                  selectedDefaultAnswerme={selectedDefaultAnswerme}
-                  setSelectedDefaultAnswerme={setSelectedDefaultAnswerme}
-                />
-              )}
-              <TouchableHighlight
-                underlayColor="transparent"
-                style={[
-                  styles.havesection,
-                  selectedTab === 'Have' ? styles.selectedTab : null,
-                ]}
-                onPress={() => handleTabClickHave('Have')}>
-                <View style={styles.havesection}>
-                  <Text
-                    style={[
-                      styles.havetext,
-                      selectedTab === 'Have' ? styles.boldText : null,
-                    ]}>
-                    Have
+                <View style={styles.HeaderTextWrapper}>
+                  <Text style={styles.myself}>
+                    <Text style={styles.m}>M</Text>
+                    <Text style={styles.y}>y</Text>
+                    <Text style={styles.s}>s</Text>
+                    <Text style={styles.e}>e</Text>
+                    <Text style={styles.l}>l</Text>
+                    <Text style={styles.f}>f</Text>
                   </Text>
-                  <View style={styles.borderBottomHave} />
-                </View>
-              </TouchableHighlight>
-              {selectedTab === 'Have' && (
-                <HaveSection
-                  isHaveModalVisible={isHaveModalVisible}
-                  toggleModalHave={toggleModalHave}
-                  handleTabClickHave={handleTabClickHave}
-                  haveListData={haveListData}
-                  questionMapHave={questionMapHave}
-                  handleAnswerSubmitHave={handleAnswerSubmitHave}
-                  defaultAnswersHave={defaultAnswerHave}
-                  selectedItemHave={selectedItemHave}
-                  answerHave={answerHave}
-                  setAnswerHave={setAnswerHave}
-                  selectedDefaultAnswerHave={selectedDefaultAnswerHave}
-                  setSelectedDefaultAnswerHave={setSelectedDefaultAnswerHave}
-                />
-              )}
-              <TouchableHighlight
-                underlayColor="transparent"
-                style={[
-                  styles.isection,
-                  selectedTab === 'I' ? styles.selectedTab : null,
-                ]}
-                onPress={() => handleTabClick('I')}>
-                <View style={styles.itext}>
-                  <Text
-                    style={[
-                      styles.itext,
-                      selectedTab === 'I' ? styles.boldText : null,
-                    ]}>
-                    i
-                  </Text>
-                  <View style={styles.borderBottom} />
-                </View>
-              </TouchableHighlight>
-              </View> 
+                  <View style={styles.namesection}>
+                    <Text style={styles.fullname}>Sarvesh Awasthi</Text>
+                    <Text style={styles.gender}>F/ 23 Single</Text>
+                  </View>
 
-              {selectedTab === 'I' && (
-                <ISection
-                  isModalVisible={isModalVisible}
-                  toggleModal={toggleModal}
-                  handleTabClick={handleTabClick}
-                  iListData={iListData}
-                  questionMap={questionMap}
-                  handleAnswerSubmit={handleAnswerSubmit}
-                  defaultAnswers={defaultAnswers}
-                  selectedItem={selectedItem}
-                  answer={answer}
-                  setAnswer={setAnswer}
-                  selectedDefaultAnswer={selectedDefaultAnswer}
-                  setSelectedDefaultAnswer={setSelectedDefaultAnswer}
-                />
-              )}
-            </View>
+                  <Text style={styles.city}>Pune</Text>
+                </View>
+              </View>
+              <ScrollView horizontal={true}>
+                <View style={styles.Addsection}>
+                  {participants.length < 5 && (
+                    <TouchableHighlight
+                      onPress={addParticipant}
+                      underlayColor="transparent">
+                      <>
+                        <View
+                          style={{
+                            alignItems: 'center',
+                            width: 100,
+                          }}>
+                          <Text
+                            style={
+                              {
+                                marginTop: 45,
+                                fontSize: 23,
+                                fontWeight: '500',
+                              }
+                              // {left: calculateButtonLeft()},
+                            }>
+                            +
+                          </Text>
+                        </View>
+                      </>
+                    </TouchableHighlight>
+                  )}
+                  <View style={styles.smp04Parent}>
+                    {participants.map((participant, index) => (
+                      <View
+                        key={index}
+                        style={[
+                          styles.participantContainer,
+                          {left: 86 * index},
+                        ]}>
+                        <TouchableHighlight underlayColor="transparent">
+                          <Image
+                            style={[styles.addfirst, styles.iconLayout]}
+                            resizeMode="cover"
+                            source={{uri: participant.selectedImage}}
+                          />
+                        </TouchableHighlight>
+                        <Text style={[styles.partner, styles.sisterTypo]}>
+                          {participant.relationship.length > 7
+                            ? `${participant.relationship.slice(
+                                0,
+                                7,
+                              )}\n${participant.relationship.slice(7)}`
+                            : participant.relationship}
+                        </Text>
+                      </View>
+                    ))}
+                  </View>
+                </View>
+              </ScrollView>
+
+              <View style={styles.Mehavei}>
+                <View style={styles.section2}>
+                  <TouchableHighlight
+                    underlayColor="transparent"
+                    style={[
+                      styles.mesection,
+                      selectedTab === 'Me' ? styles.selectedTab : null,
+                    ]}
+                    onPress={() => handleTabClickme('Me')}>
+                    <View>
+                      <Text
+                        style={[
+                          styles.metext,
+                          selectedTabme === 'Me' ? styles.boldText : null,
+                        ]}>
+                        Me
+                      </Text>
+                      <View style={styles.borderBottom} />
+                    </View>
+                  </TouchableHighlight>
+
+                  {selectedTab === 'Me' && (
+                    <Mesection
+                      ismeModalVisible={ismeModalVisible}
+                      toggleModalme={toggleModalme}
+                      handleTabClickme={handleTabClickme}
+                      meListData={meListData}
+                      questionMapme={questionMapme}
+                      handleAnswerSubmitme={handleAnswerSubmitme}
+                      defaultAnswersme={defaultAnswersme}
+                      selectedItemme={selectedItemme}
+                      answer={answer}
+                      setAnswerme={setAnswerme}
+                      selectedDefaultAnswerme={selectedDefaultAnswerme}
+                      setSelectedDefaultAnswerme={setSelectedDefaultAnswerme}
+                    />
+                  )}
+                  <TouchableHighlight
+                    underlayColor="transparent"
+                    style={[
+                      styles.havesection,
+                      selectedTab === 'Have' ? styles.selectedTab : null,
+                    ]}
+                    onPress={() => handleTabClickHave('Have')}>
+                    <View style={styles.havesection}>
+                      <Text
+                        style={[
+                          styles.havetext,
+                          selectedTab === 'Have' ? styles.boldText : null,
+                        ]}>
+                        Have
+                      </Text>
+                      <View style={styles.borderBottomHave} />
+                    </View>
+                  </TouchableHighlight>
+                  {selectedTab === 'Have' && (
+                    <HaveSection
+                      isHaveModalVisible={isHaveModalVisible}
+                      toggleModalHave={toggleModalHave}
+                      handleTabClickHave={handleTabClickHave}
+                      haveListData={haveListData}
+                      questionMapHave={questionMapHave}
+                      handleAnswerSubmitHave={handleAnswerSubmitHave}
+                      defaultAnswersHave={defaultAnswerHave}
+                      selectedItemHave={selectedItemHave}
+                      answerHave={answerHave}
+                      setAnswerHave={setAnswerHave}
+                      selectedDefaultAnswerHave={selectedDefaultAnswerHave}
+                      setSelectedDefaultAnswerHave={
+                        setSelectedDefaultAnswerHave
+                      }
+                    />
+                  )}
+                  <TouchableHighlight
+                    underlayColor="transparent"
+                    style={[
+                      styles.isection,
+                      selectedTab === 'I' ? styles.selectedTab : null,
+                    ]}
+                    onPress={() => handleTabClick('I')}>
+                    <View style={styles.itext}>
+                      <Text
+                        style={[
+                          styles.itext,
+                          selectedTab === 'I' ? styles.boldText : null,
+                        ]}>
+                        i
+                      </Text>
+                      <View style={styles.borderBottom} />
+                    </View>
+                  </TouchableHighlight>
+                </View>
+
+                {selectedTab === 'I' && (
+                  <ISection
+                    isModalVisible={isModalVisible}
+                    toggleModal={toggleModal}
+                    handleTabClick={handleTabClick}
+                    iListData={iListData}
+                    questionMap={questionMap}
+                    handleAnswerSubmit={handleAnswerSubmit}
+                    defaultAnswers={defaultAnswers}
+                    selectedItem={selectedItem}
+                    answer={answer}
+                    setAnswer={setAnswer}
+                    selectedDefaultAnswer={selectedDefaultAnswer}
+                    setSelectedDefaultAnswer={setSelectedDefaultAnswer}
+                  />
+                )}
+              </View> */}
           </View>
-          {/* <View style={styles.footer}></View> */}
-        </>
-      )}
-    </View>
+        )}
+      </View>
+    </SafeAreaView>
   );
 };
 

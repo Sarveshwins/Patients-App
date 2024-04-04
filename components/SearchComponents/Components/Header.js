@@ -6,6 +6,7 @@ import {
   Image,
   TouchableHighlight,
   TouchableOpacity,
+  SafeAreaView,
 } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import {
@@ -116,6 +117,7 @@ const Header = () => {
   });
 
   return (
+    <SafeAreaView style={{flex:1,backgroundColor:'white'}}>
     <View style={styles.conatiner}>
       <TouchableHighlight onPress={imagepick}>
         <Image
@@ -156,6 +158,7 @@ const Header = () => {
         )}
       </TouchableOpacity>
     </View>
+    </SafeAreaView>
   );
 };
 

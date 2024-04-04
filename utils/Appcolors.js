@@ -10,5 +10,8 @@ export const appColors = {
     tan: '#DFCDBC',
     black: '#212121',
     lightRed: '#FF9393',
+    bottomGray:"#A3A3A3",
+    textPlaceholder:"#454545"
+    
   };
   
