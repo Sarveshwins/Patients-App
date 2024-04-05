@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "patientapp.app"
-               BlueprintName = "patientapp"
-               ReferencedContainer = "container:patientapp.xcodeproj">
+               BuildableName = "PatientApp.app"
+               BlueprintName = "PatientApp"
+               ReferencedContainer = "container:PatientApp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "patientappTests.xctest"
-               BlueprintName = "patientappTests"
-               ReferencedContainer = "container:patientapp.xcodeproj">
+               BuildableName = "PatientAppTests.xctest"
+               BlueprintName = "PatientAppTests"
+               ReferencedContainer = "container:PatientApp.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "patientapp.app"
-            BlueprintName = "patientapp"
-            ReferencedContainer = "container:patientapp.xcodeproj">
+            BuildableName = "PatientApp.app"
+            BlueprintName = "PatientApp"
+            ReferencedContainer = "container:PatientApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "patientapp.app"
-            BlueprintName = "patientapp"
-            ReferencedContainer = "container:patientapp.xcodeproj">
+            BuildableName = "PatientApp.app"
+            BlueprintName = "PatientApp"
+            ReferencedContainer = "container:PatientApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
