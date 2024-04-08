@@ -1,4 +1,11 @@
-import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  FlatList,
+} from 'react-native';
 import React from 'react';
 import {
   widthPercentageToDP as wp,
@@ -21,6 +28,44 @@ const MyDoctors = () => {
     navigation.navigate('MyDoctorScreen');
   }
 
+  const renderDoctorItem = ({item, index}) => (
+    <View
+      key={item.key}
+      style={[
+        styles.DoctorCard,
+        {
+          borderBottomColor: index > 1 ? 'white' : 'black',
+          borderBottomWidth: index > 1 ? 0 : 0.5,
+        },
+      ]}>
+      <View
+        style={{
+          height: 57,
+          width: 57,
+          backgroundColor: 'blue',
+          alignSelf: 'center',
+          alignItems: 'center',
+          justifyContent: 'center',
+          borderRadius: 23,
+          borderWidth: 1.7,
+        }}>
+        <Image style={styles.DoctorImage} source={item.image} />
+      </View>
+      <View style={styles.DoctorTextView}>
+        <Text style={styles.TextName}>{item.name}</Text>
+        <Text style={styles.TextSpecialist}>{item.specialist}</Text>
+        <Text style={styles.TextArea}>{item.area}</Text>
+      </View>
+      <View style={styles.ButtonView}>
+        <TouchableOpacity style={[styles.DoctorButton]}>
+          <Text style={styles.buttonText}>Book</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.DoctorButton]}>
+          <Text style={styles.buttonText}>Call</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
   const styles = StyleSheet.create({
     container: {
       width: wp(90),
@@ -115,7 +160,8 @@ const MyDoctors = () => {
       backgroundColor: isDarkMode ? '#000' : '#1A936F',
       borderColor: isDarkMode ? '#1A936F' : undefined,
       borderWidth: 1,
-      margin: 7,
+      marginHorizontal: 5,
+      marginVertical: 7,
     },
     DoctorButtonHovered: {
       backgroundColor: isDarkMode ? '#1A936F' : '#147e5a',
@@ -144,48 +190,11 @@ const MyDoctors = () => {
         </TouchableOpacity>
       </View>
       <View style={styles.DoctorsCard}>
-        {myDoctorsData.map(
-          (doctor, index) =>
-            doctor.key < 4 && (
-              <View
-                key={doctor.key}
-                style={[
-                  styles.DoctorCard,
-                  {
-                    borderBottomColor: index > 1 ? 'white' : 'black',
-                    borderBottomWidth: index > 1 ? 0 : 0.5,
-                  },
-                ]}>
-                <View
-                  style={{
-                    height: 57,
-                    width: 57,
-                    backgroundColor: 'blue',
-                    alignSelf: 'center',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    borderRadius: 23,
-                    borderWidth: 1.7,
-                  }}>
-                  <Image style={styles.DoctorImage} source={doctor.image} />
-                </View>
-                {/* <Image style={styles.DoctorBorderImage} source={Border} /> */}
-                <View style={styles.DoctorTextView}>
-                  <Text style={styles.TextName}>{doctor.name}</Text>
-                  <Text style={styles.TextSpecialist}>{doctor.specialist}</Text>
-                  <Text style={styles.TextArea}>{doctor.area}</Text>
-                </View>
-                <View style={styles.ButtonView}>
-                  <TouchableOpacity style={[styles.DoctorButton]}>
-                    <Text style={styles.buttonText}>Book</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={[styles.DoctorButton]}>
-                    <Text style={styles.buttonText}>Call</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            ),
-        )}
+        <FlatList
+          data={myDoctorsData.filter((doctor, index) => doctor.key < 4)}
+          renderItem={renderDoctorItem}
+          keyExtractor={item => item.key.toString()}
+        />
       </View>
     </View>
   );

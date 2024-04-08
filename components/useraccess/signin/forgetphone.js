@@ -7,7 +7,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import React, {useState} from 'react';
-import OtpInputs from 'react-native-otp-inputs';
+// import OtpInputs from 'react-native-otp-inputs';
 import ScreenWrapper from '../../ScreenWrapper';
 
 const Forgetphone = ({navigation}) => {
@@ -29,7 +29,7 @@ const Forgetphone = ({navigation}) => {
             </Text>
           </View>
 
-          <OtpInputs
+          {/* <OtpInputs
             inputContainerStyles={{
               width: 40,
               height: 40,
@@ -54,7 +54,7 @@ const Forgetphone = ({navigation}) => {
             style={{flexDirection: 'row'}}
             numberOfInputs={6}
             handleChange={handleOtpChange} // Call this function when OTP changes
-          />
+          /> */}
         </View>
         <TouchableOpacity>
           <Text style={styles.forgetPassword}>Resend OTP </Text>

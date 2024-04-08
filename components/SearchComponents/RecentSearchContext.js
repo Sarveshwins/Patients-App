@@ -533,7 +533,7 @@ export const RecentSearchProvider = ({children}) => {
   const leftSideIssueData = [
     {
       id: 1,
-      FirstName: 'Diabetes',
+      FirstName: 'Diabetes Diabetes',
       image: Diabetes,
     },
     {
@@ -583,6 +583,51 @@ export const RecentSearchProvider = ({children}) => {
       id: 10,
       FirstName: 'Weight Loss',
       image: WeightLoss,
+    },
+    {
+      id: 1,
+      FirstName: 'Knee Pain',
+      image: KneePain,
+    },
+    {
+      id: 2,
+      FirstName: 'Infertitily',
+      image: Infertitily,
+    },
+    {
+      id: 3,
+      FirstName: 'Headache',
+      image: Headache,
+    },
+    {
+      id: 4,
+      FirstName: 'Piles',
+      image: Piles,
+    },
+    {
+      id: 5,
+      FirstName: 'Diarrhoea',
+      image: Diarrhoea,
+    },
+    {
+      id: 6,
+      FirstName: 'Back Pain',
+      image: BackPain,
+    },
+    {
+      id: 7,
+      FirstName: 'Piles',
+      image: Piles,
+    },
+    {
+      id: 8,
+      FirstName: 'Diarrhoea',
+      image: Diarrhoea,
+    },
+    {
+      id: 9,
+      FirstName: 'Back Pain',
+      image: BackPain,
     },
   ];
 
@@ -679,7 +724,7 @@ export const RecentSearchProvider = ({children}) => {
       FirstName: 'Weight Loss',
     },
   ];
-  
+
   const rightSideSpecialityData = [
     {
       id: 11,
@@ -732,7 +777,7 @@ export const RecentSearchProvider = ({children}) => {
       setAllSelectedItems([item, ...allSelectedItems]);
     }
   }
-  
+
   return (
     <RecentSearchContext.Provider
       value={{

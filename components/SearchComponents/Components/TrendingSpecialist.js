@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  FlatList,
 } from 'react-native';
 import React from 'react';
 import {
@@ -30,6 +31,15 @@ const TrendingSpecialist = () => {
   function handleArrowClick() {
     navigation.navigate('Specailist');
   }
+  const renderSpecialityItem = ({item, index}) => (
+    <View key={index} style={styles.ImageView}>
+      <Image style={styles.TrendingImage} source={Medicines} />
+      <View style={styles.ImageTextView}>
+        <Text style={styles.TextName}>{item.FirstName}</Text>
+        {item.LastName && <Text style={styles.TextName}>{item.LastName}</Text>}
+      </View>
+    </View>
+  );
 
   const styles = StyleSheet.create({
     container: {
@@ -57,7 +67,7 @@ const TrendingSpecialist = () => {
     ImagesContainer: {
       marginTop: hp(2.5),
       //marginLeft: -16,
-      marginBottom: "8%",
+      marginBottom: '8%',
     },
     ImagesRow: {
       flexDirection: 'row',
@@ -120,17 +130,12 @@ const TrendingSpecialist = () => {
             ))}
           </View>
           <View style={styles.ImagesRow2}>
-            {rightSideSpecialityData.map((speciality, index) => (
-              <View key={index} style={styles.ImageView}>
-                <Image style={styles.TrendingImage} source={Medicines} />
-                <View style={styles.ImageTextView}>
-                  <Text style={styles.TextName}>{speciality.FirstName}</Text>
-                  {speciality.LastName && (
-                    <Text style={styles.TextName}>{speciality.LastName}</Text>
-                  )}
-                </View>
-              </View>
-            ))}
+            <FlatList
+              data={rightSideSpecialityData}
+              renderItem={renderSpecialityItem}
+              keyExtractor={(item, index) => index.toString()}
+              horizontal
+            />
           </View>
         </View>
       </ScrollView>

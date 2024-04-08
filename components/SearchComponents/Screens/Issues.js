@@ -7,6 +7,7 @@ import {
   Image,
   ScrollView,
   SafeAreaView,
+  FlatList,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {
@@ -26,10 +27,54 @@ const Issues = () => {
   const {leftSideIssueData, rightSideIssueData} = useRecentSearch();
 
   function handleArrowClick() {
-   // navigation.navigate('SearchHome');
-        navigation.navigate('MainContainer', {screen: 'SearchHome'});
-
+    // navigation.navigate('SearchHome');
+    navigation.navigate('MainContainer', {screen: 'SearchHome'});
   }
+
+  const renderLeftItem = ({item}) => (
+    <View
+      style={{
+        flex: 1,
+        flexDirection: 'row',
+
+        marginLeft: 8,
+      }}>
+      <View style={styles.DoctorCard} key={item.id}>
+        <Image style={styles.DoctorImage} source={item.image} />
+        <View style={styles.DoctorTextView}>
+          {item.FirstName && item.LastName ? (
+            <>
+              <Text style={styles.TextName2}>{item.FirstName}</Text>
+              <Text style={styles.TextName3}>{item.LastName}</Text>
+            </>
+          ) : (
+            <Text style={styles.TextName}>{item.FirstName}</Text>
+          )}
+        </View>
+      </View>
+      <View style={styles.DoctorCard2} key={item.id}>
+        <Image style={styles.DoctorImage} source={item.image} />
+        <View
+          style={{
+            marginLeft: wp(3.2),
+            width: wp(30),
+            flexDirection: 'column',
+            verticalAlign: 'middle',
+
+            height: wp(13),
+          }}>
+          {item.FirstName && item.LastName ? (
+            <>
+              <Text style={styles.TextName2}>{item.FirstName}</Text>
+              <Text style={styles.TextName3}>{item.LastName}</Text>
+            </>
+          ) : (
+            <Text style={styles.TextName}>{item.FirstName}</Text>
+          )}
+        </View>
+      </View>
+    </View>
+  );
 
   const styles = StyleSheet.create({
     container: {
@@ -60,10 +105,10 @@ const Issues = () => {
       flexDirection: 'row',
     },
     DoctorsCard: {
-      flexDirection: 'column',
+      // flexDirection: 'column',
       marginTop: hp(2.2),
       width: wp(45),
-      marginLeft: wp(5.86),
+      // marginLeft: wp(5.86),
     },
     DoctorsCard2: {
       flexDirection: 'column',
@@ -75,6 +120,10 @@ const Issues = () => {
       flexDirection: 'row',
       marginBottom: hp(8),
     },
+    DoctorCard2: {
+      flexDirection: 'row',
+      marginTop: hp(8),
+    },
     DoctorImage: {
       width: wp(13),
       height: wp(13),
@@ -84,9 +133,10 @@ const Issues = () => {
     },
     DoctorTextView: {
       marginLeft: wp(3.2),
-      width: wp(40),
+      width: wp(30),
       flexDirection: 'column',
       verticalAlign: 'middle',
+
       height: wp(13),
     },
     TextName: {
@@ -119,10 +169,10 @@ const Issues = () => {
   });
 
   return (
-    <SafeAreaView style={{flex:1}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <View style={styles.container}>
         <View style={styles.ViewWrapper}>
-        <TouchableOpacity onPress={handleArrowClick}>
+          <TouchableOpacity onPress={handleArrowClick}>
             {isDarkMode ? (
               <Image style={styles.ArrowImage} source={LeftArrowDark} />
             ) : (
@@ -131,47 +181,21 @@ const Issues = () => {
           </TouchableOpacity>
           <Text style={styles.DoctorText}>Issues</Text>
         </View>
-        <ScrollView
-          style={styles.ScrollArea}
-          showsVerticalScrollIndicator={false}>
-          <View style={styles.IssuesWrapper}>
-            <View style={styles.DoctorsCard}>
-              {leftSideIssueData.map(issuse => (
-                <View style={styles.DoctorCard} key={issuse.id}>
-                  <Image style={styles.DoctorImage} source={issuse.image} />
-                  <View style={styles.DoctorTextView}>
-                    {issuse.FirstName && issuse.LastName ? (
-                      <>
-                        <Text style={styles.TextName2}>{issuse.FirstName}</Text>
-                        <Text style={styles.TextName3}>{issuse.LastName}</Text>
-                      </>
-                    ) : (
-                      <Text style={styles.TextName}>{issuse.FirstName}</Text>
-                    )}
-                  </View>
-                </View>
-              ))}
-            </View>
+        <FlatList
+          data={leftSideIssueData}
+          renderItem={renderLeftItem}
+          keyExtractor={item => item.id.toString()}
+          showsVerticalScrollIndicator={false}
+        />
 
-            <View style={styles.DoctorsCard2}>
-              {rightSideIssueData.map(issuse => (
-                <View style={styles.DoctorCard} key={issuse.id}>
-                  <Image style={styles.DoctorImage} source={issuse.image} />
-                  <View style={styles.DoctorTextView}>
-                    {issuse.FirstName && issuse.LastName ? (
-                      <>
-                        <Text style={styles.TextName2}>{issuse.FirstName}</Text>
-                        <Text style={styles.TextName3}>{issuse.LastName}</Text>
-                      </>
-                    ) : (
-                      <Text style={styles.TextName}>{issuse.FirstName}</Text>
-                    )}
-                  </View>
-                </View>
-              ))}
-            </View>
-          </View>
-        </ScrollView>
+        {/* <View style={styles.DoctorsCard2}>
+              <FlatList
+                data={rightSideIssueData}
+                renderItem={renderRightItem}
+                keyExtractor={item => item.id.toString()}
+                showsVerticalScrollIndicator={false}
+              />
+            </View> */}
       </View>
     </SafeAreaView>
   );

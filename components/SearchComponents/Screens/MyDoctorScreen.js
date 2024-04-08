@@ -7,6 +7,7 @@ import {
   Image,
   ScrollView,
   SafeAreaView,
+  FlatList,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -35,6 +36,50 @@ const MyDoctorScreen = () => {
   const handleBookPress = () => {
     setBookPressed(true);
   };
+  const renderDoctorItem = ({item}) => (
+    <View
+      style={[
+        styles.DoctorCard,
+        {
+          borderBottomColor: 'black',
+          borderBottomWidth: 1,
+        },
+      ]}>
+      <View
+        style={{
+          height: 57,
+          width: 57,
+          backgroundColor: 'blue',
+          alignSelf: 'center',
+          alignItems: 'center',
+          justifyContent: 'center',
+          borderRadius: 23,
+          borderWidth: 1.7,
+        }}>
+        <Image style={styles.DoctorImage} source={item.image} />
+      </View>
+      <View style={styles.DoctorTextView}>
+        <Text style={styles.TextName}>{item.name}</Text>
+        <Text style={styles.TextSpecialist}>{item.specialist}</Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            width: '75%',
+            justifyContent: 'space-between',
+          }}>
+          <Text style={styles.TextArea}>{item.area}</Text>
+          <View style={styles.ButtonView}>
+            <TouchableOpacity style={[styles.DoctorButton]}>
+              <Text style={styles.buttonText}>Book</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.DoctorButton]}>
+              <Text style={styles.buttonText}>Call</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    </View>
+  );
 
   const styles = StyleSheet.create({
     container: {
@@ -89,7 +134,6 @@ const MyDoctorScreen = () => {
     DoctorTextView: {
       marginLeft: wp(3.2),
       width: '100%',
-  
     },
     TextName: {
       color: isDarkMode ? '#fff' : '#000',
@@ -117,9 +161,8 @@ const MyDoctorScreen = () => {
     },
     ButtonView: {
       flexDirection: 'row',
-      width:130,
-      justifyContent:"space-evenly"
-      
+      width: 130,
+      justifyContent: 'space-evenly',
     },
     DoctorButton: {
       width: 58,
@@ -161,70 +204,11 @@ const MyDoctorScreen = () => {
           style={styles.ScrollArea}
           showsVerticalScrollIndicator={false}>
           <View style={styles.DoctorsCard}>
-            {myDoctorsData.map(doctor => (
-              <View
-                style={[
-                  styles.DoctorCard,
-                  {
-                    borderBottomColor: 'black',
-                    borderBottomWidth: 1,
-                  },
-                ]}
-                key={doctor.key}>
-                <View
-                  style={{
-                    height: 57,
-                    width: 57,
-                    backgroundColor: 'blue',
-                    alignSelf: 'center',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    borderRadius: 23,
-                    borderWidth: 1.7,
-                  }}>
-                  <Image style={styles.DoctorImage} source={doctor.image} />
-                </View>
-                <View style={styles.DoctorTextView}>
-                  <Text style={styles.TextName}>{doctor.name}</Text>
-                  <Text style={styles.TextSpecialist}>{doctor.specialist}</Text>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      width: '75%',
-                      justifyContent: 'space-between',
-                    }}>
-                    <Text style={styles.TextArea}>{doctor.area}</Text>
-                    {/* <View
-                      style={{
-                        alignSelf: 'center',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        borderRadius: 31,
-                        borderWidth: 1,
-                        borderColor: '#1A936F',
-                        backgroundColor:'red'
-                      }}>
-                      <TouchableOpacity
-                        onPress={handleBookPress}
-                        style={[
-                          styles.DoctorButton,
-                          isBookPressed && styles.DoctorButtonHovered,
-                        ]}>
-                        <Text style={styles.buttonText}>Book a call</Text>
-                      </TouchableOpacity>
-                    </View> */}
-                     <View style={styles.ButtonView}> 
-                      <TouchableOpacity style={[styles.DoctorButton]}>
-                        <Text style={styles.buttonText}>Book</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity style={[styles.DoctorButton]}>
-                        <Text style={styles.buttonText}>Call</Text>
-                      </TouchableOpacity>
-                     </View> 
-                  </View>
-                </View>
-              </View>
-            ))}
+            <FlatList
+              data={myDoctorsData}
+              renderItem={renderDoctorItem}
+              keyExtractor={item => item.key.toString()}
+            />
           </View>
           <View style={{marginTop: 70}} />
         </ScrollView>

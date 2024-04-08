@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  FlatList,
 } from 'react-native';
 import React from 'react';
 import {
@@ -12,8 +13,8 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {useNavigation} from '@react-navigation/native';
-import { useRecentSearch } from '../RecentSearchContext';
-import { useTheme } from '../../ThemeContext';
+import {useRecentSearch} from '../RecentSearchContext';
+import {useTheme} from '../../ThemeContext';
 
 import RightArrow from '../../../assets/searchSection/RightArrowIcon.png';
 import RightArrowDark from '../../../assets/searchSection/RightArrowIconDark.png';
@@ -26,6 +27,15 @@ const TrendingIssues = () => {
   function handleArrowClick() {
     navigation.navigate('Issues');
   }
+  const renderIssueItem = ({item}) => (
+    <View key={item.id} style={styles.ImageView}>
+      <Image style={styles.TrendingImage} source={item.image} />
+      <View style={styles.ImageTextView}>
+        <Text style={styles.TextName}>{item.FirstName}</Text>
+        {item.LastName && <Text style={styles.TextName}>{item.LastName}</Text>}
+      </View>
+    </View>
+  );
 
   const styles = StyleSheet.create({
     container: {
@@ -51,7 +61,7 @@ const TrendingIssues = () => {
     },
     RighArrowImage: {
       marginLeft: wp(43),
-      marginTop: 6
+      marginTop: 6,
     },
     ImagesContainer: {
       marginTop: hp(2.5),
@@ -91,7 +101,6 @@ const TrendingIssues = () => {
     },
   });
 
-
   return (
     <View style={styles.container}>
       <View style={styles.ViewWrapper}>
@@ -107,17 +116,12 @@ const TrendingIssues = () => {
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
         <View style={styles.ImagesContainer}>
           <View style={styles.ImagesRow}>
-            {leftSideIssueData.map(issue => (
-              <View key={issue.id} style={styles.ImageView}>
-                <Image style={styles.TrendingImage} source={issue.image} />
-                <View style={styles.ImageTextView}>
-                  <Text style={styles.TextName}>{issue.FirstName}</Text>
-                  {issue.LastName && (
-                    <Text style={styles.TextName}>{issue.LastName}</Text>
-                  )}
-                </View>
-              </View>
-            ))}
+            <FlatList
+              data={leftSideIssueData}
+              renderItem={renderIssueItem}
+              keyExtractor={item => item.id.toString()}
+              horizontal
+            />
           </View>
           <View style={styles.ImagesRow2}>
             {rightSideIssueData.map(issue => (
