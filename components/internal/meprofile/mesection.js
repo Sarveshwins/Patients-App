@@ -45,7 +45,7 @@ const Mesection = ({
             {item.text === 'Brush' ? (
               <Text style={{color: 'black'}}>{item.text} : </Text>
             ) : (
-              <Text>{item.text} </Text>
+              <Text style={{color: 'black'}}>{item.text} </Text>
             )}
             {item.answerme ? (
               <Text style={{color: 'black', fontWeight: '400'}}>
@@ -92,7 +92,7 @@ const Mesection = ({
 
   return (
     <View style={styles.meContent}>
-      <ScrollView style={{minHeight: hp('100%')}}>
+      <ScrollView contentContainerStyle={{paddingBottom: 300}}>
         {meListData.map(item => renderItemContent(item))}
       </ScrollView>
 
@@ -177,8 +177,9 @@ const Mesection = ({
 };
 const styles = StyleSheet.create({
   meContent: {
-    position: 'absolute',
+    //  position: 'absolute',
     width: '100%',
+    backgroundColor: 'yellow',
   },
   scrollContent: {
     backgroundColor: '#FFF',
@@ -233,7 +234,7 @@ const styles = StyleSheet.create({
   sectiontexts: {
     fontSize: 17,
     left: 20,
-    color: '#291E17',
+    color: 'red', //'#291E17',
     fontWeight: '700',
   },
   modalContainer: {

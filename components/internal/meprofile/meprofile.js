@@ -18,8 +18,12 @@ import Mesection from './mesection';
 import HaveSection from './HaveSection';
 import ImagePicker from 'react-native-image-crop-picker';
 import {useTheme} from '../../ThemeContext';
+import {useAppCommonDataProvider} from '../../UseAppCommonDataProvider';
+import {appColors} from '../../../utils/Appcolors';
 
 const Meprofile = ({navigation}) => {
+  const {colorScheme} = useAppCommonDataProvider();
+
   const [participants, setParticipants] = useState([]);
   const [showParticipantForm, setShowParticipantForm] = useState(false);
   const [selectedTab, setSelectedTab] = useState('Me');
@@ -300,82 +304,86 @@ const Meprofile = ({navigation}) => {
       //minHeight: hp('70%'),
     },
     container: {
-      backgroundColor: "red",//isDarkMode ? 'black' : '#FFF',
-      flex: 1,
-    
+      backgroundColor: isDarkMode ? 'black' : '#FFF',
     },
     header: {
-      height: 220,
+      height: 140,
+      alignItems: 'center',
+      flexDirection: 'row',
+      width: '100%',
     },
     Addsection: {
       height: 102,
-      backgroundColor: 'red',
+      width: '100%',
     },
     section2: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      backgroundColor: 'red',
-     
     },
 
     Mehavei: {
-      backgroundColor: 'blue', //isDarkMode ? 'black' : '#FFF',
-     
+      backgroundColor:
+        colorScheme === 'light' ? appColors?.white : appColors?.black,
     },
     footer: {
       height: hp('7%'),
-      backgroundColor: isDarkMode ? 'black' : '#FFF',
+      backgroundColor:
+        colorScheme === 'light' ? appColors?.black : appColors?.white,
     },
 
     // header section
     imageprofile: {
-      marginLeft: 25,
+      marginLeft: 15,
       borderRadius: 51,
-      width: hp(17),
-      height: hp(17),
-      position: 'absolute',
+      height: 120,
+      width: 120,
       borderWidth: 10,
       borderColor: isDarkMode ? '#9E9E9E' : 'grey',
       backgroundColor: '#C4C4C4',
       overflow: 'hidden',
-      marginTop: 11,
       shadowColor: '#CC9B66',
       shadowOffset: {width: 0, height: 2},
       shadowRadius: 25,
       shadowOpacity: 0.9,
       borderRadius: 51,
     },
-    HeaderTextWrapper: {
-      marginLeft: 7,
-    },
+
     m: {
       color: '#4a90e2',
+      fontSize: 18,
+      fontWeight: '600',
     },
     y: {
       color: '#d0021b',
+      fontSize: 18,
+      fontWeight: '600',
     },
     s: {
       color: '#7ed321',
+      fontSize: 18,
+      fontWeight: '600',
     },
     e: {
       color: '#f8e71c',
+      fontSize: 18,
+      fontWeight: '600',
     },
     l: {
       color: '#f5a623',
+      fontSize: 18,
+      fontWeight: '600',
     },
     f: {
       color: '#b888b8',
-    },
-    myself: {
       fontSize: 18,
       fontWeight: '600',
-      top: hp('9%'),
-      left: 187,
+    },
+    myself: {
+      left: 27,
+      flexDirection: 'row',
     },
     namesection: {
-      left: 187,
-      position: 'absolute',
-      top: 103,
+      left: 27,
     },
 
     fullname: {
@@ -402,11 +410,7 @@ const Meprofile = ({navigation}) => {
       color: isDarkMode ? '#fff' : '#291E17',
     },
     city: {
-      left: 187,
-      position: 'absolute',
       fontSize: 17,
-      top: 148,
-      fontWeight: '100',
       color: isDarkMode ? '#fff' : '#291E17',
     },
     // Header section over
@@ -478,12 +482,10 @@ const Meprofile = ({navigation}) => {
     mother: {
       left: 189,
     },
-    smp04Parent: {
-      width: 210,
-      height: 86,
-      left: 30,
-      position: 'absolute',
-    },
+    // smp04Parent: {
+    //   width: 210,
+    //   height: 86,
+    // },
     sisterTypo: {
       fontSize: 13,
       top: 83,
@@ -517,7 +519,6 @@ const Meprofile = ({navigation}) => {
       alignContent: 'center',
       alignSelf: 'center',
       fontWeight: '400',
-      color: '#291E17',
     },
     havetext: {
       fontSize: 21,
@@ -699,8 +700,18 @@ const Meprofile = ({navigation}) => {
   });
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
-      <View style={{flex: 1, backgroundColor: isDarkMode ? 'black' : '#FFF'}}>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor:
+          colorScheme === 'light' ? appColors?.white : appColors?.black,
+      }}>
+      <View
+        style={{
+          flex: 1,
+          backgroundColor:
+            colorScheme === 'light' ? appColors?.white : appColors?.black,
+        }}>
         {showParticipantForm ? (
           <ParticipantForm
             onClose={handleCloseParticipantForm}
@@ -720,8 +731,24 @@ const Meprofile = ({navigation}) => {
             ]}
           />
         ) : (
-          <View style={styles.container}>
-            <View style={{height:200,width:"100%",backgroundColor:'blue',alignSelf:'center',justifyContent:'space-between'}}>
+          <View
+            style={[
+              styles?.container,
+              {
+                backgroundColor:
+                  colorScheme === 'light' ? appColors?.white : appColors?.black,
+              },
+            ]}>
+            <View
+              style={[
+                styles?.header,
+                {
+                  backgroundColor:
+                    colorScheme === 'light'
+                      ? appColors?.white
+                      : appColors?.black,
+                },
+              ]}>
               <TouchableHighlight
                 underlayColor="transparent"
                 onLongPress={handleLongPress}
@@ -736,95 +763,118 @@ const Meprofile = ({navigation}) => {
                   }
                 />
               </TouchableHighlight>
-            </View>
-            {/* <View style={styles.header}>
-                <TouchableHighlight
-                  underlayColor="transparent"
-                  onLongPress={handleLongPress}
-                  onPress={imagepick}>
-                  <Image
-                    style={styles.imageprofile}
-                    resizeMode="cover"
-                    source={
-                      profile
-                        ? {uri: profile}
-                        : require('../../../assets/isection/emptyavator.png')
-                    }
-                  />
-                </TouchableHighlight>
-                <View style={styles.HeaderTextWrapper}>
-                  <Text style={styles.myself}>
-                    <Text style={styles.m}>M</Text>
-                    <Text style={styles.y}>y</Text>
-                    <Text style={styles.s}>s</Text>
-                    <Text style={styles.e}>e</Text>
-                    <Text style={styles.l}>l</Text>
-                    <Text style={styles.f}>f</Text>
+              <View style={{flex: 1}}>
+                <View style={styles.myself}>
+                  <Text style={styles.m}>M</Text>
+                  <Text style={styles.y}>y</Text>
+                  <Text style={styles.s}>s</Text>
+                  <Text style={styles.e}>e</Text>
+                  <Text style={styles.l}>l</Text>
+                  <Text style={styles.f}>f</Text>
+                </View>
+                <View style={styles.namesection}>
+                  <Text
+                    style={[
+                      styles?.fullname,
+                      {
+                        color:
+                          colorScheme === 'light'
+                            ? appColors?.black
+                            : appColors?.white,
+                      },
+                    ]}>
+                    Sarvesh Awasthi
                   </Text>
-                  <View style={styles.namesection}>
-                    <Text style={styles.fullname}>Sarvesh Awasthi</Text>
-                    <Text style={styles.gender}>F/ 23 Single</Text>
-                  </View>
-
-                  <Text style={styles.city}>Pune</Text>
+                  <Text
+                    style={[
+                      styles?.gender,
+                      {
+                        color:
+                          colorScheme === 'light'
+                            ? appColors?.black
+                            : appColors?.white,
+                      },
+                    ]}>
+                    F/ 23 Single
+                  </Text>
+                  <Text
+                    style={[
+                      styles?.city,
+                      {
+                        color:
+                          colorScheme === 'light'
+                            ? appColors?.black
+                            : appColors?.white,
+                      },
+                    ]}>
+                    Pune
+                  </Text>
                 </View>
               </View>
-              <ScrollView horizontal={true}>
-                <View style={styles.Addsection}>
-                  {participants.length < 5 && (
-                    <TouchableHighlight
-                      onPress={addParticipant}
-                      underlayColor="transparent">
-                      <>
-                        <View
-                          style={{
-                            alignItems: 'center',
-                            width: 100,
-                          }}>
-                          <Text
-                            style={
-                              {
-                                marginTop: 45,
-                                fontSize: 23,
-                                fontWeight: '500',
-                              }
-                              // {left: calculateButtonLeft()},
-                            }>
-                            +
-                          </Text>
-                        </View>
-                      </>
-                    </TouchableHighlight>
-                  )}
-                  <View style={styles.smp04Parent}>
-                    {participants.map((participant, index) => (
-                      <View
-                        key={index}
-                        style={[
-                          styles.participantContainer,
-                          {left: 86 * index},
-                        ]}>
-                        <TouchableHighlight underlayColor="transparent">
-                          <Image
-                            style={[styles.addfirst, styles.iconLayout]}
-                            resizeMode="cover"
-                            source={{uri: participant.selectedImage}}
-                          />
-                        </TouchableHighlight>
-                        <Text style={[styles.partner, styles.sisterTypo]}>
-                          {participant.relationship.length > 7
-                            ? `${participant.relationship.slice(
-                                0,
-                                7,
-                              )}\n${participant.relationship.slice(7)}`
-                            : participant.relationship}
-                        </Text>
-                      </View>
-                    ))}
-                  </View>
+            </View>
+            <ScrollView horizontal={true} style={styles.Addsection}>
+              {participants.map((participant, index) => (
+                <View
+                  key={index}
+                  style={{
+                    left: 20 * index,
+                    height: 60,
+                    height: 60,
+                  }}>
+                  <TouchableHighlight underlayColor="transparent">
+                    <Image
+                      style={{
+                        borderRadius: 51,
+                        borderWidth: 4,
+                        borderColor: 'white',
+                        height: 80,
+                        width: 80,
+                        backgroundColor: 'lightgray',
+                        shadowColor: '#454545',
+                        shadowOffset: {width: 0, height: 4},
+                        shadowOpacity: 0.45,
+                        shadowRadius: 10,
+                      }}
+                      resizeMode="cover"
+                      source={{uri: participant.selectedImage}}
+                    />
+                  </TouchableHighlight>
+                  <Text style={[styles.partner, styles.sisterTypo]}>
+                    {participant.relationship.length > 7
+                      ? `${participant.relationship.slice(
+                          0,
+                          7,
+                        )}\n${participant.relationship.slice(7)}`
+                      : participant.relationship}
+                  </Text>
                 </View>
-              </ScrollView>
-
+              ))}
+              {participants.length < 5 && (
+                <TouchableHighlight
+                  onPress={addParticipant}
+                  underlayColor="transparent">
+                  <>
+                    <View
+                      style={{
+                        alignItems: 'center',
+                        width: 100,
+                      }}>
+                      <Text
+                        style={{
+                          marginTop: 45,
+                          fontSize: 23,
+                          fontWeight: '500',
+                        }}>
+                        +
+                      </Text>
+                    </View>
+                  </>
+                </TouchableHighlight>
+              )}
+            </ScrollView>
+            <ScrollView
+              contentContainerStyle={{paddingBottom: 380}}
+              style={{width: '100%', height: '100%'}}>
               <View style={styles.Mehavei}>
                 <View style={styles.section2}>
                   <TouchableHighlight
@@ -839,6 +889,12 @@ const Meprofile = ({navigation}) => {
                         style={[
                           styles.metext,
                           selectedTabme === 'Me' ? styles.boldText : null,
+                          {
+                            color:
+                              colorScheme === 'light'
+                                ? appColors?.textColor
+                                : appColors?.loaderColor,
+                          },
                         ]}>
                         Me
                       </Text>
@@ -846,22 +902,6 @@ const Meprofile = ({navigation}) => {
                     </View>
                   </TouchableHighlight>
 
-                  {selectedTab === 'Me' && (
-                    <Mesection
-                      ismeModalVisible={ismeModalVisible}
-                      toggleModalme={toggleModalme}
-                      handleTabClickme={handleTabClickme}
-                      meListData={meListData}
-                      questionMapme={questionMapme}
-                      handleAnswerSubmitme={handleAnswerSubmitme}
-                      defaultAnswersme={defaultAnswersme}
-                      selectedItemme={selectedItemme}
-                      answer={answer}
-                      setAnswerme={setAnswerme}
-                      selectedDefaultAnswerme={selectedDefaultAnswerme}
-                      setSelectedDefaultAnswerme={setSelectedDefaultAnswerme}
-                    />
-                  )}
                   <TouchableHighlight
                     underlayColor="transparent"
                     style={[
@@ -874,30 +914,18 @@ const Meprofile = ({navigation}) => {
                         style={[
                           styles.havetext,
                           selectedTab === 'Have' ? styles.boldText : null,
+                          {
+                            color:
+                              colorScheme === 'light'
+                                ? appColors?.textColor
+                                : appColors?.loaderColor,
+                          },
                         ]}>
                         Have
                       </Text>
                       <View style={styles.borderBottomHave} />
                     </View>
                   </TouchableHighlight>
-                  {selectedTab === 'Have' && (
-                    <HaveSection
-                      isHaveModalVisible={isHaveModalVisible}
-                      toggleModalHave={toggleModalHave}
-                      handleTabClickHave={handleTabClickHave}
-                      haveListData={haveListData}
-                      questionMapHave={questionMapHave}
-                      handleAnswerSubmitHave={handleAnswerSubmitHave}
-                      defaultAnswersHave={defaultAnswerHave}
-                      selectedItemHave={selectedItemHave}
-                      answerHave={answerHave}
-                      setAnswerHave={setAnswerHave}
-                      selectedDefaultAnswerHave={selectedDefaultAnswerHave}
-                      setSelectedDefaultAnswerHave={
-                        setSelectedDefaultAnswerHave
-                      }
-                    />
-                  )}
                   <TouchableHighlight
                     underlayColor="transparent"
                     style={[
@@ -910,14 +938,53 @@ const Meprofile = ({navigation}) => {
                         style={[
                           styles.itext,
                           selectedTab === 'I' ? styles.boldText : null,
+                          {
+                            color:
+                              colorScheme === 'light'
+                                ? appColors?.textColor
+                                : appColors?.loaderColor,
+                          },
                         ]}>
+                        {' '}
                         i
                       </Text>
                       <View style={styles.borderBottom} />
                     </View>
                   </TouchableHighlight>
                 </View>
+                {selectedTab === 'Me' && (
+                  <Mesection
+                    ismeModalVisible={ismeModalVisible}
+                    toggleModalme={toggleModalme}
+                    handleTabClickme={handleTabClickme}
+                    meListData={meListData}
+                    questionMapme={questionMapme}
+                    handleAnswerSubmitme={handleAnswerSubmitme}
+                    defaultAnswersme={defaultAnswersme}
+                    selectedItemme={selectedItemme}
+                    answer={answer}
+                    setAnswerme={setAnswerme}
+                    selectedDefaultAnswerme={selectedDefaultAnswerme}
+                    setSelectedDefaultAnswerme={setSelectedDefaultAnswerme}
+                  />
+                )}
 
+                {selectedTab === 'Have' && (
+                  <HaveSection
+                    isHaveModalVisible={isHaveModalVisible}
+                    toggleModalHave={toggleModalHave}
+                    handleTabClickHave={handleTabClickHave}
+                    haveListData={haveListData}
+                    questionMapHave={questionMapHave}
+                    handleAnswerSubmitHave={handleAnswerSubmitHave}
+                    defaultAnswersHave={defaultAnswerHave}
+                    selectedItemHave={selectedItemHave}
+                    answerHave={answerHave}
+                    setAnswerHave={setAnswerHave}
+                    selectedDefaultAnswerHave={selectedDefaultAnswerHave}
+                    setSelectedDefaultAnswerHave={setSelectedDefaultAnswerHave}
+                  />
+                )}
                 {selectedTab === 'I' && (
                   <ISection
                     isModalVisible={isModalVisible}
@@ -934,7 +1001,8 @@ const Meprofile = ({navigation}) => {
                     setSelectedDefaultAnswer={setSelectedDefaultAnswer}
                   />
                 )}
-              </View> */}
+              </View>
+            </ScrollView>
           </View>
         )}
       </View>

@@ -74,24 +74,32 @@ const SignIn = ({navigation}) => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor:
+          colorScheme === 'light' ? appColors?.white : appColors?.black,
+      }}>
       <View
         // keyboardShouldPersistTaps="always"
         // enableOnAndroid={true}
         // contentContainerStyle={{paddingBottom: 20}}
         style={{
           flex: 1,
-          paddingHorizontal: '10%',
+          paddingHorizontal: '8%',
           paddingTop: 28,
           backgroundColor:
             colorScheme === 'light' ? appColors?.white : appColors?.black,
         }}>
-        <View style={{ flex: 1}}>
+        <View style={{flex: 1}}>
           <Text
             style={{
               fontSize: 37,
               fontWeight: '500',
-              color: colorScheme === 'light' ? 'black' : 'white',
+              color:
+                colorScheme === 'light'
+                  ? appColors?.textColor
+                  : appColors?.white,
             }}>
             Welcome back
           </Text>
@@ -99,61 +107,74 @@ const SignIn = ({navigation}) => {
             style={{
               fontSize: 19,
               fontWeight: '500',
-              color: '#C0C0C0',
+              color:
+                colorScheme === 'light'
+                  ? appColors?.textColor
+                  : appColors?.white,
               marginTop: '4%',
               lineHeight: 22,
             }}>
             Sign in to Continue {'\n'}using the app
           </Text>
         </View>
-        <View contentContainerStyle={{flex: 1}}>
-          <View style={{flex: 1, margintTop: 10}}>
-            <CommonTextInput
-              label="Enter Phone Number"
-              value={loginValue?.phoneNumber}
-              sucess={/^(?:\d{10}|\w+@\w+\.\w{2,3})$/.test(
-                loginValue?.phoneNumber,
-              )}
-              onChangeText={e => {
-                setLoginValue({...loginValue, phoneNumber: e});
-              }}
-            />
-          </View>
+        <View style={{flex: 1, margintTop: 10}}>
+          <CommonTextInput
+            label="Enter Phone Number"
+            value={loginValue?.phoneNumber}
+            sucess={/^(?:\d{10}|\w+@\w+\.\w{2,3})$/.test(
+              loginValue?.phoneNumber,
+            )}
+            onChangeText={e => {
+              setLoginValue({...loginValue, phoneNumber: e});
+            }}
+          />
+        </View>
+        <View
+          style={{
+            marginTop: '15%',
+            width: '100%',
+          }}>
           <View
             style={{
-              marginTop: '25%',
-              width: '100%',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
             }}>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}>
+            {colorScheme === 'light' ? (
               <CommonButton
                 buttonText={'Sign up'}
                 onPress={() => {
                   signUpProcess();
                 }}
               />
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-end',
+            ) : (
+              <TouchableOpacity
+                onPress={() => {
+                  signUpProcess();
                 }}>
-                <TouchableOpacity>
-                  <Image source={imagePath?.GoogleIcon} />
-                </TouchableOpacity>
-                <TouchableOpacity>
-                  <Image source={imagePath?.facebookIcon} />
-                </TouchableOpacity>
-              </View>
+                <Image source={imagePath?.DSignUp} />
+              </TouchableOpacity>
+            )}
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'flex-end',
+              }}>
+              <TouchableOpacity>
+                <Image source={imagePath?.GoogleIcon} />
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Image source={imagePath?.facebookIcon} />
+              </TouchableOpacity>
             </View>
           </View>
 
           <Text
             style={{
               marginTop: '15%',
-              color: appColors?.gray,
+              color:
+                colorScheme === 'light'
+                  ? appColors?.textColor
+                  : appColors?.white,
               fontSize: 15,
             }}>
             You can continue Sign In through
@@ -163,7 +184,7 @@ const SignIn = ({navigation}) => {
               flex: 1,
               alignSelf: 'center',
               alignItems: 'center',
-              marginTop: '25%',
+              marginTop: '15%',
             }}>
             <TouchableOpacity>
               <Image style={{width: 360}} source={imagePath?.AppleLogin} />
@@ -179,17 +200,28 @@ const SignIn = ({navigation}) => {
             }}></View>
         </View>
       </View>
-      <Text style={styles.group4text}>
+      <Text
+        style={[
+          styles?.group4text,
+          {
+            color:
+              colorScheme === 'light' ? appColors?.textColor : appColors?.white,
+          },
+        ]}>
         If you already have an Account then,
       </Text>
       <View
         style={{
           alignSelf: 'flex-end',
           marginRight: 30,
-          bottom:5
+          bottom: 5,
         }}>
-        <TouchableOpacity onPress={() => navigation?.navigate('SignIn')}>
-          <Image source={imagePath?.SignInBtn} />
+        <TouchableOpacity onPress={() => navigation?.navigate('MainContainer')}>
+          {colorScheme === 'light' ? (
+            <Image source={imagePath?.SignInBtn} />
+          ) : (
+            <Image source={imagePath?.DSignINBtn} />
+          )}
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -261,6 +293,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: '#454545',
     marginLeft: 35,
+    top: -8,
   },
   signinbutton: {
     borderRadius: 15, // Adjust the border radius as needed

@@ -8,16 +8,44 @@ import {
 } from 'react-native';
 import {appColors} from '../../utils/Appcolors';
 import {imagePath} from '../../utils/imagePath';
+import {useAppCommonDataProvider} from '../UseAppCommonDataProvider';
 
 const Welcome = ({navigation}) => {
+  const {colorScheme} = useAppCommonDataProvider();
+
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor:
+          colorScheme === 'light' ? appColors?.white : appColors?.black,
+      }}>
       <View
         style={{
           flex: 1,
         }}>
-        <Text style={styles.WelcomeText}>Welcome to {'\n'}With Me !!</Text>
-        <Text style={styles.signup_text}>
+        <Text
+          style={[
+            styles?.WelcomeText,
+            {
+              color:
+                colorScheme === 'light'
+                  ? appColors?.textColor
+                  : appColors?.white,
+            },
+          ]}>
+          Welcome to {'\n'}With Me !!
+        </Text>
+        <Text
+          style={[
+            styles?.signup_text,
+            {
+              color:
+                colorScheme === 'light'
+                  ? appColors?.textColor
+                  : appColors?.loaderColor,
+            },
+          ]}>
           Signup first to experience {'\n'}the app
         </Text>
         <View
@@ -25,61 +53,65 @@ const Welcome = ({navigation}) => {
             justifyContent: 'center',
             alignSelf: 'center',
             alignItems: 'center',
-            flex: 0.9,
+            flex: 1,
           }}>
           <TouchableOpacity
             style={styles.button}
             onPress={() => navigation.navigate('Signup')}>
-            <Image resizeMode="cover" source={imagePath?.PhoneNoLogin} />
+            {colorScheme === 'light' ? (
+              <Image source={imagePath?.PhoneNoLogin} />
+            ) : (
+              <Image source={imagePath?.DPhoneNo} />
+            )}
           </TouchableOpacity>
           <TouchableOpacity style={styles.button}>
-            <Image source={imagePath?.FacebookLogin} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.navigate('MainContainer')}>
-            <Image source={imagePath?.GoogleLogin} />
+            {colorScheme === 'light' ? (
+              <Image source={imagePath?.FacebookLogin} />
+            ) : (
+              <Image source={imagePath?.DFacebookBtn} />
+            )}
           </TouchableOpacity>
           <TouchableOpacity style={styles.button}>
-            <Image source={imagePath?.AppleLogin} />
+            {colorScheme === 'light' ? (
+              <Image source={imagePath?.GoogleLogin} />
+            ) : (
+              <Image source={imagePath?.DGoogle} />
+            )}
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button}>
+            {colorScheme === 'light' ? (
+              <Image source={imagePath?.AppleLogin} />
+            ) : (
+              <Image source={imagePath?.Dapple} />
+            )}
           </TouchableOpacity>
         </View>
-        {/* <View
-          style={{
-            flexDirection: 'row',
-            marginTop: 10,
-            alignSelf: 'center',
-            alignItems: 'center',
-          }}>
-          <Text style={{color: appColors?.gray}}>
-            If you already have an account ?
+        <View>
+          <Text
+            style={[
+              styles?.group4text,
+              {
+                color:
+                  colorScheme === 'light'
+                    ? appColors?.textColor
+                    : appColors?.loaderColor,
+              },
+            ]}>
+            If you already have an Account then,
           </Text>
-          <TouchableOpacity
-            onPress={() => {
-              navigation?.navigate('SignIn');
+          <View
+            style={{
+              alignSelf: 'flex-end',
+              marginRight: 30,
             }}>
-            <Text
-              style={{
-                color: appColors?.orange,
-                fontSize: 25,
-                fontWeight: 500,
-                textDecorationLine: 'underline',
-              }}>
-              {' Sign in'}
-            </Text>
-          </TouchableOpacity>
-        </View> */}
-        <Text style={styles.group4text}>
-          If you already have an Account then,
-        </Text>
-        <View
-          style={{
-            alignSelf: 'flex-end',
-            marginRight: 30,
-          }}>
-          <TouchableOpacity onPress={() =>  navigation?.navigate('SignIn')}>
-            <Image source={imagePath?.SignInBtn} />
-          </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation?.navigate('SignIn')}>
+              {colorScheme === 'light' ? (
+                <Image source={imagePath?.SignInBtn} />
+              ) : (
+                <Image source={imagePath?.DSignINBtn} />
+              )}
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </SafeAreaView>
@@ -88,7 +120,6 @@ const Welcome = ({navigation}) => {
 
 const styles = StyleSheet.create({
   WelcomeText: {
-    color: '#454545',
     fontSize: 40,
     fontWeight: '600',
     marginLeft: 35,

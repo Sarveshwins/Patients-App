@@ -100,14 +100,19 @@ const Signup = ({navigation}) => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor:
+          colorScheme === 'light' ? appColors?.white : appColors?.black,
+      }}>
       <KeyboardAwareScrollView
         keyboardShouldPersistTaps="always"
         enableOnAndroid={true}
-        contentContainerStyle={{paddingBottom: 20}}
+        contentContainerStyle={{paddingBottom: 70}}
         style={{
           flex: 1,
-          paddingHorizontal: '10%',
+          paddingHorizontal: '5%',
           paddingTop: 28,
           backgroundColor:
             colorScheme === 'light' ? appColors?.white : appColors?.black,
@@ -117,7 +122,10 @@ const Signup = ({navigation}) => {
             style={{
               fontSize: 37,
               fontWeight: '500',
-              color: colorScheme === 'light' ? 'black' : 'white',
+              color:
+                colorScheme === 'light'
+                  ? appColors?.textColor
+                  : appColors?.white,
             }}>
             Sign Up
           </Text>
@@ -125,7 +133,10 @@ const Signup = ({navigation}) => {
             style={{
               fontSize: 19,
               fontWeight: '500',
-              color: '#C0C0C0',
+              color:
+                colorScheme === 'light'
+                  ? appColors?.textColor
+                  : appColors?.white,
               marginTop: '4%',
               lineHeight: 22,
             }}>
@@ -171,12 +182,22 @@ const Signup = ({navigation}) => {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
               }}>
-              <CommonButton
-                buttonText={'Sign up'}
-                onPress={() => {
-                  signUpProcess();
-                }}
-              />
+              {colorScheme === 'light' ? (
+                <CommonButton
+                  buttonText={'Sign up'}
+                  onPress={() => {
+                    signUpProcess();
+                  }}
+                />
+              ) : (
+                <TouchableOpacity
+                  onPress={() => {
+                    signUpProcess();
+                  }}>
+                  <Image source={imagePath?.DSignUp} />
+                </TouchableOpacity>
+              )}
+
               <View
                 style={{
                   flexDirection: 'row',
@@ -196,11 +217,15 @@ const Signup = ({navigation}) => {
               justifyContent: 'center',
               alignSelf: 'center',
               alignItems: 'center',
+              marginTop: '5%',
             }}>
-           
-              <TouchableOpacity>
-                <Image style={{width: 360}} source={imagePath?.AppleLogin} />
-              </TouchableOpacity>
+            <TouchableOpacity>
+              {colorScheme === 'light' ? (
+                <Image source={imagePath?.AppleCenter} />
+              ) : (
+                <Image source={imagePath?.AppleCenter} />
+              )}
+            </TouchableOpacity>
             <Text
               style={{
                 marginTop: '5%',
@@ -212,32 +237,22 @@ const Signup = ({navigation}) => {
           </View>
           <View
             style={{
-              flex: 0.1,
               flexDirection: 'row',
-              marginTop: '35%',
+              marginTop: '15%',
               alignSelf: 'center',
               alignItems: 'center',
-            }}>
-            {/* <Text style={{color: appColors?.gray}}>
-              If you already have an account ?
-            </Text>
-            <TouchableOpacity
-              onPress={() => {
-                navigation?.navigate('Login');
-              }}>
-              <Text
-                style={{
-                  color: appColors?.orange,
-                  fontSize: 25,
-                  fontWeight: 500,
-                  textDecorationLine: 'underline',
-                }}>
-                {' Sign in'}
-              </Text>
-            </TouchableOpacity> */}
-          </View>
+            }}></View>
         </View>
-        <Text style={styles.group4text}>
+        <Text
+          style={[
+            styles?.group4text,
+            {
+              color:
+                colorScheme === 'light'
+                  ? appColors?.textColor
+                  : appColors?.white,
+            },
+          ]}>
           If you already have an Account then,
         </Text>
         <View
@@ -246,7 +261,11 @@ const Signup = ({navigation}) => {
             marginRight: 30,
           }}>
           <TouchableOpacity onPress={() => navigation?.navigate('SignIn')}>
-            <Image source={imagePath?.SignInBtn} />
+            {colorScheme === 'light' ? (
+              <Image source={imagePath?.SignInBtn} />
+            ) : (
+              <Image source={imagePath?.DSignINBtn} />
+            )}
           </TouchableOpacity>
         </View>
       </KeyboardAwareScrollView>
@@ -356,8 +375,8 @@ const styles = StyleSheet.create({
   group4text: {
     fontSize: 14,
     fontWeight: '500',
-    color: '#454545',
-    left: 54,
+    left: 5,
+    top: -5,
   },
   signinbutton: {
     borderRadius: 15, // Adjust the border radius as needed

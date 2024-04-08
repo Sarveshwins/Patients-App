@@ -13,4 +13,12 @@ export const imagePath = {
   arrow: require('../assets/logos/arrow.png'),
   GoogleIcon: require('../assets/logos/GoogleIcon.png'),
   SignInBtn: require('../assets/logos/SignInBtn.png'),
+  DSignINBtn: require('../assets/logos/DSignINBtn.png'),
+  DSignUp: require('../assets/logos/DSignUp.png'),
+  DFacebookBtn: require('../assets/logos/DFacebookBtn.png'),
+  DPhoneNo: require('../assets/logos/DPhoneNo.png'),
+  DGoogle: require('../assets/logos/DGoogle.png'),
+  Dapple: require('../assets/logos/Dapple.png'),
+  DApplecenter: require('../assets/logos/DApplecenter.png'),
+  AppleCenter: require('../assets/logos/AppleCenter.png'),
 };

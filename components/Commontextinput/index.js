@@ -14,6 +14,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {useAppCommonDataProvider} from '../UseAppCommonDataProvider';
 
 const CommonTextInput = ({
   label,
@@ -31,7 +32,7 @@ const CommonTextInput = ({
   keyboardType,
   editable,
 }) => {
-  // const { colorScheme } = useAppCommonDataProvider();
+  const {colorScheme} = useAppCommonDataProvider();
   console.log(!passwordFocus && value?.length !== 0, passwordFocus, value);
   if (label?.includes('Password')) {
     return (
@@ -52,7 +53,11 @@ const CommonTextInput = ({
             secureTextEntry={eyeValue}
             placeholder={label}
             onFocus={onFocus}
-            placeholderTextColor={appColors?.loaderColor}
+            placeholderTextColor={
+              colorScheme === 'light'
+                ? appColors?.white
+                : appColors?.loaderColor
+            }
             onBlur={onBlur}
             onChangeText={onChangeText}
             value={value}
@@ -61,8 +66,8 @@ const CommonTextInput = ({
               height: 40,
               fontSize: 17,
               paddingBottom: 10,
-              // color:
-              // colorScheme === "light" ? appColors?.black : appColors?.white,
+              color:
+                colorScheme === 'light' ? appColors?.black : appColors?.white,
             }}
           />
           <TouchableOpacity
@@ -108,7 +113,8 @@ const CommonTextInput = ({
         }}>
         <Text
           style={{
-            // color: colorScheme === "light" ? "black" : "white",
+            color:
+              colorScheme === 'light' ? appColors?.black : appColors?.white,
             marginRight: 10,
             fontSize: 17,
             justifyContent: 'center',
@@ -126,8 +132,8 @@ const CommonTextInput = ({
               height: 40,
               paddingBottom: 20,
               fontSize: 17,
-
-              //  color: colorScheme === "light" ? "black" : "white",
+              color:
+                colorScheme === 'light' ? appColors?.black : appColors?.white,
             },
             style,
           ]}
@@ -143,7 +149,9 @@ const CommonTextInput = ({
         editable={editable}
         keyboardType={keyboardType ? keyboardType : 'default'}
         placeholder={label}
-        placeholderTextColor={appColors?.textPlaceholder}
+        placeholderTextColor={
+          colorScheme === 'light' ? appColors?.loaderColor : appColors?.white
+        }
         style={[
           {
             height: 40,
@@ -156,7 +164,8 @@ const CommonTextInput = ({
               ? appColors?.green
               : appColors?.bottomGray,
             borderBottomWidth: 3,
-            //color: colorScheme === "light" ? "black" : "white",
+            color:
+              colorScheme === 'light' ? appColors?.black : appColors?.white,
           },
           style,
         ]}
