@@ -167,7 +167,7 @@ const Specailist = () => {
         </View>
 
         <FlatList
-          data={leftSideSpecialityData}
+          data={rightSideSpecialityData}
           renderItem={renderLeftItem}
           keyExtractor={item => item.id.toString()}
           showsVerticalScrollIndicator={false}

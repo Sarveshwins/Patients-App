@@ -19,6 +19,7 @@ import CommonButton from '../../CommonButton';
 import {imagePath} from '../../../utils/imagePath';
 import {useAppCommonDataProvider} from '../../UseAppCommonDataProvider';
 import {appColors} from '../../../utils/Appcolors';
+import ShakeComponent from '../../ShakeComponent';
 
 const SignIn = ({navigation}) => {
   const [loginValue, setLoginValue] = useState({
@@ -73,6 +74,12 @@ const SignIn = ({navigation}) => {
     console.log(userInfo, '<----userInfo');
   };
 
+  const [count, setCount] = useState(0);
+
+  const signUpProcess = () => {
+    setCount(count + 1);
+  };
+
   return (
     <SafeAreaView
       style={{
@@ -118,16 +125,22 @@ const SignIn = ({navigation}) => {
           </Text>
         </View>
         <View style={{flex: 1, margintTop: 10}}>
-          <CommonTextInput
-            label="Enter Phone Number"
-            value={loginValue?.phoneNumber}
-            sucess={/^(?:\d{10}|\w+@\w+\.\w{2,3})$/.test(
-              loginValue?.phoneNumber,
-            )}
-            onChangeText={e => {
-              setLoginValue({...loginValue, phoneNumber: e});
-            }}
-          />
+          <ShakeComponent
+            shouldShake={
+              !/^(?:\d{10}|\w+@\w+\.\w{2,3})$/.test(loginValue?.phoneNumber)
+            }
+            render={count}>
+            <CommonTextInput
+              label="Enter Phone Number"
+              value={loginValue?.phoneNumber}
+              sucess={/^(?:\d{10}|\w+@\w+\.\w{2,3})$/.test(
+                loginValue?.phoneNumber,
+              )}
+              onChangeText={e => {
+                setLoginValue({...loginValue, phoneNumber: e});
+              }}
+            />
+          </ShakeComponent>
         </View>
         <View
           style={{

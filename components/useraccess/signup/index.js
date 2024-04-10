@@ -22,6 +22,7 @@ import {SignUpAction} from '../../redux/action/Signup';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {imagePath} from '../../../utils/imagePath';
 import CommonButton from '../../CommonButton';
+import ShakeComponent from '../../ShakeComponent';
 
 // import { useAppCommonDataProvider } from '../../../useAppCommonDataProvider'
 
@@ -60,7 +61,10 @@ const Signup = ({navigation}) => {
   //   }
   // };
 
+  const [count, setCount] = useState(0);
+
   const signUpProcess = async () => {
+    setCount(count + 1);
     if (
       signUpValues?.firstName?.length >= 2 &&
       signUpValues?.lastName?.length >= 2 &&
@@ -145,30 +149,46 @@ const Signup = ({navigation}) => {
         </View>
         <View contentContainerStyle={{flex: 1}}>
           <View style={{flex: 1}}>
-            <CommonTextInput
-              label="Enter Phone Number"
-              value={signUpValues?.Phone}
-              sucess={/^(?:\d{10}|\w+@\w+\.\w{2,3})$/.test(signUpValues?.Phone)}
-              onChangeText={e => {
-                setSignUpValues({...signUpValues, Phone: e});
-              }}
-            />
-            <CommonTextInput
-              label="First Name"
-              value={signUpValues?.firstName}
-              sucess={signUpValues?.firstName?.length >= 3}
-              onChangeText={e => {
-                setSignUpValues({...signUpValues, firstName: e});
-              }}
-            />
-            <CommonTextInput
-              label="Last Name"
-              value={signUpValues?.lastName}
-              sucess={signUpValues?.lastName?.length >= 3}
-              onChangeText={e => {
-                setSignUpValues({...signUpValues, lastName: e});
-              }}
-            />
+            <ShakeComponent
+              shouldShake={
+                !/^(?:\d{10}|\w+@\w+\.\w{2,3})$/.test(signUpValues?.Phone)
+              }
+              render={count}>
+              <CommonTextInput
+                label="Enter Phone Number"
+                value={signUpValues?.Phone}
+                sucess={/^(?:\d{10}|\w+@\w+\.\w{2,3})$/.test(
+                  signUpValues?.Phone,
+                )}
+                onChangeText={e => {
+                  setSignUpValues({...signUpValues, Phone: e});
+                }}
+              />
+            </ShakeComponent>
+            <ShakeComponent
+              shouldShake={signUpValues?.firstName?.length < 3}
+              render={count}>
+              <CommonTextInput
+                label="First Name"
+                value={signUpValues?.firstName}
+                sucess={signUpValues?.firstName?.length >= 3}
+                onChangeText={e => {
+                  setSignUpValues({...signUpValues, firstName: e});
+                }}
+              />
+            </ShakeComponent>
+            <ShakeComponent
+              shouldShake={signUpValues?.lastName?.length < 3}
+              render={count}>
+              <CommonTextInput
+                label="Last Name"
+                value={signUpValues?.lastName}
+                sucess={signUpValues?.lastName?.length >= 3}
+                onChangeText={e => {
+                  setSignUpValues({...signUpValues, lastName: e});
+                }}
+              />
+            </ShakeComponent>
           </View>
           <View
             style={{
