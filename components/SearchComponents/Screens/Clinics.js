@@ -7,6 +7,7 @@ import {
   Image,
   ScrollView,
   SafeAreaView,
+  FlatList,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -24,9 +25,8 @@ const Clinics = ({route}) => {
   const {isDarkMode} = useTheme();
 
   function handleArrowClick() {
-   // navigation.navigate('SearchHome');
-        navigation.navigate('MainContainer', {screen: 'SearchHome'});
-
+    // navigation.navigate('SearchHome');
+    navigation.navigate('MainContainer', {screen: 'SearchHome'});
   }
 
   const styles = StyleSheet.create({
@@ -126,9 +126,30 @@ const Clinics = ({route}) => {
     ScrollArea: {
       marginBottom: 85,
       height: hp(100),
-    }
+    },
   });
-
+  const renderItem1 = ({item}) => (
+    <View style={styles.DoctorCard} key={item.id}>
+      <Image style={styles.DoctorImage} source={item.image} />
+      <View style={styles.DoctorTextView}>
+        <Text style={styles.TextName}>{item.name}</Text>
+        <Text style={styles.TextSpecialist}>
+          {item.field} | {item.location}
+        </Text>
+      </View>
+    </View>
+  );
+  const renderItem = ({item}) => (
+    <View style={styles.DoctorCard} key={item.id}>
+      <Image style={styles.DoctorImage} source={item.image} />
+      <View style={styles.DoctorTextView}>
+        <Text style={styles.TextName}>{item.name}</Text>
+        <Text style={styles.TextSpecialist}>
+          {item.field} | {item.location}
+        </Text>
+      </View>
+    </View>
+  );
   return (
     <SafeAreaView style={{height: hp(100)}}>
       <View style={styles.container}>
@@ -147,31 +168,19 @@ const Clinics = ({route}) => {
           showsVerticalScrollIndicator={false}>
           {clinicsNameList ? (
             <View style={styles.DoctorsCard}>
-              {clinicsNameList.map(clinic => (
-                <View style={styles.DoctorCard} key={clinic.id}>
-                  <Image style={styles.DoctorImage} source={clinic.image} />
-                  <View style={styles.DoctorTextView}>
-                    <Text style={styles.TextName}>{clinic.name}</Text>
-                    <Text style={styles.TextSpecialist}>
-                      {clinic.field} | {clinic.location}
-                    </Text>
-                  </View>
-                </View>
-              ))}
+              <FlatList
+                data={clinicsNameList}
+                renderItem={renderItem}
+                keyExtractor={item => item.id.toString()}
+              />
             </View>
           ) : (
             <View style={styles.DoctorsCard}>
-              {filteredClinics.map(clinic => (
-                <View style={styles.DoctorCard} key={clinic.id}>
-                  <Image style={styles.DoctorImage} source={clinic.image} />
-                  <View style={styles.DoctorTextView}>
-                    <Text style={styles.TextName}>{clinic.name}</Text>
-                    <Text style={styles.TextSpecialist}>
-                      {clinic.field} | {clinic.location}
-                    </Text>
-                  </View>
-                </View>
-              ))}
+              <FlatList
+                data={filteredClinics}
+                renderItem={renderItem1}
+                keyExtractor={item => item.id.toString()}
+              />
             </View>
           )}
         </ScrollView>

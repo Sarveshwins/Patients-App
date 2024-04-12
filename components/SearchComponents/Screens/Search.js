@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   SafeAreaView,
+  FlatList,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -66,9 +67,8 @@ const Search = () => {
     if (userClicked === true) {
       navigation.navigate('RecentSearch');
     } else {
-     // navigation.navigate('SearchHome');
-          navigation.navigate('MainContainer', {screen: 'SearchHome'});
-
+      // navigation.navigate('SearchHome');
+      navigation.navigate('MainContainer', {screen: 'SearchHome'});
     }
   }
 
@@ -280,6 +280,55 @@ const Search = () => {
     },
   });
 
+  const renderIssueList = ({item}) =>
+    item.id < 10 && (
+      <TouchableOpacity>
+        <View style={styles.TopCityCard} key={item.id}>
+          <Text style={styles.TopCityText}>{item.issue}</Text>
+          <Image source={Line} style={styles.TopCityLine} />
+        </View>
+      </TouchableOpacity>
+    );
+
+  const renderClinicsList = ({item}) =>
+    item.id < 31 && (
+      <TouchableOpacity onPress={handleClinicArrowClick}>
+        {isDarkMode ? (
+          <Image style={styles.RightArrowImage} source={RightArrowDark} />
+        ) : (
+          <Image style={styles.RightArrowImage} source={RightArrow} />
+        )}
+      </TouchableOpacity>
+    );
+
+  const renderDoctorList = ({item}) => {
+    if (item.id < 57) {
+      return (
+        <View style={styles.DoctorCard}>
+          <TouchableOpacity onPress={() => handleClickedItem(item)}>
+            <Image style={styles.ClinicImage} source={item.image} />
+            <View style={styles.DoctorTextView}>
+              <Text style={styles.ClinicName}>
+                {item.firstName} {item.lastName}
+              </Text>
+              <Text style={styles.ClinicSpecialist}>{item.field}</Text>
+            </View>
+          </TouchableOpacity>
+          <View style={styles.ButtonView}>
+            <TouchableOpacity
+              style={[
+                styles.DoctorButton,
+                isBookPressed && styles.DoctorButtonHovered,
+              ]}>
+              <Text style={styles.buttonText}>Book a call</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      );
+    }
+    return null; // Returning null for items that do not meet the condition
+  };
+
   return (
     <SafeAreaView style={{height: hp(100)}}>
       <View style={styles.Container}>
@@ -421,8 +470,7 @@ const Search = () => {
                           />
                           <View style={styles.DoctorTextView}>
                             <Text style={styles.ClinicName}>
-                              {boldMatchedText(doctor.firstName, searchText)}
-                              {' '}
+                              {boldMatchedText(doctor.firstName, searchText)}{' '}
                               {boldMatchedText(doctor.lastName, searchText)}
                             </Text>
                             <Text style={styles.ClinicSpecialist}>
@@ -447,36 +495,19 @@ const Search = () => {
             </>
           ) : (
             <>
-              {issueDataList.map(issue => (
-                <View style={styles.TopCityCard} key={issue.id}>
-                  {issue.id < 10 ? (
-                    <>
-                      <TouchableOpacity>
-                        <Text style={styles.TopCityText}>{issue.issue}</Text>
-                      </TouchableOpacity>
-                      <Image source={Line} style={styles.TopCityLine} />
-                    </>
-                  ) : undefined}
-                </View>
-              ))}
+              <FlatList
+                data={issueDataList}
+                renderItem={renderIssueList}
+                keyExtractor={item => item.id.toString()}
+              />
               <View style={styles.ScrollAreaContainer}>
                 <View style={styles.TopCities}>
                   <Text style={styles.TopCitiesText}>Cilincs</Text>
-                  {clinicsNameList.length > itemsPerPage && (
-                    <TouchableOpacity onPress={handleClinicArrowClick}>
-                      {isDarkMode ? (
-                        <Image
-                          style={styles.RightArrowImage}
-                          source={RightArrowDark}
-                        />
-                      ) : (
-                        <Image
-                          style={styles.RightArrowImage}
-                          source={RightArrow}
-                        />
-                      )}
-                    </TouchableOpacity>
-                  )}
+                  <FlatList
+                    data={clinicsNameList}
+                    renderItem={renderClinicsList}
+                    keyExtractor={item => item.id.toString()}
+                  />
                 </View>
               </View>
               {clinicsNameList.map(clinic => (
@@ -520,38 +551,12 @@ const Search = () => {
                   )}
                 </View>
               </View>
-              {doctorList.map(doctor => (
-                <View style={styles.DoctorCard} key={doctor.id}>
-                  {doctor.id < 57 && (
-                    <>
-                      <TouchableOpacity
-                        onPress={() => handleClickedItem(doctor)}>
-                        <Image
-                          style={styles.ClinicImage}
-                          source={doctor.image}
-                        />
-                        <View style={styles.DoctorTextView}>
-                          <Text style={styles.ClinicName}>
-                            {doctor.firstName} {doctor.lastName}
-                          </Text>
-                          <Text style={styles.ClinicSpecialist}>
-                            {doctor.field}
-                          </Text>
-                        </View>
-                      </TouchableOpacity>
-                      <View style={styles.ButtonView}>
-                        <TouchableOpacity
-                          style={[
-                            styles.DoctorButton,
-                            isBookPressed && styles.DoctorButtonHovered,
-                          ]}>
-                          <Text style={styles.buttonText}>Book a call</Text>
-                        </TouchableOpacity>
-                      </View>
-                    </>
-                  )}
-                </View> 
-              ))}
+              <FlatList
+                data={doctorList}
+                renderItem={renderDoctorList}
+                keyExtractor={item => item.id.toString()}
+                // Add any additional props you need here
+              />
             </>
           )}
           <View style={{padding: 60}} />

@@ -66,9 +66,7 @@ const Location = () => {
   }
   function handleCurrentLocality(localityName) {
     handleLocality(localityName);
-   // navigation.navigate('SearchHome');
-        navigation.navigate('MainContainer', {screen: 'SearchHome'});
-
+    navigation.navigate('MainContainer', {screen: 'SearchHome'});
   }
 
   function handleCurrentLocation(cityName) {
@@ -108,7 +106,6 @@ const Location = () => {
   }
 
   function handleArrowClick() {
-    // navigation.navigate('SearchHome');
     navigation.navigate('MainContainer', {screen: 'SearchHome'});
   }
 
@@ -235,7 +232,7 @@ const Location = () => {
   });
 
   return (
-    <SafeAreaView style={{height: hp(100)}}>
+    <SafeAreaView style={{flex: 1, color: 'red'}}>
       <View style={styles.Container}>
         <View style={styles.headerWrapper}>
           <View style={styles.header}>
@@ -253,7 +250,7 @@ const Location = () => {
                 <Image source={searchIcon} style={styles.searchIcon} />
               )}
               <TextInput
-                placeholder="Search1 my city, locality"
+                placeholder="Search my city, locality"
                 placeholderTextColor={isDarkMode ? '#fff' : '#4A4A4A'}
                 clearButtonMode="always"
                 style={styles.input}

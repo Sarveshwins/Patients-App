@@ -26,8 +26,7 @@ const Doctors = ({route}) => {
 
   function handleArrowClick() {
     //navigation.navigate('SearchHome');
-        navigation.navigate('MainContainer', {screen: 'SearchHome'});
-
+    navigation.navigate('MainContainer', {screen: 'SearchHome'});
   }
 
   const styles = StyleSheet.create({
@@ -121,7 +120,7 @@ const Doctors = ({route}) => {
       borderColor: isDarkMode ? '#1A936F' : undefined,
       borderWidth: 1,
       marginTop: 13,
-      marginLeft: 7
+      marginLeft: 7,
     },
     DoctorButtonHovered: {
       backgroundColor: isDarkMode ? '#1A936F' : '#147e5a',
@@ -141,6 +140,24 @@ const Doctors = ({route}) => {
     },
   });
 
+  const renderItem = ({item}) => (
+    <View style={styles.DoctorCard}>
+      <Image style={styles.DoctorImage} source={item.image} />
+      <Image style={styles.DoctorBorderImage} source={Border} />
+      <View style={styles.DoctorTextView}>
+        <Text style={styles.TextName}>{item.firstName}</Text>
+        <Text style={styles.TextSpecialist}>{item.lastName}</Text>
+      </View>
+      <View style={styles.ButtonView}>
+        <TouchableOpacity style={styles.DoctorButton}>
+          <Text style={styles.buttonText}>Book</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.DoctorButton}>
+          <Text style={styles.buttonText}>Call</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
   return (
     <SafeAreaView style={{height: hp(100)}}>
       <View style={styles.container}>
@@ -168,12 +185,10 @@ const Doctors = ({route}) => {
                     <Text style={styles.TextSpecialist}>{doctor.lastName}</Text>
                   </View>
                   <View style={styles.ButtonView}>
-                    <TouchableOpacity
-                      style={[styles.DoctorButton]}>
+                    <TouchableOpacity style={[styles.DoctorButton]}>
                       <Text style={styles.buttonText}>Book</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity
-                      style={[styles.DoctorButton]}>
+                    <TouchableOpacity style={[styles.DoctorButton]}>
                       <Text style={styles.buttonText}>Call</Text>
                     </TouchableOpacity>
                   </View>
@@ -191,12 +206,10 @@ const Doctors = ({route}) => {
                     <Text style={styles.TextSpecialist}>{doctor.lastName}</Text>
                   </View>
                   <View style={styles.ButtonView}>
-                    <TouchableOpacity
-                      style={[styles.DoctorButton]}>
+                    <TouchableOpacity style={[styles.DoctorButton]}>
                       <Text style={styles.buttonText}>Book</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity
-                      style={[styles.DoctorButton]}>
+                    <TouchableOpacity style={[styles.DoctorButton]}>
                       <Text style={styles.buttonText}>Call</Text>
                     </TouchableOpacity>
                   </View>
