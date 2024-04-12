@@ -25,4 +25,7 @@ export const imagePath = {
   FIcon: require('../assets/logos/fIcon.png'),
   GIcon: require('../assets/logos/GIcon.png'),
   user: require('../assets/logos/user.png'),
+  appoint: require('../assets/logos/appoint.png'),
+  video: require('../assets/logos/video.png'),
+  wave: require('../assets/logos/wave.png'),
 };

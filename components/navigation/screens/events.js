@@ -54,9 +54,9 @@ const events = () => {
         }}>
         {/* <UserConfirmation /> */}
         {/* <ForWhom /> */}
-        <EnterDetails />
+        {/* <EnterDetails /> */}
         {/* <OTP /> */}
-        {/* <BookAppointment /> */}
+        <BookAppointment />
       </RBSheet>
     </View>
   );
