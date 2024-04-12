@@ -3,30 +3,31 @@ import React from 'react';
 import OtpInputs from 'react-native-otp-inputs';
 import {imagePath} from '../../../../utils/imagePath';
 
-const OTP = () => {
+const OTP = ({onPress, onDone}) => {
   return (
-    <View
-      style={{flex: 1, marginTop: 20, marginBottom: 30, paddingHorizontal: 30}}>
+    <View style={{flex: 1, padding: 30}}>
       <View
         style={{
           justifyContent: 'space-between',
           flexDirection: 'row',
           //   marginHorizontal: 10,
           //   paddingHorizontal: 20,
-          paddingVertical: 10,
+          // paddingVertical: 10,
           width: '100%',
         }}>
         <Text style={{textAlign: 'left', fontSize: 18, fontWeight: '700'}}>
           Verification Details
         </Text>
-        <Text
-          style={{
-            color: '#007AFF',
-            fontSize: 17,
-            fontWeight: '400',
-          }}>
-          Done
-        </Text>
+        <TouchableOpacity onPress={onDone}>
+          <Text
+            style={{
+              color: '#007AFF',
+              fontSize: 17,
+              fontWeight: '400',
+            }}>
+            Done
+          </Text>
+        </TouchableOpacity>
       </View>
       <View style={{flex: 1, justifyContent: 'space-between'}}>
         <View
@@ -71,6 +72,7 @@ const OTP = () => {
           </Text>
         </View>
         <TouchableOpacity
+          onPress={onPress}
           style={{
             flexDirection: 'row',
             alignSelf: 'flex-end',

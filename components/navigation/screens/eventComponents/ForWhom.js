@@ -1,36 +1,39 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 
-const ForWhom = () => {
+const ForWhom = ({onPress, onDone}) => {
   return (
-    <View style={{flex: 1, marginTop: 20}}>
+    <View style={{flex: 1, padding: 30}}>
       <View
         style={{
           justifyContent: 'space-between',
           flexDirection: 'row',
-          marginHorizontal: 10,
-          padding: 15,
+          // marginHorizontal: 10,
+          // padding: 15,
           width: '100%',
         }}>
         <Text style={{textAlign: 'left', fontSize: 18, fontWeight: '700'}}>
           We Welcome You! {'\n'}Select for whom?
         </Text>
-        <Text
-          style={{
-            color: '#007AFF',
-            fontSize: 17,
-            fontWeight: '400',
-          }}>
-          Done
-        </Text>
+        <TouchableOpacity onPress={onDone}>
+          <Text
+            style={{
+              color: '#007AFF',
+              fontSize: 17,
+              fontWeight: '400',
+            }}>
+            Done
+          </Text>
+        </TouchableOpacity>
       </View>
       <View
         style={{
           flex: 1,
           justifyContent: 'space-evenly',
-          paddingHorizontal: 60,
+          paddingHorizontal: 20,
         }}>
-        <View
+        <TouchableOpacity
+          onPress={() => onPress('EnterDetails', true)}
           style={{
             backgroundColor: '#FFDFDF',
             paddingVertical: 15,
@@ -43,8 +46,9 @@ const ForWhom = () => {
             // marginBottom: 40,
           }}>
           <Text style={{fontSize: 17, fontWeight: '500'}}>Myself</Text>
-        </View>
-        <View
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => onPress('EnterDetails', false)}
           style={{
             backgroundColor: '#C7E2FF',
             paddingVertical: 15,
@@ -56,7 +60,7 @@ const ForWhom = () => {
             shadowOffset: {width: 3, height: 4},
           }}>
           <Text style={{fontSize: 17, fontWeight: '500'}}>Relative</Text>
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   );

@@ -5,7 +5,7 @@ import {imagePath} from '../../../../utils/imagePath';
 import {useAppCommonDataProvider} from '../../../UseAppCommonDataProvider';
 import {appColors} from '../../../../utils/Appcolors';
 
-const EnterDetails = () => {
+const EnterDetails = ({onPress, onDone, forMyself}) => {
   const {colorScheme} = useAppCommonDataProvider();
 
   const [signUpValues, setSignUpValues] = useState({
@@ -19,7 +19,8 @@ const EnterDetails = () => {
     <View
       style={{
         flex: 1,
-        marginTop: 20,
+        // marginTop: 20,
+        padding: 30,
         backgroundColor:
           colorScheme === 'light' ? appColors?.white : appColors?.black,
       }}>
@@ -27,24 +28,26 @@ const EnterDetails = () => {
         style={{
           justifyContent: 'space-between',
           flexDirection: 'row',
-          marginHorizontal: 10,
-          paddingHorizontal: 20,
-          paddingVertical: 10,
+          // marginHorizontal: 10,
+          // paddingHorizontal: 20,
+          // paddingVertical: 10,
           width: '100%',
         }}>
         <Text style={{textAlign: 'left', fontSize: 18, fontWeight: '700'}}>
-          Enter Details for Myself
+          {forMyself ? 'Enter Details for Myself' : 'Enter Relatives Details'}
         </Text>
-        <Text
-          style={{
-            color: '#007AFF',
-            fontSize: 17,
-            fontWeight: '400',
-          }}>
-          Done
-        </Text>
+        <TouchableOpacity onPress={onDone}>
+          <Text
+            style={{
+              color: '#007AFF',
+              fontSize: 17,
+              fontWeight: '400',
+            }}>
+            Done
+          </Text>
+        </TouchableOpacity>
       </View>
-      <View style={{flex: 1, paddingHorizontal: 30}}>
+      <View style={{flex: 1}}>
         <CommonTextInput
           style={{height: 60}}
           label="First Name"
@@ -116,15 +119,26 @@ const EnterDetails = () => {
             alignItems: 'center',
             marginTop: 20,
           }}>
-          <View style={{flexDirection: 'row'}}>
-            <TouchableOpacity>
-              <Image source={imagePath.FIcon} style={{height: 60, width: 60}} />
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Image source={imagePath.GIcon} style={{height: 60, width: 60}} />
-            </TouchableOpacity>
-          </View>
+          {forMyself ? (
+            <View style={{flexDirection: 'row'}}>
+              <TouchableOpacity>
+                <Image
+                  source={imagePath.FIcon}
+                  style={{height: 60, width: 60}}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Image
+                  source={imagePath.GIcon}
+                  style={{height: 60, width: 60}}
+                />
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <View />
+          )}
           <TouchableOpacity
+            onPress={onPress}
             style={{
               flexDirection: 'row',
               width: '35%',

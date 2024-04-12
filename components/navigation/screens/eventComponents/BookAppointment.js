@@ -11,7 +11,7 @@ import React, {useState} from 'react';
 import {imagePath} from '../../../../utils/imagePath';
 import moment from 'moment/moment';
 
-const BookAppointment = () => {
+const BookAppointment = ({onPress}) => {
   const days = [
     {day: 'Today'},
     {day: '22,Wed'},
@@ -108,9 +108,9 @@ const BookAppointment = () => {
       style={{
         flex: 1,
         width: '100%',
-        paddingHorizontal: 30,
+
         justifyContent: 'space-between',
-        paddingVertical: 30,
+        padding: 30,
       }}>
       <View
         style={{

@@ -28,4 +28,5 @@ export const imagePath = {
   appoint: require('../assets/logos/appoint.png'),
   video: require('../assets/logos/video.png'),
   wave: require('../assets/logos/wave.png'),
+  search: require('../assets/searchSection/searchIcon.png'),
 };
