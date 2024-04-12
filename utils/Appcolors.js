@@ -13,4 +13,5 @@ export const appColors = {
   bottomGray: '#A3A3A3',
   textPlaceholder: '#454545',
   textColor: '#4A4A4A',
+
 };

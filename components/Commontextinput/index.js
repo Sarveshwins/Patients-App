@@ -15,6 +15,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {useAppCommonDataProvider} from '../UseAppCommonDataProvider';
+import ShakeComponent from '../ShakeComponent';
 
 const CommonTextInput = ({
   label,
@@ -31,146 +32,160 @@ const CommonTextInput = ({
   maxlength,
   keyboardType,
   editable,
+  shouldShake,
+  render,
 }) => {
   const {colorScheme} = useAppCommonDataProvider();
   console.log(!passwordFocus && value?.length !== 0, passwordFocus, value);
   if (label?.includes('Password')) {
     return (
-      <View style={{height: 75}}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-            borderBottomColor: sucess
-              ? appColors?.green
-              : appColors?.loaderColor,
-            borderBottomWidth: 1,
-            width: 265,
-            marginTop: '10%',
-          }}>
-          <TextInput
-            secureTextEntry={eyeValue}
-            placeholder={label}
-            onFocus={onFocus}
-            placeholderTextColor={
-              colorScheme === 'light'
-                ? appColors?.white
-                : appColors?.loaderColor
-            }
-            onBlur={onBlur}
-            onChangeText={onChangeText}
-            value={value}
+      <ShakeComponent shouldShake={shouldShake} render={render}>
+        <View style={[{height: 75}, style]}>
+          <View
             style={{
-              width: '90%',
-              height: 40,
-              fontSize: 17,
-              paddingBottom: 10,
-              color:
-                colorScheme === 'light' ? appColors?.black : appColors?.white,
-            }}
-          />
-          <TouchableOpacity
-            onPress={onChangeEye}
-            style={
-              {
-                // backgroundColor: 'red',
-                // height: '80%',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderBottomColor: sucess
+                ? appColors?.green
+                : appColors?.loaderColor,
+              borderBottomWidth: 1,
+              width: 265,
+              marginTop: '10%',
+            }}>
+            <TextInput
+              secureTextEntry={eyeValue}
+              placeholder={label}
+              onFocus={onFocus}
+              placeholderTextColor={
+                colorScheme === 'light'
+                  ? appColors?.white
+                  : appColors?.loaderColor
               }
-            }>
-            <Image
-              // source={eyeValue ? imagePath?.eyeClose : imagePath?.eyeOpen}
+              onBlur={onBlur}
+              onChangeText={onChangeText}
+              value={value}
               style={{
-                height: 17,
-                width: 17,
+                width: '90%',
+                height: 40,
+                fontSize: 17,
+                paddingBottom: 10,
+                color:
+                  colorScheme === 'light' ? appColors?.black : appColors?.white,
               }}
             />
-          </TouchableOpacity>
-        </View>
-        {console.log(value, '<---valuevalue')}
-        {value?.length !== 0 && (
-          <View>
-            <PasswordError
-              passwordFocus={passwordFocus}
-              passwordCheck={!passwordFocus && value?.length !== 0}
-              value={value}
-            />
+            <TouchableOpacity
+              onPress={onChangeEye}
+              style={
+                {
+                  // backgroundColor: 'red',
+                  // height: '80%',
+                }
+              }>
+              <Image
+                // source={eyeValue ? imagePath?.eyeClose : imagePath?.eyeOpen}
+                style={{
+                  height: 17,
+                  width: 17,
+                }}
+              />
+            </TouchableOpacity>
           </View>
-        )}
-      </View>
+          {console.log(value, '<---valuevalue')}
+          {value?.length !== 0 && (
+            <View>
+              <PasswordError
+                passwordFocus={passwordFocus}
+                passwordCheck={!passwordFocus && value?.length !== 0}
+                value={value}
+              />
+            </View>
+          )}
+        </View>
+      </ShakeComponent>
     );
   }
   if (initvalue) {
     return (
-      <View
-        style={{
-          height: 75,
-          flexDirection: 'row',
-          width: 265,
-          height: 40,
-          borderBottomColor: sucess ? appColors?.green : '#979797',
-          borderBottomWidth: 0.6,
-        }}>
-        <Text
-          style={{
-            color:
-              colorScheme === 'light' ? appColors?.black : appColors?.white,
-            marginRight: 10,
-            fontSize: 17,
-            justifyContent: 'center',
-          }}>
-          {initvalue}
-        </Text>
-        <TextInput
-          onChangeText={onChangeText}
-          maxLength={maxlength}
-          value={value}
-          placeholder={label}
+      <ShakeComponent shouldShake={shouldShake} render={render}>
+        <View
           style={[
             {
+              height: 75,
+              flexDirection: 'row',
+              width: 265,
+              height: 40,
+              borderBottomColor: sucess ? appColors?.green : '#979797',
+              borderBottomWidth: 0.6,
+            },
+            style,
+          ]}>
+          <Text
+            style={{
+              color:
+                colorScheme === 'light' ? appColors?.black : appColors?.white,
+              marginRight: 10,
+              fontSize: 17,
+              justifyContent: 'center',
+            }}>
+            {initvalue}
+          </Text>
+          <TextInput
+            onChangeText={onChangeText}
+            maxLength={maxlength}
+            value={value}
+            placeholder={label}
+            style={{
               width: 252,
               height: 40,
               paddingBottom: 20,
               fontSize: 17,
               color:
                 colorScheme === 'light' ? appColors?.black : appColors?.white,
-            },
-            style,
-          ]}
-        />
-      </View>
+            }}
+          />
+        </View>
+      </ShakeComponent>
     );
   }
   return (
-    <View style={{height: 75}}>
-      <TextInput
-        onChangeText={onChangeText}
-        value={value}
-        editable={editable}
-        keyboardType={keyboardType ? keyboardType : 'default'}
-        placeholder={label}
-        placeholderTextColor={
-          colorScheme === 'light' ? appColors?.loaderColor : appColors?.white
-        }
+    <ShakeComponent shouldShake={shouldShake} render={render}>
+      <View
         style={[
           {
-            height: 40,
-            paddingBottom: 9,
-            paddingLeft: 10,
-            fontSize: 16,
-            fontWeight: '500',
-            marginTop: '10%',
-            borderBottomColor: sucess
-              ? appColors?.green
-              : appColors?.bottomGray,
-            borderBottomWidth: 3,
-            color:
-              colorScheme === 'light' ? appColors?.black : appColors?.white,
+            height: 75,
+            justifyContent: 'flex-end',
           },
           style,
-        ]}
-      />
-    </View>
+        ]}>
+        <TextInput
+          onChangeText={onChangeText}
+          value={value}
+          editable={editable}
+          keyboardType={keyboardType ? keyboardType : 'default'}
+          placeholder={label}
+          placeholderTextColor={
+            colorScheme === 'light' ? appColors?.loaderColor : appColors?.white
+          }
+          style={[
+            {
+              height: 40,
+              paddingBottom: 9,
+              paddingLeft: 10,
+              fontSize: 16,
+              fontWeight: '500',
+              marginTop: '10%',
+              borderBottomColor: sucess
+                ? appColors?.green
+                : appColors?.bottomGray,
+              borderBottomWidth: 3,
+              color:
+                colorScheme === 'light' ? appColors?.black : appColors?.white,
+            },
+          ]}
+        />
+      </View>
+    </ShakeComponent>
   );
 };
 

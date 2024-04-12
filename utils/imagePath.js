@@ -21,4 +21,8 @@ export const imagePath = {
   Dapple: require('../assets/logos/Dapple.png'),
   DApplecenter: require('../assets/logos/DApplecenter.png'),
   AppleCenter: require('../assets/logos/AppleCenter.png'),
+  forwardVector: require('../assets/logos/forwardVector.png'),
+  FIcon: require('../assets/logos/fIcon.png'),
+  GIcon: require('../assets/logos/GIcon.png'),
+  user: require('../assets/logos/user.png'),
 };

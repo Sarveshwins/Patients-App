@@ -149,46 +149,41 @@ const Signup = ({navigation}) => {
         </View>
         <View contentContainerStyle={{flex: 1}}>
           <View style={{flex: 1}}>
-            <ShakeComponent
+            <CommonTextInput
+              label="Enter Phone Number"
+              value={signUpValues?.Phone}
+              sucess={/^(?:\d{10}|\w+@\w+\.\w{2,3})$/.test(signUpValues?.Phone)}
+              onChangeText={e => {
+                setSignUpValues({...signUpValues, Phone: e});
+              }}
               shouldShake={
+                count != 0 &&
                 !/^(?:\d{10}|\w+@\w+\.\w{2,3})$/.test(signUpValues?.Phone)
               }
-              render={count}>
-              <CommonTextInput
-                label="Enter Phone Number"
-                value={signUpValues?.Phone}
-                sucess={/^(?:\d{10}|\w+@\w+\.\w{2,3})$/.test(
-                  signUpValues?.Phone,
-                )}
-                onChangeText={e => {
-                  setSignUpValues({...signUpValues, Phone: e});
-                }}
-              />
-            </ShakeComponent>
-            <ShakeComponent
-              shouldShake={signUpValues?.firstName?.length < 3}
-              render={count}>
-              <CommonTextInput
-                label="First Name"
-                value={signUpValues?.firstName}
-                sucess={signUpValues?.firstName?.length >= 3}
-                onChangeText={e => {
-                  setSignUpValues({...signUpValues, firstName: e});
-                }}
-              />
-            </ShakeComponent>
-            <ShakeComponent
-              shouldShake={signUpValues?.lastName?.length < 3}
-              render={count}>
-              <CommonTextInput
-                label="Last Name"
-                value={signUpValues?.lastName}
-                sucess={signUpValues?.lastName?.length >= 3}
-                onChangeText={e => {
-                  setSignUpValues({...signUpValues, lastName: e});
-                }}
-              />
-            </ShakeComponent>
+              render={count}
+            />
+
+            <CommonTextInput
+              label="First Name"
+              value={signUpValues?.firstName}
+              sucess={signUpValues?.firstName?.length >= 3}
+              onChangeText={e => {
+                setSignUpValues({...signUpValues, firstName: e});
+              }}
+              shouldShake={count != 0 && signUpValues?.firstName?.length < 3}
+              render={count}
+            />
+
+            <CommonTextInput
+              label="Last Name"
+              value={signUpValues?.lastName}
+              sucess={signUpValues?.lastName?.length >= 3}
+              onChangeText={e => {
+                setSignUpValues({...signUpValues, lastName: e});
+              }}
+              shouldShake={count != 0 && signUpValues?.lastName?.length < 3}
+              render={count}
+            />
           </View>
           <View
             style={{

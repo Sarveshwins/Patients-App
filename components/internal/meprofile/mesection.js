@@ -179,7 +179,6 @@ const styles = StyleSheet.create({
   meContent: {
     //  position: 'absolute',
     width: '100%',
-    backgroundColor: 'yellow',
   },
   scrollContent: {
     backgroundColor: '#FFF',
@@ -234,7 +233,7 @@ const styles = StyleSheet.create({
   sectiontexts: {
     fontSize: 17,
     left: 20,
-    color: 'red', //'#291E17',
+    color: '#291E17',
     fontWeight: '700',
   },
   modalContainer: {

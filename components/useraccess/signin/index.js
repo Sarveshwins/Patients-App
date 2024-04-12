@@ -125,22 +125,21 @@ const SignIn = ({navigation}) => {
           </Text>
         </View>
         <View style={{flex: 1, margintTop: 10}}>
-          <ShakeComponent
+          <CommonTextInput
+            label="Enter Phone Number"
+            value={loginValue?.phoneNumber}
+            sucess={/^(?:\d{10}|\w+@\w+\.\w{2,3})$/.test(
+              loginValue?.phoneNumber,
+            )}
+            onChangeText={e => {
+              setLoginValue({...loginValue, phoneNumber: e});
+            }}
             shouldShake={
+              count != 0 &&
               !/^(?:\d{10}|\w+@\w+\.\w{2,3})$/.test(loginValue?.phoneNumber)
             }
-            render={count}>
-            <CommonTextInput
-              label="Enter Phone Number"
-              value={loginValue?.phoneNumber}
-              sucess={/^(?:\d{10}|\w+@\w+\.\w{2,3})$/.test(
-                loginValue?.phoneNumber,
-              )}
-              onChangeText={e => {
-                setLoginValue({...loginValue, phoneNumber: e});
-              }}
-            />
-          </ShakeComponent>
+            render={count}
+          />
         </View>
         <View
           style={{
