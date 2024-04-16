@@ -6,6 +6,7 @@ import {useAppCommonDataProvider} from '../../../UseAppCommonDataProvider';
 import {appColors} from '../../../../utils/Appcolors';
 
 const EnterDetails = ({onPress, onDone, forMyself}) => {
+  const [count, setCount] = useState(0);
   const {colorScheme} = useAppCommonDataProvider();
 
   const [signUpValues, setSignUpValues] = useState({
@@ -15,6 +16,14 @@ const EnterDetails = ({onPress, onDone, forMyself}) => {
     Gender: '',
     DOB: '',
   });
+  const handleChange = (key, value) => {
+    setSignUpValues(prevState => ({...prevState, [key]: value}));
+  };
+
+  const validate = () => {
+    setCount(count + 1);
+    onPress();
+  };
   return (
     <View
       style={{
@@ -28,9 +37,6 @@ const EnterDetails = ({onPress, onDone, forMyself}) => {
         style={{
           justifyContent: 'space-between',
           flexDirection: 'row',
-          // marginHorizontal: 10,
-          // paddingHorizontal: 20,
-          // paddingVertical: 10,
           width: '100%',
         }}>
         <Text style={{textAlign: 'left', fontSize: 18, fontWeight: '700'}}>
@@ -53,20 +59,18 @@ const EnterDetails = ({onPress, onDone, forMyself}) => {
           label="First Name"
           value={signUpValues?.firstName}
           sucess={signUpValues?.firstName.length > 2}
-          onChangeText={e => {
-            setSignUpValues({...signUpValues, firstName: e});
-          }}
-          shouldShake={signUpValues?.firstName.length < 3}
+          onChangeText={text => handleChange('firstName', text)}
+          shouldShake={count != 0 && signUpValues?.firstName.length < 3}
+          render={count}
         />
         <CommonTextInput
           style={{height: 60}}
           label="Last Name"
           value={signUpValues?.lastName}
           sucess={signUpValues?.lastName.length > 2}
-          onChangeText={e => {
-            setSignUpValues({...signUpValues, firstName: e});
-          }}
-          shouldShake={signUpValues?.lastName.length < 3}
+          onChangeText={text => handleChange('lastName', text)}
+          shouldShake={count != 0 && signUpValues?.lastName.length < 3}
+          render={count}
         />
 
         <View
@@ -83,9 +87,8 @@ const EnterDetails = ({onPress, onDone, forMyself}) => {
               label="Gender"
               value={signUpValues?.Gender}
               sucess={signUpValues?.Gender}
-              onChangeText={e => {
-                setSignUpValues({...signUpValues, Gender: e});
-              }}
+              onChangeText={text => handleChange('Gender', text)}
+              render={count}
             />
           </View>
           <View style={{flex: 1}}>
@@ -94,23 +97,22 @@ const EnterDetails = ({onPress, onDone, forMyself}) => {
               label="Date of Birth"
               value={signUpValues?.DOB}
               sucess={signUpValues?.DOB}
-              onChangeText={e => {
-                setSignUpValues({...signUpValues, DOB: e});
-              }}
+              onChangeText={text => handleChange('DOB', text)}
+              render={count}
             />
           </View>
         </View>
         <CommonTextInput
           style={{height: 60}}
           label="Phone Number"
-          value={signUpValues?.Phone}
+          value={count != 0 && signUpValues?.Phone}
           sucess={/^(?:\d{10}|\w+@\w+\.\w{2,3})$/.test(signUpValues?.Phone)}
-          onChangeText={e => {
-            setSignUpValues({...signUpValues, Phone: e});
-          }}
+          onChangeText={text => handleChange('Phone', text)}
           shouldShake={
+            count != 0 &&
             !/^(?:\d{10}|\w+@\w+\.\w{2,3})$/.test(signUpValues?.Phone)
           }
+          render={count}
         />
         <View
           style={{
@@ -138,7 +140,7 @@ const EnterDetails = ({onPress, onDone, forMyself}) => {
             <View />
           )}
           <TouchableOpacity
-            onPress={onPress}
+            onPress={validate}
             style={{
               flexDirection: 'row',
               width: '35%',

@@ -1,136 +1,68 @@
+import React, {useState} from 'react';
 import {
   FlatList,
   Image,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
-import {imagePath} from '../../../../utils/imagePath';
 import moment from 'moment/moment';
+import {imagePath} from '../../../../utils/imagePath';
 
 const BookAppointment = ({onPress}) => {
-  const days = [
-    {day: 'Today'},
-    {day: '22,Wed'},
-    {day: '23,Thur'},
-    {day: '24,Fri'},
-    {day: '25,Sat'},
-    {day: '26,Sun'},
-  ];
-  const [Dates, setDates] = useState([
-    {
-      id: 1,
-      name: 'Today',
-      isSelected: true,
-    },
-    {
-      id: 2,
-      name: `${moment().add(1, 'days').format('DD, ddd')}`,
-      isSelected: false,
-    },
-    {
-      id: 3,
-      name: `${moment().add(2, 'days').format('DD, ddd')}`,
-      isSelected: false,
-    },
-    {
-      id: 4,
-      name: `${moment().add(3, 'days').format('DD, ddd')}`,
-      isSelected: false,
-    },
-    {
-      id: 5,
-      name: `${moment().add(4, 'days').format('DD, ddd')}`,
-      isSelected: false,
-    },
-    {
-      id: 6,
-      name: `${moment().add(5, 'days').format('DD, ddd')}`,
-      isSelected: false,
-    },
-    {
-      id: 7,
-      name: `${moment().add(6, 'days').format('DD, ddd')}`,
-      isSelected: false,
-    },
-  ]);
-
-  const timeInterval = [
-    {t1: '06:30', t2: '07:00'},
-    {t1: '07:00', t2: '07:30'},
-    {t1: '07:30', t2: '08:00'},
-    {t1: '08:00', t2: '08:30'},
-    {t1: '08:30', t2: '09:00'},
-    {t1: '09:00', t2: '09:30'},
-    {t1: '09:30', t2: '10:00'},
-    {t1: '10:00', t2: '10:30'},
-    {t1: '10:30', t2: '11:00'},
-    {t1: '11:00', t2: '11:30'},
-    {t1: '11:30', t2: '12:00'},
-    {t1: '12:00', t2: '12:30'},
-    {t1: '12:30', t2: '13:00'},
-    {t1: '13:00', t2: '13:30'},
-    {t1: '13:30', t2: '14:00'},
-  ];
   const [icons, setIcons] = useState([
-    {
-      id: 1,
-      name: imagePath.appoint,
-      isSelected: false,
-    },
-    {
-      id: 2,
-      name: imagePath.video,
-      isSelected: false,
-    },
-    {
-      id: 3,
-      name: imagePath.wave,
-      isSelected: false,
-    },
+    {id: 1, name: imagePath.appoint, isSelected: false},
+    {id: 2, name: imagePath.video, isSelected: false},
+    {id: 3, name: imagePath.wave, isSelected: false},
   ]);
-  const handleIconPress = id => {
-    setIcons(prevIcons => {
-      return prevIcons.map(icon => {
-        if (icon.id === id) {
-          return {...icon, isSelected: !icon.isSelected};
-        }
-        return icon;
-      });
-    });
-  };
-  const [dayIndex, setDayIndex] = useState(0);
-  return (
-    <View
-      style={{
-        flex: 1,
-        width: '100%',
 
-        justifyContent: 'space-between',
-        padding: 30,
-      }}>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-        }}>
-        <Text style={{fontSize: 25, fontWeight: '500', flex: 1}}>
-          Book {'\n'}Appointment
-        </Text>
-        {icons.map((item, index) => (
+  const [dayIndex, setDayIndex] = useState(0);
+
+  const handleIconPress = id => {
+    setIcons(prevIcons =>
+      prevIcons.map(icon =>
+        icon.id === id ? {...icon, isSelected: !icon.isSelected} : icon,
+      ),
+    );
+  };
+
+  const days = Array.from({length: 7}, (_, i) => {
+    const currentDate = moment().add(i, 'days').format('YYYY-MM-DD');
+    let dayName = moment().add(i, 'days').format('DD, ddd');
+
+    if (currentDate === moment().format('YYYY-MM-DD')) {
+      dayName = 'today';
+    } else if (currentDate === moment().add(1, 'days').format('YYYY-MM-DD')) {
+      dayName = 'tomorrow';
+    }
+
+    return dayName;
+  });
+
+  const timeInterval = Array.from({length: 15}, (_, i) => {
+    const startTime = moment('06:30', 'HH:mm')
+      .add(i * 30, 'minutes')
+      .format('HH:mm');
+    const endTime = moment('06:30', 'HH:mm')
+      .add((i + 1) * 30, 'minutes')
+      .format('HH:mm');
+    return {t1: startTime, t2: endTime};
+  });
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.title}>Book {'\n'}Appointment</Text>
+        {icons.map(item => (
           <TouchableOpacity
+            key={item.id}
             onPress={() => handleIconPress(item.id)}
-            style={{
-              backgroundColor: item.isSelected ? '#2CD31180' : '#C4C4C4',
-              borderRadius: 15,
-              padding: 5,
-              marginHorizontal: 10,
-            }}>
+            style={[
+              styles.iconButton,
+              {backgroundColor: item.isSelected ? '#2CD31180' : '#C4C4C4'},
+            ]}>
             <Image
-              key={index}
               source={item.name}
               style={{tintColor: item.isSelected ? '#fff' : '#000'}}
             />
@@ -170,7 +102,7 @@ const BookAppointment = ({onPress}) => {
         <FlatList
           showsHorizontalScrollIndicator={false}
           horizontal
-          data={Dates}
+          data={days}
           renderItem={({item, index}) => (
             <Text
               onPress={() => setDayIndex(index)}
@@ -179,7 +111,7 @@ const BookAppointment = ({onPress}) => {
                 width: 80,
                 textDecorationLine: index === dayIndex ? 'underline' : 'none',
               }}>
-              {item.name}
+              {item}
             </Text>
           )}
         />
@@ -199,7 +131,7 @@ const BookAppointment = ({onPress}) => {
                   width: 80,
                   alignItems: 'center',
                   justifyContent: 'center',
-                  marginVertical: 15,
+                  marginVertical: 10,
                 }}>
                 <Text>{item.t1}</Text>
               </View>
@@ -213,6 +145,7 @@ const BookAppointment = ({onPress}) => {
                   width: 80,
                   alignItems: 'center',
                   justifyContent: 'center',
+                  marginVertical: 10,
                 }}>
                 <Text>{item.t2}</Text>
               </View>
@@ -220,23 +153,47 @@ const BookAppointment = ({onPress}) => {
           )}
         />
       </View>
-      <TouchableOpacity
-        style={{
-          alignSelf: 'center',
-          opacity: 0.2,
-          paddingHorizontal: 10,
-          borderRadius: 10,
-          borderWidth: 2,
-          paddingVertical: 5,
-        }}>
-        <Text style={{fontWeight: '500', fontSize: 22}}>
-          Confirm Appointment
-        </Text>
+
+      <TouchableOpacity style={styles.confirmButton}>
+        <Text style={styles.confirmButtonText}>Confirm Appointment</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
-export default BookAppointment;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    width: '100%',
+    justifyContent: 'space-between',
+    padding: 30,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 25,
+    fontWeight: '500',
+    flex: 1,
+  },
+  iconButton: {
+    borderRadius: 15,
+    padding: 5,
+    marginHorizontal: 10,
+  },
+  confirmButton: {
+    alignSelf: 'center',
+    opacity: 0.2,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    borderWidth: 2,
+    paddingVertical: 5,
+  },
+  confirmButtonText: {
+    fontWeight: '500',
+    fontSize: 22,
+  },
+});
 
-const styles = StyleSheet.create({});
+export default BookAppointment;
