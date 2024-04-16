@@ -14,18 +14,18 @@ import {
 } from 'react-native-responsive-screen';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {LoginAction} from '../../redux/action/Login';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import CommonButton from '../../CommonButton';
 import {imagePath} from '../../../utils/imagePath';
 import {useAppCommonDataProvider} from '../../UseAppCommonDataProvider';
 import {appColors} from '../../../utils/Appcolors';
-import ShakeComponent from '../../ShakeComponent';
+import CustomMessage from '../../../utils/CustomMessage';
 
 const SignIn = ({navigation}) => {
   const [loginValue, setLoginValue] = useState({
     phoneNumber: '', //"doctor@yopmail.com"
   });
   const {colorScheme} = useAppCommonDataProvider();
+  let isLightMode = colorScheme === 'light';
 
   const loginMethod = async () => {
     // navigation?.navigate("TabNavigator");
@@ -84,8 +84,7 @@ const SignIn = ({navigation}) => {
     <SafeAreaView
       style={{
         flex: 1,
-        backgroundColor:
-          colorScheme === 'light' ? appColors?.white : appColors?.black,
+        backgroundColor: isLightMode ? appColors?.white : appColors?.black,
       }}>
       <View
         // keyboardShouldPersistTaps="always"
@@ -95,18 +94,14 @@ const SignIn = ({navigation}) => {
           flex: 1,
           paddingHorizontal: '8%',
           paddingTop: 28,
-          backgroundColor:
-            colorScheme === 'light' ? appColors?.white : appColors?.black,
+          backgroundColor: isLightMode ? appColors?.white : appColors?.black,
         }}>
         <View style={{flex: 1}}>
           <Text
             style={{
               fontSize: 37,
               fontWeight: '500',
-              color:
-                colorScheme === 'light'
-                  ? appColors?.textColor
-                  : appColors?.white,
+              color: isLightMode ? appColors?.textColor : appColors?.white,
             }}>
             Welcome back
           </Text>
@@ -114,10 +109,7 @@ const SignIn = ({navigation}) => {
             style={{
               fontSize: 19,
               fontWeight: '500',
-              color:
-                colorScheme === 'light'
-                  ? appColors?.textColor
-                  : appColors?.white,
+              color: isLightMode ? appColors?.textColor : appColors?.white,
               marginTop: '4%',
               lineHeight: 22,
             }}>
@@ -151,7 +143,7 @@ const SignIn = ({navigation}) => {
               flexDirection: 'row',
               justifyContent: 'space-between',
             }}>
-            {colorScheme === 'light' ? (
+            {isLightMode ? (
               <CommonButton
                 buttonText={'Sign up'}
                 onPress={() => {
@@ -183,10 +175,7 @@ const SignIn = ({navigation}) => {
           <Text
             style={{
               marginTop: '15%',
-              color:
-                colorScheme === 'light'
-                  ? appColors?.textColor
-                  : appColors?.white,
+              color: isLightMode ? appColors?.textColor : appColors?.white,
               fontSize: 15,
             }}>
             You can continue Sign In through
@@ -211,34 +200,28 @@ const SignIn = ({navigation}) => {
               alignItems: 'center',
             }}></View>
         </View>
-      </View>
-      <Text
-        style={[
-          styles?.group4text,
-          {
-            color:
-              colorScheme === 'light' ? appColors?.textColor : appColors?.white,
-          },
-        ]}>
-        If you already have an Account then,
-      </Text>
-      <View
-        style={{
-          alignSelf: 'flex-end',
-          marginRight: 30,
-          bottom: 5,
-        }}>
-        <TouchableOpacity onPress={() => navigation?.navigate('MainContainer')}>
-          {colorScheme === 'light' ? (
-            <Image source={imagePath?.SignInBtn} />
-          ) : (
-            <Image source={imagePath?.DSignINBtn} />
-          )}
+        <Text
+          style={[
+            styles?.group4text,
+            {
+              color: isLightMode ? appColors?.textColor : appColors?.white,
+            },
+          ]}>
+          If you already have an Account then,
+        </Text>
+
+        <TouchableOpacity
+          style={{alignSelf: 'flex-end', bottom: 5}}
+          onPress={() => navigation?.navigate('MainContainer')}>
+          <Image
+            source={isLightMode ? imagePath?.SignInBtn : imagePath?.DSignINBtn}
+          />
         </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
 };
+
 const styles = StyleSheet.create({
   container: {flex: 1},
   // group 1 start
