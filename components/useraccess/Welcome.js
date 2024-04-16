@@ -12,26 +12,20 @@ import {useAppCommonDataProvider} from '../UseAppCommonDataProvider';
 
 const Welcome = ({navigation}) => {
   const {colorScheme} = useAppCommonDataProvider();
+  let isLightMode = colorScheme === 'light';
 
   return (
     <SafeAreaView
       style={{
         flex: 1,
-        backgroundColor:
-          colorScheme === 'light' ? appColors?.white : appColors?.black,
+        backgroundColor: isLightMode ? appColors?.white : appColors?.black,
       }}>
-      <View
-        style={{
-          flex: 1,
-        }}>
+      <View style={{flex: 1}}>
         <Text
           style={[
             styles?.WelcomeText,
             {
-              color:
-                colorScheme === 'light'
-                  ? appColors?.textColor
-                  : appColors?.white,
+              color: isLightMode ? appColors?.textColor : appColors?.white,
             },
           ]}>
           Welcome to {'\n'}With Me !!
@@ -40,81 +34,61 @@ const Welcome = ({navigation}) => {
           style={[
             styles?.signup_text,
             {
-              color:
-                colorScheme === 'light'
-                  ? appColors?.textColor
-                  : appColors?.loaderColor,
+              color: isLightMode
+                ? appColors?.textColor
+                : appColors?.loaderColor,
             },
           ]}>
           Signup first to experience {'\n'}the app
         </Text>
-        <View
-          style={{
-            justifyContent: 'center',
-            alignSelf: 'center',
-            alignItems: 'center',
-            flex: 1,
-          }}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.navigate('Signup')}>
-            {colorScheme === 'light' ? (
-              <Image source={imagePath?.PhoneNoLogin} />
-            ) : (
-              <Image source={imagePath?.DPhoneNo} />
-            )}
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
-            {colorScheme === 'light' ? (
-              <Image source={imagePath?.FacebookLogin} />
-            ) : (
-              <Image source={imagePath?.DFacebookBtn} />
-            )}
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
-            {colorScheme === 'light' ? (
-              <Image source={imagePath?.GoogleLogin} />
-            ) : (
-              <Image source={imagePath?.DGoogle} />
-            )}
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
-            {colorScheme === 'light' ? (
-              <Image source={imagePath?.AppleLogin} />
-            ) : (
-              <Image source={imagePath?.Dapple} />
-            )}
-          </TouchableOpacity>
+        <View style={styles.innerView}>
+          <OptionButton
+            onPress={() => navigation.navigate('Signup')}
+            image={isLightMode ? imagePath?.PhoneNoLogin : imagePath?.DPhoneNo}
+          />
+
+          <OptionButton
+            image={
+              isLightMode ? imagePath?.FacebookLogin : imagePath?.DFacebookBtn
+            }
+          />
+          <OptionButton
+            image={isLightMode ? imagePath?.GoogleLogin : imagePath?.DGoogle}
+          />
+          <OptionButton
+            image={isLightMode ? imagePath?.AppleLogin : imagePath?.Dapple}
+          />
         </View>
-        <View>
-          <Text
-            style={[
-              styles?.group4text,
-              {
-                color:
-                  colorScheme === 'light'
-                    ? appColors?.textColor
-                    : appColors?.loaderColor,
-              },
-            ]}>
-            If you already have an Account then,
-          </Text>
-          <View
-            style={{
-              alignSelf: 'flex-end',
-              marginRight: 30,
-            }}>
-            <TouchableOpacity onPress={() => navigation?.navigate('SignIn')}>
-              {colorScheme === 'light' ? (
-                <Image source={imagePath?.SignInBtn} />
-              ) : (
-                <Image source={imagePath?.DSignINBtn} />
-              )}
-            </TouchableOpacity>
-          </View>
-        </View>
+
+        <Text
+          style={[
+            styles?.group4text,
+            {
+              color: isLightMode
+                ? appColors?.textColor
+                : appColors?.loaderColor,
+            },
+          ]}>
+          If you already have an Account then,
+        </Text>
+
+        <OptionButton
+          onPress={() => navigation?.navigate('SignIn')}
+          containerStyle={styles.touchSignIn}
+          image={isLightMode ? imagePath?.SignInBtn : imagePath?.DSignINBtn}
+        />
       </View>
     </SafeAreaView>
+  );
+};
+
+const OptionButton = ({onPress, image, containerStyle}) => {
+  return (
+    <TouchableOpacity
+      style={[containerStyle]}
+      onPress={() => onPress && onPress()}>
+      <Image source={image} />
+    </TouchableOpacity>
   );
 };
 
@@ -132,11 +106,13 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: '#9e9e9e',
   },
-
-  button: {
-    height: 75,
-    marginBottom: 10,
+  innerView: {
+    justifyContent: 'center',
+    alignSelf: 'center',
+    alignItems: 'center',
+    flex: 1,
   },
+
   group4text: {
     fontSize: 14,
     fontWeight: '500',
@@ -144,6 +120,7 @@ const styles = StyleSheet.create({
     left: 54,
     margin: 7,
   },
+  touchSignIn: {alignSelf: 'flex-end', marginRight: 30},
 });
 
 export default Welcome;

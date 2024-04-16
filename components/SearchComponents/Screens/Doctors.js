@@ -7,6 +7,7 @@ import {
   Image,
   ScrollView,
   SafeAreaView,
+  FlatList,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -140,8 +141,8 @@ const Doctors = ({route}) => {
     },
   });
 
-  const renderItem = ({item}) => (
-    <View style={styles.DoctorCard}>
+  const renderDoctorList = ({item}) => (
+    <View style={styles.DoctorCard} key={item.id}>
       <Image style={styles.DoctorImage} source={item.image} />
       <Image style={styles.DoctorBorderImage} source={Border} />
       <View style={styles.DoctorTextView}>
@@ -149,10 +150,10 @@ const Doctors = ({route}) => {
         <Text style={styles.TextSpecialist}>{item.lastName}</Text>
       </View>
       <View style={styles.ButtonView}>
-        <TouchableOpacity style={styles.DoctorButton}>
+        <TouchableOpacity style={[styles.DoctorButton]}>
           <Text style={styles.buttonText}>Book</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.DoctorButton}>
+        <TouchableOpacity style={[styles.DoctorButton]}>
           <Text style={styles.buttonText}>Call</Text>
         </TouchableOpacity>
       </View>
@@ -176,24 +177,11 @@ const Doctors = ({route}) => {
           showsVerticalScrollIndicator={false}>
           {doctorList ? (
             <View style={styles.DoctorsCard}>
-              {doctorList.map(doctor => (
-                <View style={styles.DoctorCard} key={doctor.id}>
-                  <Image style={styles.DoctorImage} source={doctor.image} />
-                  <Image style={styles.DoctorBorderImage} source={Border} />
-                  <View style={styles.DoctorTextView}>
-                    <Text style={styles.TextName}>{doctor.firstName}</Text>
-                    <Text style={styles.TextSpecialist}>{doctor.lastName}</Text>
-                  </View>
-                  <View style={styles.ButtonView}>
-                    <TouchableOpacity style={[styles.DoctorButton]}>
-                      <Text style={styles.buttonText}>Book</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={[styles.DoctorButton]}>
-                      <Text style={styles.buttonText}>Call</Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              ))}
+              <FlatList
+                data={doctorList}
+                renderItem={renderDoctorList}
+                keyExtractor={item => item.id.toString()}
+              />
             </View>
           ) : (
             <View style={styles.DoctorsCard}>
