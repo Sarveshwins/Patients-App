@@ -94,9 +94,7 @@ const Events = () => {
         return <UserConfirmation onPress={e => setPageIndex(e)} />;
     }
   };
-  {
-    pageIndex;
-  }
+
   const renderRBSheet = (ref, height, content) => (
     <RBSheet
       ref={ref}

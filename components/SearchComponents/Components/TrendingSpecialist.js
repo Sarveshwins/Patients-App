@@ -117,7 +117,7 @@ const TrendingSpecialist = () => {
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
         <View style={styles.ImagesContainer}>
           <View style={styles.ImagesRow}>
-            {leftSideSpecialityData.map((speciality, index) => (
+            {/* {leftSideSpecialityData.map((speciality, index) => (
               <View key={index} style={styles.ImageView}>
                 <Image style={styles.TrendingImage} source={Medicines} />
                 <View style={styles.ImageTextView}>
@@ -127,7 +127,13 @@ const TrendingSpecialist = () => {
                   )}
                 </View>
               </View>
-            ))}
+            ))} */}
+            <FlatList
+              data={leftSideSpecialityData}
+              renderItem={renderSpecialityItem}
+              keyExtractor={(item, index) => index.toString()}
+              horizontal
+            />
           </View>
           <View style={styles.ImagesRow2}>
             <FlatList

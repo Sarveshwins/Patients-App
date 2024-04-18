@@ -13,6 +13,7 @@ import {useAppCommonDataProvider} from '../../../UseAppCommonDataProvider';
 import {appColors} from '../../../../utils/Appcolors';
 import DatePicker from 'react-native-date-picker';
 import RNPickerSelect from 'react-native-picker-select';
+// import RNPickerSelect from 'react-native-picker-select/src/index.js';
 import ShakeComponent from '../../../ShakeComponent';
 
 const EnterDetails = ({onPress, onDone, forMyself}) => {
