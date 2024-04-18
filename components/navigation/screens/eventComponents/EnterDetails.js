@@ -1,14 +1,37 @@
-import {View, Text, ScrollView, Image, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  Button,
+} from 'react-native';
 import React, {useState} from 'react';
 import CommonTextInput from '../../../Commontextinput';
 import {imagePath} from '../../../../utils/imagePath';
 import {useAppCommonDataProvider} from '../../../UseAppCommonDataProvider';
 import {appColors} from '../../../../utils/Appcolors';
+import DatePicker from 'react-native-date-picker';
+import RNPickerSelect from 'react-native-picker-select';
+import ShakeComponent from '../../../ShakeComponent';
 
 const EnterDetails = ({onPress, onDone, forMyself}) => {
   const [count, setCount] = useState(0);
   const {colorScheme} = useAppCommonDataProvider();
+  const [date, setDate] = useState(new Date());
+  const [open, setOpen] = useState(false);
+  const [activatePicker, setActivatePicker] = useState(false);
+  const [selectedValue, setSelectedValue] = useState(null);
 
+  const newDate = new Date(date);
+  const currentDate = new Date();
+  const day = newDate.getDate();
+  const month = newDate.getMonth() + 1;
+  const year = newDate.getFullYear();
+
+  const formattedDate = `${day}/${month < 10 ? '0' : ''}${month}/${year}`;
+
+  const dateCompare = currentDate > newDate;
   const [signUpValues, setSignUpValues] = useState({
     firstName: '',
     lastName: '',
@@ -22,8 +45,16 @@ const EnterDetails = ({onPress, onDone, forMyself}) => {
 
   const validate = () => {
     setCount(count + 1);
-    onPress();
+    if (
+      signUpValues?.firstName.length > 2 &&
+      signUpValues?.lastName.length > 2 &&
+      signUpValues?.Phone.length === 10
+    ) {
+      onPress();
+      return;
+    }
   };
+
   return (
     <View
       style={{
@@ -82,23 +113,105 @@ const EnterDetails = ({onPress, onDone, forMyself}) => {
               flex: 1,
               marginRight: 30,
             }}>
-            <CommonTextInput
-              style={{height: 60}}
-              label="Gender"
-              value={signUpValues?.Gender}
-              sucess={signUpValues?.Gender}
-              onChangeText={text => handleChange('Gender', text)}
+            <ShakeComponent
               render={count}
-            />
+              shouldShake={count != 0 && !selectedValue}>
+              <View
+                style={{
+                  height: 60,
+                  borderBottomColor: selectedValue
+                    ? appColors?.green
+                    : appColors?.bottomGray,
+                  borderBottomWidth: 3,
+                  justifyContent: 'flex-end',
+                }}>
+                <RNPickerSelect
+                  value={selectedValue}
+                  onValueChange={value => setSelectedValue(value)}
+                  items={[
+                    // {label: 'Select One', value: null},
+                    {label: 'Male', value: 'Male'},
+                    {label: 'Female', value: 'Female'},
+                  ]}
+                  placeholder={{label: 'Gender', value: null}}
+                  style={{
+                    placeholder: {color: appColors?.loaderColor},
+                    inputAndroid: {
+                      height: 40,
+                      fontSize: 16,
+                      fontWeight: '500',
+                      paddingHorizontal: 10,
+                      color: 'black',
+                      backgroundColor: 'white',
+                      textColor: 'black',
+                    },
+                    inputIOS: {
+                      height: 40,
+                      fontSize: 16,
+                      fontWeight: '500',
+                      paddingHorizontal: 10,
+                      color: 'black',
+                      backgroundColor: 'white',
+                      textColor: 'black',
+                    },
+                  }}
+                />
+              </View>
+            </ShakeComponent>
           </View>
-          <View style={{flex: 1}}>
-            <CommonTextInput
-              style={{height: 60}}
-              label="Date of Birth"
-              value={signUpValues?.DOB}
-              sucess={signUpValues?.DOB}
-              onChangeText={text => handleChange('DOB', text)}
+
+          <View
+            style={{
+              flex: 1,
+            }}>
+            <ShakeComponent
               render={count}
+              shouldShake={count != 0 && !activatePicker}>
+              <TouchableOpacity
+                onPress={() => {
+                  setOpen(true), setActivatePicker(true);
+                }}>
+                <View
+                  style={{
+                    height: 60,
+                    borderBottomColor:
+                      date && activatePicker
+                        ? dateCompare
+                          ? appColors?.green
+                          : appColors?.lightRed
+                        : appColors?.loaderColor,
+                    borderBottomWidth: 3,
+                    justifyContent: 'flex-end',
+                  }}>
+                  <Text
+                    style={{
+                      height: 40,
+                      paddingLeft: 10,
+                      fontSize: 16,
+                      fontWeight: '500',
+                      paddingTop: 10,
+                      color:
+                        date && activatePicker
+                          ? appColors?.textColor
+                          : appColors?.loaderColor,
+                    }}>
+                    {date && activatePicker ? formattedDate : 'Date of Birth'}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </ShakeComponent>
+            <DatePicker
+              modal
+              mode="date"
+              open={open}
+              date={date}
+              onConfirm={date => {
+                setOpen(false);
+                setDate(date);
+              }}
+              onCancel={() => {
+                setOpen(false);
+              }}
             />
           </View>
         </View>

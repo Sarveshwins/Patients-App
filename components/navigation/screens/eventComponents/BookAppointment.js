@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {
   FlatList,
   Image,
@@ -49,7 +49,7 @@ const BookAppointment = ({onPress}) => {
       .format('HH:mm');
     return {t1: startTime, t2: endTime};
   });
-
+  const timeRef = useRef();
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -105,7 +105,9 @@ const BookAppointment = ({onPress}) => {
           data={days}
           renderItem={({item, index}) => (
             <Text
-              onPress={() => setDayIndex(index)}
+              onPress={() => {
+                setDayIndex(index), timeRef.current.scrollToIndex({index: 0});
+              }}
               style={{
                 marginRight: 20,
                 width: 80,
@@ -116,6 +118,7 @@ const BookAppointment = ({onPress}) => {
           )}
         />
         <FlatList
+          ref={timeRef}
           showsHorizontalScrollIndicator={false}
           horizontal
           data={timeInterval}
@@ -154,7 +157,7 @@ const BookAppointment = ({onPress}) => {
         />
       </View>
 
-      <TouchableOpacity style={styles.confirmButton}>
+      <TouchableOpacity style={styles.confirmButton} onPress={onPress}>
         <Text style={styles.confirmButtonText}>Confirm Appointment</Text>
       </TouchableOpacity>
     </View>

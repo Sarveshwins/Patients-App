@@ -76,7 +76,7 @@ const Events = () => {
           />
         );
       case 'BookAppointment':
-        return <BookAppointment onPress={() => console.log('22')} />;
+        return <BookAppointment onPress={onDone} />;
       case 'SelectRelation':
         return (
           <SelectRelation
@@ -94,7 +94,9 @@ const Events = () => {
         return <UserConfirmation onPress={e => setPageIndex(e)} />;
     }
   };
-
+  {
+    pageIndex;
+  }
   const renderRBSheet = (ref, height, content) => (
     <RBSheet
       ref={ref}
