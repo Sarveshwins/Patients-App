@@ -12,7 +12,12 @@ const ForWhom = ({onPress, onDone}) => {
           // padding: 15,
           width: '100%',
         }}>
-        <Text style={{textAlign: 'left', fontSize: 18, fontWeight: '700'}}>
+        <Text
+          style={{
+            textAlign: 'left',
+            fontSize: 18,
+            fontWeight: '700',
+          }}>
           We Welcome You! {'\n'}Select for whom?
         </Text>
         <TouchableOpacity onPress={onDone}>
@@ -28,7 +33,8 @@ const ForWhom = ({onPress, onDone}) => {
       </View>
       <View
         style={{
-          flex: 1,
+          marginTop: 70,
+          height: 250,
           justifyContent: 'space-evenly',
           paddingHorizontal: 20,
         }}>

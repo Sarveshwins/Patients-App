@@ -178,6 +178,7 @@ const CommonTextInput = ({
               borderBottomColor: sucess
                 ? appColors?.green
                 : appColors?.bottomGray,
+
               borderBottomWidth: 3,
               color:
                 colorScheme === 'light' ? appColors?.black : appColors?.white,

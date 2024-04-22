@@ -43,19 +43,23 @@ const Welcome = ({navigation}) => {
         </Text>
         <View style={styles.innerView}>
           <OptionButton
+            containerStyle={{padding: isLightMode ? 0 : 20}}
             onPress={() => navigation.navigate('Signup')}
             image={isLightMode ? imagePath?.PhoneNoLogin : imagePath?.DPhoneNo}
           />
 
           <OptionButton
+            containerStyle={{padding: isLightMode ? 0 : 20}}
             image={
               isLightMode ? imagePath?.FacebookLogin : imagePath?.DFacebookBtn
             }
           />
           <OptionButton
+            containerStyle={{padding: isLightMode ? 0 : 20}}
             image={isLightMode ? imagePath?.GoogleLogin : imagePath?.DGoogle}
           />
           <OptionButton
+            containerStyle={{padding: isLightMode ? 0 : 20}}
             image={isLightMode ? imagePath?.AppleLogin : imagePath?.Dapple}
           />
         </View>
@@ -120,7 +124,7 @@ const styles = StyleSheet.create({
     left: 54,
     margin: 7,
   },
-  touchSignIn: {alignSelf: 'flex-end', marginRight: 30},
+  touchSignIn: {alignSelf: 'flex-end', marginRight: 30, margin: 10},
 });
 
 export default Welcome;

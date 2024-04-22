@@ -103,7 +103,7 @@ const Events = () => {
       onClose={() => {
         pageIndex !== 'SelectRelation' && setPageIndex('UserConfirmation');
       }}
-      height={height}
+      height={478}
       openDuration={250}
       customStyles={{
         container: {

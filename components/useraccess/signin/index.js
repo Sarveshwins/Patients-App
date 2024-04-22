@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Image,
   SafeAreaView,
+  ScrollView,
 } from 'react-native';
 import React, {useState} from 'react';
 import CommonTextInput from '../../Commontextinput';
@@ -86,13 +87,13 @@ const SignIn = ({navigation}) => {
         flex: 1,
         backgroundColor: isLightMode ? appColors?.white : appColors?.black,
       }}>
-      <View
-        // keyboardShouldPersistTaps="always"
-        // enableOnAndroid={true}
-        // contentContainerStyle={{paddingBottom: 20}}
+      <ScrollView
+        keyboardShouldPersistTaps="always"
+        enableOnAndroid={true}
+        contentContainerStyle={{paddingBottom: 20}}
         style={{
-          flex: 1,
-          paddingHorizontal: '8%',
+          // flex: 1,
+          paddingHorizontal: '10%',
           paddingTop: 28,
           backgroundColor: isLightMode ? appColors?.white : appColors?.black,
         }}>
@@ -116,9 +117,10 @@ const SignIn = ({navigation}) => {
             Sign in to Continue {'\n'}using the app
           </Text>
         </View>
-        <View style={{flex: 1, margintTop: 10}}>
+        <View style={{flex: 1, width: 261}}>
           <CommonTextInput
             label="Enter Phone Number"
+            keyboardType="numeric"
             value={loginValue?.phoneNumber}
             sucess={/^(?:\d{10}|\w+@\w+\.\w{2,3})$/.test(
               loginValue?.phoneNumber,
@@ -137,6 +139,7 @@ const SignIn = ({navigation}) => {
           style={{
             marginTop: '15%',
             width: '100%',
+            height: 280,
           }}>
           <View
             style={{
@@ -145,7 +148,7 @@ const SignIn = ({navigation}) => {
             }}>
             {isLightMode ? (
               <CommonButton
-                buttonText={'Sign up'}
+                buttonText={'Login'}
                 onPress={() => {
                   signUpProcess();
                 }}
@@ -155,7 +158,7 @@ const SignIn = ({navigation}) => {
                 onPress={() => {
                   signUpProcess();
                 }}>
-                <Image source={imagePath?.DSignUp} />
+                <Image source={imagePath?.Dlogin} />
               </TouchableOpacity>
             )}
             <View
@@ -174,9 +177,9 @@ const SignIn = ({navigation}) => {
 
           <Text
             style={{
-              marginTop: '15%',
               color: isLightMode ? appColors?.textColor : appColors?.white,
               fontSize: 15,
+              marginTop: '5%',
             }}>
             You can continue Sign In through
           </Text>
@@ -185,39 +188,38 @@ const SignIn = ({navigation}) => {
               flex: 1,
               alignSelf: 'center',
               alignItems: 'center',
-              marginTop: '15%',
+              marginTop: '10%',
             }}>
             <TouchableOpacity>
-              <Image style={{width: 360}} source={imagePath?.AppleLogin} />
+              <Image source={imagePath?.AppleLogin} />
             </TouchableOpacity>
           </View>
-          <View
-            style={{
-              flex: 0.1,
-              flexDirection: 'row',
-              marginTop: '35%',
-              alignSelf: 'center',
-              alignItems: 'center',
-            }}></View>
         </View>
-        <Text
-          style={[
-            styles?.group4text,
-            {
-              color: isLightMode ? appColors?.textColor : appColors?.white,
-            },
-          ]}>
-          If you already have an Account then,
-        </Text>
-
+        <View
+          style={{
+            flexDirection: 'row',
+            marginBottom: '10%',
+          }}>
+          <Text
+            style={[
+              styles?.group4text,
+              {
+                color: isLightMode ? appColors?.textColor : appColors?.white,
+                fontStyle: 'italic',
+              },
+            ]}>
+            If you are a new user create an account to enter and experience the
+            app
+          </Text>
+        </View>
         <TouchableOpacity
-          style={{alignSelf: 'flex-end', bottom: 5}}
+          style={{alignItems: 'flex-end'}}
           onPress={() => navigation?.navigate('MainContainer')}>
           <Image
-            source={isLightMode ? imagePath?.SignInBtn : imagePath?.DSignINBtn}
+            source={isLightMode ? imagePath?.signupnew : imagePath?.Dsignupnew}
           />
         </TouchableOpacity>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -287,8 +289,7 @@ const styles = StyleSheet.create({
     fontSize: hp('1.8%'),
     fontWeight: '500',
     color: '#454545',
-    marginLeft: 35,
-    top: -8,
+    //marginLeft: 35,
   },
   signinbutton: {
     borderRadius: 15, // Adjust the border radius as needed

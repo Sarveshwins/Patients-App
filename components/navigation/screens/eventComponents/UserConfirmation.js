@@ -29,7 +29,8 @@ const UserConfirmation = ({onPress, onDone}) => {
       </View>
       <View
         style={{
-          flex: 1,
+          marginTop: 70,
+          height: 250,
           justifyContent: 'space-evenly',
           paddingHorizontal: 20,
         }}>

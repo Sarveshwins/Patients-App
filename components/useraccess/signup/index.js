@@ -42,25 +42,6 @@ const Signup = ({navigation}) => {
   });
   const {colorScheme} = useAppCommonDataProvider();
 
-  // const handleSignup = () => {
-  //   if (
-  //     signUpValues?.firstName?.length >= 3 &&
-  //     signUpValues?.lastName?.length >= 3 &&
-  //     signUpValues?.Password?.length >= 8 &&
-  //     signUpValues?.confirmPassword?.length >= 8
-  //   ) {
-  //     if (/^\d{10}$/.test(signUpValues?.Phone)) {
-  //       // Navigate to verifyphoneno page if signing up with mobile number
-  //       navigation.navigate('Verifyphone');
-  //     } else {
-  //       // Navigate to verifyemail page if signing up with email
-  //       navigation.navigate('VerifyEmail');
-  //     }
-  //   } else {
-  //     console.log('Validation failed. Please check the input values.');
-  //   }
-  // };
-
   const [count, setCount] = useState(0);
 
   const signUpProcess = async () => {
@@ -71,35 +52,35 @@ const Signup = ({navigation}) => {
       signUpValues?.Password?.length >= 8 &&
       signUpValues?.confirmPassword?.length >= 8
     ) {
-      //console.log(signUpValues, '<--signUpValuessignUpValues');
-      dispatch({
-        type: SignUpAction?.types?.start,
-        payload: {
-          contact: signUpValues?.Phone,
-          firstName: signUpValues?.firstName,
-          lastName: signUpValues?.lastName,
-          password: signUpValues?.Password,
-          confirmPassword: signUpValues?.confirmPassword,
-          role: 'patient',
-          regBy: 'manual',
-          extraData: signupResponse => {
-            console.log('signupResponse', signupResponse);
-            if (signupResponse?.status === 201) {
-              if (signupResponse?.data?.status == 'success') {
-                navigation.navigate('Successful');
-                // , {
-                //   contact: signUpValues?.Phone,
-                // });
-              }
-            } else {
-              CustomMessage(err?.response?.data?.message?.message, 'danger');
-            }
-          },
-          onError: err => {
-            CustomMessage(err?.response?.data?.message?.message, 'danger');
-          },
-        },
-      });
+      navigation.navigate('Successful');
+      // dispatch({
+      //   type: SignUpAction?.types?.start,
+      //   payload: {
+      //     contact: signUpValues?.Phone,
+      //     firstName: signUpValues?.firstName,
+      //     lastName: signUpValues?.lastName,
+      //     password: signUpValues?.Password,
+      //     confirmPassword: signUpValues?.confirmPassword,
+      //     role: 'patient',
+      //     regBy: 'manual',
+      //     extraData: signupResponse => {
+      //       console.log('signupResponse', signupResponse);
+      //       if (signupResponse?.status === 201) {
+      //         if (signupResponse?.data?.status == 'success') {
+      //           navigation.navigate('Successful');
+      //           // , {
+      //           //   contact: signUpValues?.Phone,
+      //           // });
+      //         }
+      //       } else {
+      //         CustomMessage(err?.response?.data?.message?.message, 'danger');
+      //       }
+      //     },
+      //     onError: err => {
+      //       CustomMessage(err?.response?.data?.message?.message, 'danger');
+      //     },
+      //   },
+      // });
     }
   };
 
@@ -115,13 +96,13 @@ const Signup = ({navigation}) => {
         enableOnAndroid={true}
         contentContainerStyle={{paddingBottom: 70}}
         style={{
-          flex: 1,
-          paddingHorizontal: '5%',
+          // flex: 1,
+          paddingHorizontal: '10%',
           paddingTop: 28,
           backgroundColor:
             colorScheme === 'light' ? appColors?.white : appColors?.black,
         }}>
-        <View style={{margintTop: 10, flex: 1}}>
+        <View style={{marginTop: 10, flex: 1}}>
           <Text
             style={{
               fontSize: 37,
@@ -144,120 +125,118 @@ const Signup = ({navigation}) => {
               marginTop: '4%',
               lineHeight: 22,
             }}>
-            Sign up to register your self on this {'\n'}Platfom
+            Sign up to register your self on {'\n'}this Platfom
           </Text>
         </View>
-        <View contentContainerStyle={{flex: 1}}>
-          <View style={{flex: 1}}>
-            <CommonTextInput
-              label="Enter Phone Number"
-              value={signUpValues?.Phone}
-              sucess={/^(?:\d{10}|\w+@\w+\.\w{2,3})$/.test(signUpValues?.Phone)}
-              onChangeText={e => {
-                setSignUpValues({...signUpValues, Phone: e});
-              }}
-              shouldShake={
-                count != 0 &&
-                !/^(?:\d{10}|\w+@\w+\.\w{2,3})$/.test(signUpValues?.Phone)
-              }
-              render={count}
-            />
+        <View style={{flex: 1, width: 261}}>
+          <CommonTextInput
+            label="Enter Phone Number"
+            keyboardType="numeric"
+            value={signUpValues?.Phone}
+            sucess={/^(?:\d{10}|\w+@\w+\.\w{2,3})$/.test(signUpValues?.Phone)}
+            onChangeText={e => {
+              setSignUpValues({...signUpValues, Phone: e});
+            }}
+            shouldShake={
+              count != 0 &&
+              !/^(?:\d{10}|\w+@\w+\.\w{2,3})$/.test(signUpValues?.Phone)
+            }
+            render={count}
+          />
 
-            <CommonTextInput
-              label="First Name"
-              value={signUpValues?.firstName}
-              sucess={signUpValues?.firstName?.length >= 3}
-              onChangeText={e => {
-                setSignUpValues({...signUpValues, firstName: e});
-              }}
-              shouldShake={count != 0 && signUpValues?.firstName?.length < 3}
-              render={count}
-            />
+          <CommonTextInput
+            label="First Name"
+            value={signUpValues?.firstName}
+            sucess={signUpValues?.firstName?.length >= 3}
+            onChangeText={e => {
+              setSignUpValues({...signUpValues, firstName: e});
+            }}
+            shouldShake={count != 0 && signUpValues?.firstName?.length < 3}
+            render={count}
+          />
 
-            <CommonTextInput
-              label="Last Name"
-              value={signUpValues?.lastName}
-              sucess={signUpValues?.lastName?.length >= 3}
-              onChangeText={e => {
-                setSignUpValues({...signUpValues, lastName: e});
-              }}
-              shouldShake={count != 0 && signUpValues?.lastName?.length < 3}
-              render={count}
-            />
-          </View>
-          <View
-            style={{
-              marginTop: '15%',
-
-              width: '100%',
-              flex: 0.2,
-            }}>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}>
-              {colorScheme === 'light' ? (
-                <CommonButton
-                  buttonText={'Sign up'}
-                  onPress={() => {
-                    signUpProcess();
-                  }}
-                />
-              ) : (
-                <TouchableOpacity
-                  onPress={() => {
-                    signUpProcess();
-                  }}>
-                  <Image source={imagePath?.DSignUp} />
-                </TouchableOpacity>
-              )}
-
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-end',
-                }}>
-                <TouchableOpacity>
-                  <Image source={imagePath?.GoogleIcon} />
-                </TouchableOpacity>
-                <TouchableOpacity>
-                  <Image source={imagePath?.facebookIcon} />
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-          <View
-            style={{
-              justifyContent: 'center',
-              alignSelf: 'center',
-              alignItems: 'center',
-              marginTop: '5%',
-            }}>
-            <TouchableOpacity>
-              {colorScheme === 'light' ? (
-                <Image source={imagePath?.AppleCenter} />
-              ) : (
-                <Image source={imagePath?.AppleCenter} />
-              )}
-            </TouchableOpacity>
-            <Text
-              style={{
-                marginTop: '5%',
-                color: appColors?.gray,
-                fontSize: 15,
-              }}>
-              Or Sign Up with any of the Providers
-            </Text>
-          </View>
+          <CommonTextInput
+            label="Last Name"
+            value={signUpValues?.lastName}
+            sucess={signUpValues?.lastName?.length >= 3}
+            onChangeText={e => {
+              setSignUpValues({...signUpValues, lastName: e});
+            }}
+            shouldShake={count != 0 && signUpValues?.lastName?.length < 3}
+            render={count}
+          />
+        </View>
+        <View
+          style={{
+            marginTop: '15%',
+            width: '100%',
+            flex: 0.2,
+          }}>
           <View
             style={{
               flexDirection: 'row',
-              marginTop: '15%',
-              alignSelf: 'center',
-              alignItems: 'center',
-            }}></View>
+              justifyContent: 'space-between',
+            }}>
+            {colorScheme === 'light' ? (
+              <CommonButton
+                buttonText={'Sign up'}
+                onPress={() => {
+                  signUpProcess();
+                }}
+              />
+            ) : (
+              <TouchableOpacity
+                onPress={() => {
+                  signUpProcess();
+                }}>
+                <Image source={imagePath?.DSignUp} />
+              </TouchableOpacity>
+            )}
+
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'flex-end',
+              }}>
+              <TouchableOpacity>
+                <Image source={imagePath?.GoogleIcon} />
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Image source={imagePath?.facebookIcon} />
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignSelf: 'center',
+            alignItems: 'center',
+            marginTop: '5%',
+          }}>
+          <TouchableOpacity>
+            {colorScheme === 'light' ? (
+              <Image source={imagePath?.AppleCenter} />
+            ) : (
+              <Image source={imagePath?.AppleCenter} />
+            )}
+          </TouchableOpacity>
+        </View>
+        <Text
+          style={{
+            marginTop: '5%',
+            color: appColors?.gray,
+            fontSize: 15,
+          }}>
+          Or Sign Up with any of the Providers
+        </Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            marginTop: '15%',
+            alignSelf: 'center',
+            alignItems: 'center',
+          }}></View>
         <Text
           style={[
             styles?.group4text,
@@ -266,6 +245,7 @@ const Signup = ({navigation}) => {
                 colorScheme === 'light'
                   ? appColors?.textColor
                   : appColors?.white,
+              fontStyle: 'italic',
             },
           ]}>
           If you already have an Account then,
@@ -273,7 +253,6 @@ const Signup = ({navigation}) => {
         <View
           style={{
             alignSelf: 'flex-end',
-            marginRight: 30,
           }}>
           <TouchableOpacity onPress={() => navigation?.navigate('SignIn')}>
             {colorScheme === 'light' ? (

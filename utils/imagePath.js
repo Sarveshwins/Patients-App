@@ -15,6 +15,7 @@ export const imagePath = {
   SignInBtn: require('../assets/logos/SignInBtn.png'),
   DSignINBtn: require('../assets/logos/DSignINBtn.png'),
   DSignUp: require('../assets/logos/DSignUp.png'),
+  Dlogin: require('../assets/logos/Dlogin.png'),
   DFacebookBtn: require('../assets/logos/DFacebookBtn.png'),
   DPhoneNo: require('../assets/logos/DPhoneNo.png'),
   DGoogle: require('../assets/logos/DGoogle.png'),
@@ -29,4 +30,6 @@ export const imagePath = {
   video: require('../assets/logos/video.png'),
   wave: require('../assets/logos/wave.png'),
   search: require('../assets/searchSection/searchIcon.png'),
+  signupnew: require('../assets/logos/signupnew.png'),
+  Dsignupnew: require('../assets/logos/Dsignupnew.png'),
 };

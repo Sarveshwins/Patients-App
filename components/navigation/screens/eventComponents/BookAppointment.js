@@ -117,6 +117,7 @@ const BookAppointment = ({onPress}) => {
             </Text>
           )}
         />
+
         <FlatList
           ref={timeRef}
           showsHorizontalScrollIndicator={false}
