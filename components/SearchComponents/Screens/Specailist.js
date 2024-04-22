@@ -29,10 +29,16 @@ const Specailist = () => {
   function handleArrowClick() {
     navigation.navigate('MainContainer', {screen: 'SearchHome'});
   }
-  const renderLeftItem = ({item}) => (
-    <View style={{flex: 1, flexDirection: 'row'}}>
+  const renderLeftItem = ({item, index}) => (
+    <View
+      style={{
+        // flex: 1,
+        flexDirection: 'row',
+        justifyContent: index % 2 == 0 ? 'flex-start' : 'flex-end',
+        paddingHorizontal: wp(3),
+      }}>
       <View style={styles.DoctorCard} key={item.id}>
-        <Image style={styles.DoctorImage} source={item.image} />
+        <Image style={styles.DoctorImage} source={Medicines} />
         <View style={styles.DoctorTextView}>
           {item.FirstName && item.LastName ? (
             <>
@@ -44,8 +50,8 @@ const Specailist = () => {
           )}
         </View>
       </View>
-      <View style={styles.DoctorCard2} key={item.id}>
-        <Image style={styles.DoctorImage} source={item.image} />
+      {/* <View style={styles.DoctorCard2} key={item.id}>
+        <Image style={styles.DoctorImage} source={Medicines} />
         <View style={styles.DoctorTextView2}>
           {item.FirstName && item.LastName ? (
             <>
@@ -56,7 +62,7 @@ const Specailist = () => {
             <Text style={styles.TextName}>{item.FirstName}</Text>
           )}
         </View>
-      </View>
+      </View> */}
     </View>
   );
 
@@ -67,6 +73,7 @@ const Specailist = () => {
       alignSelf: 'center',
       paddingHorizontal: wp(1),
       backgroundColor: isDarkMode ? '#000' : '#fff',
+      flex: 1,
     },
     ViewWrapper: {
       flexDirection: 'row',
@@ -102,7 +109,8 @@ const Specailist = () => {
     },
     DoctorCard: {
       flexDirection: 'row',
-      marginBottom: hp(8),
+      // marginBottom: hp(8),
+      marginLeft: 20,
     },
     DoctorCard2: {
       flexDirection: 'row',
@@ -117,7 +125,7 @@ const Specailist = () => {
     },
     DoctorTextView: {
       marginLeft: wp(3.2),
-      width: wp(40),
+      width: wp(25),
       flexDirection: 'column',
       verticalAlign: 'middle',
       height: wp(13),
@@ -152,7 +160,7 @@ const Specailist = () => {
   });
 
   return (
-    <SafeAreaView style={{height: hp(100)}}>
+    <SafeAreaView style={{height: hp(100), backgroundColor: 'white'}}>
       <View style={styles.container}>
         <View style={styles.ViewWrapper}>
           <TouchableOpacity onPress={handleArrowClick}>

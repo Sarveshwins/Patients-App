@@ -169,7 +169,7 @@ const HaveSection = ({
 };
 const styles = StyleSheet.create({
   meContent: {
-    position: 'absolute',
+    // position: 'absolute',
     width: '100%',
   },
   scrollContent: {
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#CC9B66',
     height: 30,
     width: 374,
-    top: 30,
+    // top: 30,
   },
 
   sectiontexts: {

@@ -30,13 +30,13 @@ const Issues = () => {
     navigation.navigate('MainContainer', {screen: 'SearchHome'});
   }
 
-  const renderLeftItem = ({item}) => (
+  const renderLeftItem = ({item, index}) => (
     <View
       style={{
         flex: 1,
         flexDirection: 'row',
-
-        marginLeft: 8,
+        justifyContent: index % 2 == 0 ? 'flex-start' : 'flex-end',
+        paddingHorizontal: wp(8),
       }}>
       <View style={styles.DoctorCard} key={item.id}>
         <Image style={styles.DoctorImage} source={item.image} />
@@ -51,7 +51,7 @@ const Issues = () => {
           )}
         </View>
       </View>
-      <View style={styles.DoctorCard2} key={item.id}>
+      {/* <View style={styles.DoctorCard2} key={item.id}>
         <Image style={styles.DoctorImage} source={item.image} />
         <View
           style={{
@@ -71,7 +71,7 @@ const Issues = () => {
             <Text style={styles.TextName}>{item.FirstName}</Text>
           )}
         </View>
-      </View>
+      </View> */}
     </View>
   );
 
@@ -82,6 +82,7 @@ const Issues = () => {
       alignSelf: 'center',
       paddingHorizontal: wp(1),
       backgroundColor: isDarkMode ? '#000' : '#fff',
+      flex: 1,
     },
     ViewWrapper: {
       flexDirection: 'row',
@@ -117,11 +118,11 @@ const Issues = () => {
     },
     DoctorCard: {
       flexDirection: 'row',
-      marginBottom: hp(8),
+      // marginBottom: hp(8),
     },
     DoctorCard2: {
       flexDirection: 'row',
-      marginTop: hp(8),
+      // marginTop: hp(8),
     },
     DoctorImage: {
       width: wp(13),
@@ -132,7 +133,7 @@ const Issues = () => {
     },
     DoctorTextView: {
       marginLeft: wp(3.2),
-      width: wp(30),
+      width: wp(25),
       flexDirection: 'column',
       verticalAlign: 'middle',
 

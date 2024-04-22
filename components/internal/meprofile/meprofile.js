@@ -107,8 +107,8 @@ const Meprofile = ({navigation}) => {
 
   const [defaultAnswersme, setDefaultAnswersme] = useState({
     7: ['Straight', 'Wavy', 'Curly'],
-    8: ['Rarely', 'Regularly', 'Daily'],
-    9: ['Male', 'Female'],
+    8: ['Male', 'Female'],
+    9: ['Rarely', 'Regularly', 'Daily'],
     10: [
       'Maharashtra',
       'Andhra Pradesh',
