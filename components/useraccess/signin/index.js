@@ -122,15 +122,12 @@ const SignIn = ({navigation}) => {
             label="Enter Phone Number"
             keyboardType="numeric"
             value={loginValue?.phoneNumber}
-            sucess={/^(?:\d{10}|\w+@\w+\.\w{2,3})$/.test(
-              loginValue?.phoneNumber,
-            )}
+            sucess={/^(?!0)\d{10}$/.test(loginValue?.phoneNumber)}
             onChangeText={e => {
               setLoginValue({...loginValue, phoneNumber: e});
             }}
             shouldShake={
-              count != 0 &&
-              !/^(?:\d{10}|\w+@\w+\.\w{2,3})$/.test(loginValue?.phoneNumber)
+              count != 0 && !/^(?!0)\d{10}$/.test(loginValue?.phoneNumber)
             }
             render={count}
           />
