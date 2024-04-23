@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 
 import {appColors} from '../../utils/Appcolors';
 import PasswordError from '../Pssworderror';
@@ -35,6 +35,10 @@ const CommonTextInput = ({
   shouldShake,
   render,
 }) => {
+  const [colorBlue, setColorBlue] = useState(false);
+  setTimeout(() => {
+    setColorBlue(false);
+  }, 1000);
   const {colorScheme} = useAppCommonDataProvider();
   console.log(!passwordFocus && value?.length !== 0, passwordFocus, value);
   if (label?.includes('Password')) {
@@ -160,6 +164,7 @@ const CommonTextInput = ({
         ]}>
         <TextInput
           onChangeText={onChangeText}
+          onChange={() => setColorBlue(true)}
           value={value}
           editable={editable}
           keyboardType={keyboardType ? keyboardType : 'default'}
@@ -175,7 +180,9 @@ const CommonTextInput = ({
               fontSize: 16,
               fontWeight: '500',
               marginTop: '10%',
-              borderBottomColor: sucess
+              borderBottomColor: colorBlue
+                ? 'blue'
+                : sucess
                 ? appColors?.green
                 : appColors?.bottomGray,
 
