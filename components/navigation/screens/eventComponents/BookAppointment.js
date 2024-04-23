@@ -9,7 +9,9 @@ import {
 } from 'react-native';
 import moment from 'moment/moment';
 import {imagePath} from '../../../../utils/imagePath';
-
+import RBSheet from 'react-native-raw-bottom-sheet';
+import {useAppCommonDataProvider} from '../../../UseAppCommonDataProvider';
+import {appColors} from '../../../../utils/Appcolors';
 const BookAppointment = ({onPress}) => {
   const [icons, setIcons] = useState([
     {id: 1, name: imagePath.appoint, isSelected: false},
@@ -50,6 +52,55 @@ const BookAppointment = ({onPress}) => {
     return {t1: startTime, t2: endTime};
   });
   const timeRef = useRef();
+  const [paddingList, setPaddingList] = useState(30);
+
+  const userList = [
+    {
+      id: 1,
+      name: 'Swapnil Katare',
+      age: 23,
+      phone: '9876543210',
+      gender: 'Female',
+      genderSyntax: 'F',
+    },
+    {
+      id: 2,
+      name: 'Puneet',
+      age: 26,
+      phone: '7878787878',
+      gender: 'Male',
+      genderSyntax: 'M',
+    },
+    {
+      id: 3,
+      name: 'Nitin',
+      age: 19,
+      phone: '9879879876',
+      gender: 'Male',
+      genderSyntax: 'M',
+    },
+    {
+      id: 4,
+      name: 'Gauri',
+      age: 22,
+      phone: '9874563210',
+      gender: 'Female',
+      genderSyntax: 'F',
+    },
+    {
+      id: 5,
+      name: 'Rajni',
+      age: 30,
+      phone: '5285252525',
+      gender: 'Female',
+      genderSyntax: 'F',
+    },
+  ];
+  const listRef = useRef();
+  const {colorScheme} = useAppCommonDataProvider();
+  const [listIndex, setListIndex] = useState(0);
+  const {name, age, phone, gender, genderSyntax} = userList[listIndex];
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -69,7 +120,7 @@ const BookAppointment = ({onPress}) => {
           </TouchableOpacity>
         ))}
       </View>
-      <View style={{flexDirection: 'row'}}>
+      <View style={{flexDirection: 'row', paddingHorizontal: 30}}>
         <Image
           source={imagePath.user}
           style={{
@@ -85,82 +136,127 @@ const BookAppointment = ({onPress}) => {
             marginHorizontal: 10,
             justifyContent: 'space-between',
           }}>
-          <Text>Swapnil Katare</Text>
-          <Text>M/23</Text>
-          <Text>9876543210</Text>
+          <Text>{name}</Text>
+          <Text>
+            {genderSyntax}/{age}
+          </Text>
+          <Text>{phone}</Text>
         </View>
-        <Text
-          style={{
-            color: 'green',
-            alignSelf: 'flex-end',
-            textDecorationLine: 'underline',
-          }}>
-          Change user
-        </Text>
+        <TouchableOpacity
+          style={{alignSelf: 'flex-end'}}
+          onPress={() => listRef?.current.open()}>
+          <Text
+            style={{
+              color: 'green',
+
+              textDecorationLine: 'underline',
+            }}>
+            Change user
+          </Text>
+        </TouchableOpacity>
       </View>
       <View>
-        <FlatList
-          showsHorizontalScrollIndicator={false}
-          horizontal
-          data={days}
-          renderItem={({item, index}) => (
-            <Text
-              onPress={() => {
-                setDayIndex(index), timeRef.current.scrollToIndex({index: 0});
-              }}
-              style={{
-                marginRight: 20,
-                width: 80,
-                textDecorationLine: index === dayIndex ? 'underline' : 'none',
-              }}>
-              {item}
-            </Text>
-          )}
-        />
+        <View style={{paddingHorizontal: 30}}>
+          <FlatList
+            showsHorizontalScrollIndicator={false}
+            horizontal
+            data={days}
+            renderItem={({item, index}) => (
+              <Text
+                onPress={() => {
+                  setDayIndex(index),
+                    timeRef.current.scrollToIndex({index: 0}),
+                    setPaddingList(30);
+                }}
+                style={{
+                  marginRight: 20,
+                  width: 80,
+                  textDecorationLine: index === dayIndex ? 'underline' : 'none',
+                }}>
+                {item}
+              </Text>
+            )}
+          />
+        </View>
 
-        <FlatList
-          ref={timeRef}
-          showsHorizontalScrollIndicator={false}
-          horizontal
-          data={timeInterval}
-          renderItem={({item}) => (
-            <TouchableOpacity>
-              <View
-                style={{
-                  marginRight: 20,
-                  borderRadius: 10,
-                  borderColor: '#CC9B66',
-                  borderWidth: 2,
-                  height: 40,
-                  width: 80,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginVertical: 10,
-                }}>
-                <Text>{item.t1}</Text>
-              </View>
-              <View
-                style={{
-                  marginRight: 20,
-                  borderRadius: 10,
-                  borderColor: '#CC9B66',
-                  borderWidth: 2,
-                  height: 40,
-                  width: 80,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginVertical: 10,
-                }}>
-                <Text>{item.t2}</Text>
-              </View>
-            </TouchableOpacity>
-          )}
-        />
+        <View style={{paddingHorizontal: paddingList}}>
+          <FlatList
+            ref={timeRef}
+            showsHorizontalScrollIndicator={false}
+            horizontal
+            data={timeInterval}
+            renderItem={({item}) => (
+              <TouchableOpacity>
+                <View style={styles.timeInterval}>
+                  <Text>{item.t1}</Text>
+                </View>
+                <View style={styles.timeInterval}>
+                  <Text>{item.t2}</Text>
+                </View>
+              </TouchableOpacity>
+            )}
+            onScrollBeginDrag={() => setPaddingList(0)}
+          />
+        </View>
       </View>
 
       <TouchableOpacity style={styles.confirmButton} onPress={onPress}>
         <Text style={styles.confirmButtonText}>Confirm Appointment</Text>
       </TouchableOpacity>
+      <RBSheet
+        ref={listRef}
+        height={478}
+        openDuration={250}
+        customStyles={{
+          container: {
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderTopLeftRadius: 30,
+            borderTopRightRadius: 30,
+            backgroundColor:
+              colorScheme === 'light' ? appColors?.white : appColors?.black,
+          },
+        }}>
+        <View style={{width: '100%', flex: 1, padding: 30}}>
+          <View
+            style={{
+              justifyContent: 'space-between',
+              flexDirection: 'row',
+              width: '100%',
+            }}>
+            <Text style={{textAlign: 'left', fontSize: 18, fontWeight: '700'}}>
+              Select User
+            </Text>
+            <TouchableOpacity onPress={() => listRef?.current.close()}>
+              <Text
+                style={{
+                  color: '#007AFF',
+                  fontSize: 17,
+                  fontWeight: '400',
+                }}>
+                Done
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <FlatList
+            data={userList}
+            renderItem={({item, index}) => (
+              <TouchableOpacity
+                key={index}
+                style={{
+                  borderColor: index == listIndex ? 'green' : 'gray',
+                  borderBottomWidth: 1,
+                  padding: 10,
+                }}
+                onPress={() => {
+                  listRef?.current.close(), setListIndex(index);
+                }}>
+                <Text>{item.name}</Text>
+              </TouchableOpacity>
+            )}
+          />
+        </View>
+      </RBSheet>
     </View>
   );
 };
@@ -170,11 +266,12 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     justifyContent: 'space-between',
-    padding: 30,
+    paddingVertical: 30,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
+    paddingHorizontal: 30,
   },
   title: {
     fontSize: 25,
@@ -197,6 +294,17 @@ const styles = StyleSheet.create({
   confirmButtonText: {
     fontWeight: '500',
     fontSize: 22,
+  },
+  timeInterval: {
+    marginRight: 20,
+    borderRadius: 10,
+    borderColor: '#CC9B66',
+    borderWidth: 2,
+    height: 40,
+    width: 80,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 10,
   },
 });
 

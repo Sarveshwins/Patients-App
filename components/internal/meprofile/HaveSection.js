@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {
   View,
   Text,
@@ -8,9 +8,13 @@ import {
   Image,
   TouchableHighlight,
   TextInput,
+  TouchableOpacity,
+  FlatList,
 } from 'react-native';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {BlurView} from '@react-native-community/blur';
+import RBSheet from 'react-native-raw-bottom-sheet';
+import {imagePath} from '../../../utils/imagePath';
 
 const HaveSection = ({
   isHaveModalVisible,
@@ -29,9 +33,25 @@ const HaveSection = ({
   const [pain, setPain] = useState('');
   const [injuries, setInjuries] = useState('');
   const [surguries, setSurguries] = useState('');
-
+  const [viewInput, setViewInput] = useState(true);
+  const [allergies, setAllergies] = useState('');
+  const ref = useRef();
+  const inputRef = useRef();
+  const AllergiesList = [
+    'Anaphylaxis',
+    'Hemolytic Anemia',
+    'Anti-Thymocyte globulin',
+    'Atopic Eczema (Dermatitis)',
+    'Drug Allergy',
+    'Food Allergy and Food Intolerance',
+    'Skin Allergy',
+    'Rhinitis',
+    'Allergy in Children',
+    'Asthma',
+  ];
+  const [input, setInput] = useState('');
   const renderItemContent = item => {
-    if (['16', '19', '20'].includes(item.key)) {
+    if (['19', '20'].includes(item.key)) {
       return (
         <TouchableHighlight
           underlayColor="transparent"
@@ -71,6 +91,25 @@ const HaveSection = ({
         </View>
       );
       // } else if (item.key === '18') {
+    } else if (item.key === '16') {
+      return (
+        <TouchableHighlight
+          underlayColor="transparent"
+          key={item.key}
+          style={[styles.listItem]}
+          onPress={() => {
+            ref.current.open(), setViewInput(true);
+          }}>
+          <Text style={styles.sectiontexts}>
+            <Text style={{color: 'black'}}>{item.text} </Text>
+            {item.answerHave ? (
+              <Text style={{color: 'black', fontWeight: '400'}}>
+                {item.answerHave}
+              </Text>
+            ) : null}
+          </Text>
+        </TouchableHighlight>
+      );
     } else {
       return (
         <View key={item.key} style={styles.listItem}>
@@ -84,7 +123,14 @@ const HaveSection = ({
       );
     }
   };
-
+  const [filteredData, setFilteredData] = useState([]);
+  const handleSearch = text => {
+    const query = text.toLowerCase();
+    const filtered = AllergiesList.filter(item =>
+      item.toLowerCase().includes(query),
+    );
+    setFilteredData(filtered);
+  };
   return (
     <View style={styles.meContent}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
@@ -164,6 +210,176 @@ const HaveSection = ({
           </View>
         </View>
       </Modal>
+      <RBSheet
+        ref={ref}
+        height={478}
+        openDuration={250}
+        customStyles={{
+          container: {
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderTopLeftRadius: 30,
+            borderTopRightRadius: 30,
+            // backgroundColor:
+            //   colorScheme === 'light' ? appColors?.white : appColors?.black,
+          },
+        }}>
+        <View style={{flex: 1, width: '100%', paddingVertical: 30}}>
+          <View style={{paddingHorizontal: 30}}>
+            <TouchableOpacity onPress={() => ref.current.close()}>
+              <Text
+                style={{
+                  color: '#2D8AE0',
+                  fontSize: 17,
+                  fontWeight: '500',
+
+                  alignSelf: 'flex-end',
+                }}>
+                Done
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={{flex: 1}}>
+            <View
+              style={{
+                borderBottomWidth: 2,
+                borderBottomColor: '#CCCCCC',
+                marginHorizontal: 30,
+                marginBottom: 10,
+              }}>
+              <TouchableOpacity
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  paddingVertical: 5,
+                }}
+                onPress={() => {
+                  inputRef.current.focus(), setViewInput(false);
+                }}>
+                <Image
+                  style={{
+                    width: 17,
+                    height: 17,
+                    tintColor: '#CCCCCC',
+                    marginRight: 10,
+                  }}
+                  source={imagePath.search}
+                />
+                <TextInput
+                  ref={inputRef}
+                  onBlur={() => setViewInput(true)}
+                  onFocus={() => setViewInput(false)}
+                  placeholder=" Search Allergies"
+                  style={{flex: viewInput ? 0 : 1}}
+                  onChangeText={handleSearch}
+                />
+                {viewInput && (
+                  <Text style={{color: '#CCC', fontSize: 16}}>
+                    {' '}
+                    to<Text style={{color: 'limegreen'}}> Add</Text>
+                  </Text>
+                )}
+              </TouchableOpacity>
+            </View>
+            {viewInput ? (
+              <View style={{paddingHorizontal: 30}}>
+                <Text
+                  style={{
+                    color: '#CC9B66',
+                    fontSize: 28,
+                    fontWeight: '600',
+                    marginVertical: 15,
+                  }}>
+                  Allergies
+                </Text>
+                <Text style={{color: '#CC9B66', fontSize: 16}}>
+                  An allergy is an immune system response to a foreign substance
+                  that's not typically harmful to your body. These foreign
+                  substances are called allergens. They can include certain
+                  foods, pollen, or pet dander
+                </Text>
+              </View>
+            ) : (
+              <>
+                <View
+                  style={{
+                    borderBottomWidth: 2,
+                    borderBottomColor: '#CCCCCC',
+                    marginVertical: 20,
+                    // paddingHorizontal: 30,
+                    backgroundColor: 'red',
+                  }}
+                />
+                <FlatList
+                  data={filteredData}
+                  style={{paddingHorizontal: 30}}
+                  renderItem={({item}) => (
+                    <View
+                      style={{
+                        paddingVertical: 10,
+                        borderBottomWidth: 1,
+                        borderBottomColor: 'gray',
+                      }}>
+                      <Text>{item}</Text>
+                    </View>
+                  )}
+                  ListEmptyComponent={() => <Text>No data</Text>}
+                />
+              </>
+            )}
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              paddingHorizontal: 30,
+            }}>
+            <Image
+              style={{
+                height: 36,
+                width: 33,
+                borderRadius: 5,
+                marginHorizontal: 10,
+              }}
+              resizeMode="cover"
+              source={require('../../../assets/isection/figma.png')}
+            />
+            <View>
+              <Text
+                style={{
+                  fontSize: 12,
+                  color: 'rgba(60, 60, 67, 0.60)',
+                  fontWeight: '500',
+                }}>
+                Powered by
+              </Text>
+              <Text
+                style={{
+                  fontSize: 13,
+                  color: '#000',
+                  fontWeight: '600',
+                }}>
+                With Doc’s
+              </Text>
+            </View>
+            <BlurView
+              style={styles.groupItem}
+              blurType="light"
+              blurAmount={22}
+              reducedTransparencyFallbackColor="white"
+            />
+            <View style={styles.groupItemPosition}>
+              <View
+                style={{
+                  ...styles.groupItem,
+                  backgroundColor: 'transparent',
+                }}
+              />
+            </View>
+          </View>
+        </View>
+      </RBSheet>
     </View>
   );
 };

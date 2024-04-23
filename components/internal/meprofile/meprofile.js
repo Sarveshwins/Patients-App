@@ -826,6 +826,7 @@ const Meprofile = ({navigation}) => {
                       style={{
                         borderRadius: 51,
                         borderWidth: 4,
+
                         borderColor: 'white',
                         height: 80,
                         width: 80,

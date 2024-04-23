@@ -15,6 +15,7 @@ import DatePicker from 'react-native-date-picker';
 import RNPickerSelect from 'react-native-picker-select';
 // import RNPickerSelect from 'react-native-picker-select/src/index.js';
 import ShakeComponent from '../../../ShakeComponent';
+import moment from 'moment';
 
 const EnterDetails = ({onPress, onDone, forMyself}) => {
   const [count, setCount] = useState(0);
@@ -25,14 +26,14 @@ const EnterDetails = ({onPress, onDone, forMyself}) => {
   const [selectedValue, setSelectedValue] = useState(null);
 
   const newDate = new Date(date);
-  const currentDate = new Date();
+  const eightYearCheck = moment().subtract(18, 'years');
   const day = newDate.getDate();
   const month = newDate.getMonth() + 1;
   const year = newDate.getFullYear();
 
   const formattedDate = `${day}/${month < 10 ? '0' : ''}${month}/${year}`;
 
-  const dateCompare = currentDate > newDate;
+  const dateCompare = eightYearCheck > newDate;
   const [signUpValues, setSignUpValues] = useState({
     firstName: '',
     lastName: '',
@@ -202,6 +203,7 @@ const EnterDetails = ({onPress, onDone, forMyself}) => {
               </TouchableOpacity>
             </ShakeComponent>
             <DatePicker
+              maximumDate={new Date(eightYearCheck)}
               modal
               mode="date"
               open={open}
@@ -220,11 +222,13 @@ const EnterDetails = ({onPress, onDone, forMyself}) => {
           style={{height: 60}}
           label="Phone Number"
           value={count != 0 && signUpValues?.Phone}
-          sucess={/^(?:\d{10}|\w+@\w+\.\w{2,3})$/.test(signUpValues?.Phone)}
+          sucess={/^(?!0\d{9})(?:\d{10}|\w+@\w+\.\w{2,3})$/.test(
+            signUpValues?.Phone,
+          )}
           onChangeText={text => handleChange('Phone', text)}
           shouldShake={
             count != 0 &&
-            !/^(?:\d{10}|\w+@\w+\.\w{2,3})$/.test(signUpValues?.Phone)
+            !/^(?!0\d{9})(?:\d{10}|\w+@\w+\.\w{2,3})$/.test(signUpValues?.Phone)
           }
           render={count}
         />
