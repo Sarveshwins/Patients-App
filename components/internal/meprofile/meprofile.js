@@ -335,15 +335,15 @@ const Meprofile = ({navigation}) => {
     imageprofile: {
       marginLeft: 15,
       borderRadius: 51,
-      height: 120,
-      width: 120,
-      borderWidth: 10,
+      height: 124,
+      width: 124,
+      borderWidth: 3,
       borderColor: isDarkMode ? '#9E9E9E' : 'grey',
       backgroundColor: '#C4C4C4',
       overflow: 'hidden',
       shadowColor: '#CC9B66',
       shadowOffset: {width: 0, height: 2},
-      shadowRadius: 25,
+      shadowRadius: 3,
       shadowOpacity: 0.9,
       borderRadius: 51,
     },
@@ -381,9 +381,11 @@ const Meprofile = ({navigation}) => {
     myself: {
       left: 27,
       flexDirection: 'row',
+      marginTop: 35,
     },
     namesection: {
       left: 27,
+      marginTop: 5,
     },
 
     fullname: {
